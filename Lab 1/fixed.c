@@ -1,5 +1,10 @@
-//Michael Park(mjp2853), Jack Zhao
-//SP16 01/26/16
+// filename ******** fixed.c ************** 
+// Michael Park, Jack Zhao
+// Date Created: 01/26/2016
+// Includes Fixed point calculation functions
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 01/31/2016
 
 #include <stdint.h>
 #include <stdio.h>
@@ -7,9 +12,23 @@
 #include "ST7735.h"
 
 //global variables shared by the plotting methods (3,4)
-int32_t Y_min, X_min, Y_max, X_max, res;  
+int32_t gb_ymin, gb_xmin, gb_ymax, gb_xmax, gb_res;  
 
-//The purpose of this technique is to use integer arithmetic (int, long...) while being able to represent fractions
+/****************ST7735_sDecOut3***************
+ converts fixed point number to LCD
+ format signed 32-bit with resolution 0.001
+ range -9.999 to +9.999
+ Inputs:  signed 32-bit integer part of fixed-point number
+ Outputs: none
+ send exactly 6 characters to the LCD 
+Parameter LCD display
+ 12345    " *.***"
+  2345    " 2.345"  
+ -8100    "-8.100"
+  -102    "-0.102" 
+    31    " 0.031" 
+-12345    " *.***"
+ */ 
 void ST7735_sDecOut3(int32_t n)
 {
 	
@@ -74,6 +93,27 @@ void ST7735_sDecOut3(int32_t n)
 	}
 }
 
+/**************ST7735_uBinOut8***************
+ unsigned 32-bit binary fixed-point with a resolution of 1/256. 
+ The full-scale range is from 0 to 999.99. 
+ If the integer part is larger than 256000, it signifies an error. 
+ The ST7735_uBinOut8 function takes an unsigned 32-bit integer part 
+ of the binary fixed-point number and outputs the fixed-point value on the LCD
+ Inputs:  unsigned 32-bit integer part of binary fixed-point number
+ Outputs: none
+ send exactly 6 characters to the LCD 
+Parameter LCD display
+     0	  "  0.00"
+     2	  "  0.01"
+    64	  "  0.25"
+   100	  "  0.39"
+   500	  "  1.95"
+   512	  "  2.00"
+  5000	  " 19.53"
+ 30000	  "117.19"
+255997	  "999.99"
+256000	  "***.**"
+*/
 void ST7735_uBinOut8(uint32_t n)
 {
 	uint32_t n1 = n*1000/256;		//integer part
@@ -121,25 +161,35 @@ void ST7735_uBinOut8(uint32_t n)
 		}
 	}
 }
-
-//y: 0-159, x: 0-127
+/**************ST7735_XYplotInit***************
+ Specify the X and Y axes for an x-y scatter plot
+ Draw the title and clear the plot area
+ Range of Grids on LCD: y: 0-159, x: 0-127
+ Inputs:  title  ASCII string to label the plot, null-termination
+          minX   smallest X data value allowed, resolution= 0.001
+          maxX   largest X data value allowed, resolution= 0.001
+          minY   smallest Y data value allowed, resolution= 0.001
+          maxY   largest Y data value allowed, resolution= 0.001
+ Outputs: none
+ assumes minX < maxX, and miny < maxY
+*/
 void ST7735_XYplotInit(char *title, int32_t minX, int32_t maxX, int32_t minY, int32_t maxY)
 {
 	Output_Clear();
 	
 	char* graphtitle  = title; 
-	res = 100;
+	gb_res = 100;
 	
-	Y_max = (maxY - minY)/res;
-	Y_min = minY/res;
-	X_max = (maxX - minX)/res;
-	X_min = minX/res;
+	gb_ymax = (maxY - minY)/gb_res;
+	gb_ymin = minY/gb_res;
+	gb_xmax = (maxX - minX)/gb_res;
+	gb_xmin = minX/gb_res;
 	
-	if(Y_max >127) Y_max =127;
-	if(X_max >127) X_max =127;
+	if(gb_ymax >127) gb_ymax =127;
+	if(gb_xmax >127) gb_xmax =127;
 	
 	ST7735_DrawString(0, 0, graphtitle, ST7735_YELLOW);
-	ST7735_FillRect(0, 32, X_max, Y_max, ST7735_Color565(228,228,228));
+	ST7735_FillRect(0, 32, gb_xmax, gb_ymax, ST7735_Color565(228,228,228));
 }
 
 
@@ -160,16 +210,16 @@ void ST7735_XYplot(uint32_t num, int32_t bufX[], int32_t bufY[])
 	int32_t y;
 	for(int i=0;i<num;i++)
 	{
-		x=bufX[i]/res;
-		y=bufY[i]/res;
+		x=bufX[i]/gb_res;
+		y=bufY[i]/gb_res;
 
-		int32_t yplot = (y - Y_min)+32;
-		int32_t xplot = (x - X_min);
+		int32_t yplot = (y - gb_ymin)+32;
+		int32_t xplot = (x - gb_xmin);
 		
 		if(xplot<0) yplot = 0;
-		if(xplot>X_max) xplot = X_max;
+		if(xplot>gb_xmax) xplot = gb_xmax;
 		if(yplot<32) yplot = 32;
-		if(yplot>Y_max+32) yplot = Y_max+32;
+		if(yplot>gb_ymax+32) yplot = gb_ymax+32;
 		
 		ST7735_DrawPixel(xplot,   yplot,   ST7735_BLUE);
 		ST7735_DrawPixel(xplot+1, yplot,   ST7735_BLUE);
@@ -179,8 +229,13 @@ void ST7735_XYplot(uint32_t num, int32_t bufX[], int32_t bufY[])
 }
 
 /***********************EXTRA CREDIT***************************/
-//version 1
-//Time took to exectue: 2543238*12.5ns = 31.790475 ms
+/*********Extra Credit Functions****************/
+/*Test1EC
+Calculates floating point in C; used to measure time elapsed for the calculation
+Time took to exectue: 2543238*12.5ns = 31.790475 ms
+Input: None
+Output: None
+*/
 volatile float T;    // temperature in C
 volatile uint32_t N; // 12-bit ADC value
 void Test1EC(void){
@@ -189,8 +244,12 @@ void Test1EC(void){
   }
 }
 
-// version 2: C fixed-point
-//Time took to exectue: 163869*12.5ns = 2.0483625 ms
+/*Test2EC
+Calculates floating point in C; used to measure time elapsed for the calculation
+Time took to exectue: 163869*12.5ns = 2.0483625 ms
+Input: None
+Output: None
+*/
 volatile uint32_t T2;    // temperature in 0.01 C
 volatile uint32_t N;    // 12-bit ADC value
 void Test2EC(void){

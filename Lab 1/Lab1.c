@@ -6,6 +6,14 @@
 // Possible main program to test the lab
 // Feel free to edit this to match your specifications
 
+// filename ******** Lab1.c ************** 
+// Michael Park, Jack Zhao
+// Date Created: 01/26/2016
+// Driver file to test fixed.c
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 01/31/2016
+
 // Backlight (pin 10) connected to +3.3 V
 // MISO (pin 9) unconnected 
 // SCK (pin 8) connected to PA2 (SSI0Clk)
@@ -103,17 +111,16 @@ int main(void){uint32_t i;
   PortF_Init();
   ST7735_InitR(INITR_REDTAB);
 	
-  SysTick_Init();
-	SysTick_Wait(10);
-	int begin = NVIC_ST_CURRENT_R;
+  SysTick_Init();	//Initialize systick clock counts down from 0xFFFFFF 
+	int begin = NVIC_ST_CURRENT_R; //starting counter value
 	//Test1EC();
 	//Test2EC();
   Test4EC();
 	//Test3EC();
-	int end = NVIC_ST_CURRENT_R;
-	int time_spent = begin - end;
+	int end = NVIC_ST_CURRENT_R; //ending counter value
+	int time_spent = begin - end; //calculate number of cycles elapsed 
 
-	char str[80];
+	char str[80]; //string buffers to output number of systick cycles
 	char str1[80];
 	char str2[80];
 	sprintf(str, "%d",begin);
@@ -197,18 +204,3 @@ void DelayWait10ms(uint32_t n){uint32_t volatile time;
   }
 }
 
-//Extra Credit Main
-/*
-int main(void)
-{
-	PLL_Init(Bus80MHz);
-  PortF_Init();
-  ST7735_InitR(INITR_REDTAB);
-	while(1)
-	{
-		Test1EC();
-		Pause();
-		Test2EC();
-		Pause();
-	}
-}*/

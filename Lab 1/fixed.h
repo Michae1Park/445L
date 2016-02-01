@@ -1,6 +1,10 @@
 // filename ******** fixed.h ************** 
 // Michael Park, Jack Zhao
-// 01/26/16
+// Date Created: 01/26/2016
+// Includes prototypes for functions in fixed.c
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 01/31/2016
 
 #include <stdint.h>
 
@@ -69,6 +73,17 @@ void ST7735_XYplotInit(char *title, int32_t minX, int32_t maxX, int32_t minY, in
 */
 void ST7735_XYplot(uint32_t num, int32_t bufX[], int32_t bufY[]);
 
-/*********Extra Credit Fucntions****************/
+/*********Extra Credit Functions****************/
+/*Test1EC
+Calculates floating point in C; used to measure time elapsed for the calculation
+Input: None
+Output: None
+*/
 void Test1EC(void);
+
+/*Test2EC
+Calculates fixed point in C; used to measure time elapsed for the calculation
+Input: None
+Output: None
+*/
 void Test2EC(void);
