@@ -23,7 +23,10 @@
 #include "PLL.h"
 #include "fixed.h"
 #include "tm4c123gh6pm.h"
-#include "ExtraCredit.h"
+#include "SysTick.h"
+
+extern void Test4EC();
+extern void Test3EC();
 
 void DelayWait10ms(uint32_t n);
 void PortF_Init(void);
@@ -59,7 +62,7 @@ typedef const struct outTestCase2 outTestCaseType2;
 
 outTestCaseType2 outTests2[14]={ 
 {     0,  " =   0.00?\r" }, //      0/256 = 0.00  
-{     4,  " =   0.01?\r" }, //      4/256 = 0.01  
+{     -4,  " =   0.01?\r" }, //      4/256 = 0.01  
 {    10,  " =   0.03?\r" }, //     10/256 = 0.03
 {   200,  " =   0.78?\r" }, //    200/256 = 0.78
 {   254,  " =   0.99?\r" }, //    254/256 = 0.99
@@ -99,11 +102,28 @@ int main(void){uint32_t i;
   PLL_Init(Bus80MHz);
   PortF_Init();
   ST7735_InitR(INITR_REDTAB);
+	
+  SysTick_Init();
+	SysTick_Wait(10);
+	int begin = NVIC_ST_CURRENT_R;
+	//Test1EC();
+	//Test2EC();
+  Test4EC();
+	//Test3EC();
+	int end = NVIC_ST_CURRENT_R;
+	int time_spent = begin - end;
 
-
-	Test2EC();
-//	Test2EC(); 
-
+	char str[80];
+	char str1[80];
+	char str2[80];
+	sprintf(str, "%d",begin);
+	sprintf(str1, "%d",end);
+	sprintf(str2, "%d",time_spent);
+	ST7735_DrawString(0, 0, str,ST7735_Color565(255, 0, 0));
+	ST7735_DrawString(0, 5, str1,ST7735_Color565(255, 0, 0));
+	ST7735_DrawString(0, 10, str2,ST7735_Color565(255, 0, 0));
+	Pause();
+	
 	while(1){
     ST7735_FillScreen(0);  // set screen to black
     ST7735_SetCursor(0,0);

@@ -1,6 +1,4 @@
 // filename ******** fixed.h ************** 
-// possible header file for Lab 1 
-// feel free to change the specific syntax of your system
 // Michael Park, Jack Zhao
 // 01/26/16
 
@@ -71,5 +69,6 @@ void ST7735_XYplotInit(char *title, int32_t minX, int32_t maxX, int32_t minY, in
 */
 void ST7735_XYplot(uint32_t num, int32_t bufX[], int32_t bufY[]);
 
+/*********Extra Credit Fucntions****************/
 void Test1EC(void);
-
+void Test2EC(void);

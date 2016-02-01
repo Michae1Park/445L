@@ -1,10 +1,14 @@
+;*****************EXTRA CREDIT************************
 ;version 4, assembly fixed point
+;49183cycles(one instruction = one clock cycle)*12.5ns = 614.7875us
         AREA    DATA, ALIGN=2
 T       SPACE   4
 N       SPACE   4
         AREA    |.text|, CODE, READONLY, ALIGN=2
         THUMB
-Test4 PUSH {R4,R5,R6,LR}
+		EXPORT Test4EC	
+Test4EC 
+      PUSH {R4,R5,R6,LR}
       MOV R0,#0
       LDR R1,=N   ;pointer to N
       LDR R2,=T   ;pointer to T
@@ -21,3 +25,4 @@ loop4 STR R0,[R1]          ; N is volatile
       CMP R0,#4096
       BNE loop4
       POP {R4,R5,R6,PC}
+      END  

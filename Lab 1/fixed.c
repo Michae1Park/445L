@@ -180,6 +180,7 @@ void ST7735_XYplot(uint32_t num, int32_t bufX[], int32_t bufY[])
 
 /***********************EXTRA CREDIT***************************/
 //version 1
+//Time took to exectue: 2543238*12.5ns = 31.790475 ms
 volatile float T;    // temperature in C
 volatile uint32_t N; // 12-bit ADC value
 void Test1EC(void){
@@ -189,6 +190,7 @@ void Test1EC(void){
 }
 
 // version 2: C fixed-point
+//Time took to exectue: 163869*12.5ns = 2.0483625 ms
 volatile uint32_t T2;    // temperature in 0.01 C
 volatile uint32_t N;    // 12-bit ADC value
 void Test2EC(void){
