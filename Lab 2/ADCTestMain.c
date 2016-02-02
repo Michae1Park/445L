@@ -29,16 +29,27 @@
 #include "ADCSWTrigger.h"
 #include "../Shared/tm4c123gh6pm.h"
 #include "PLL.h"
+#include "Timer1.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
+	
+typedef int bool;
+enum { false, true };
+
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
+
+//global vars
 volatile uint32_t ADCvalue;
+uint32_t time_dump[1000], adc_dump[1000];
+static uint32_t count = 0;
+static bool flag = 0;
+
 // This debug function initializes Timer0A to request interrupts
 // at a 100 Hz frequency.  It is similar to FreqMeasure.c.
 void Timer0A_Init100HzInt(void){
@@ -66,6 +77,22 @@ void Timer0A_Handler(void){
   PF2 ^= 0x04;                   // profile
   PF2 ^= 0x04;                   // profile
   ADCvalue = ADC0_InSeq3();
+	
+	//debugging feature - collecting data
+	if (count < 1000)
+	{
+		adc_dump[count] = ADCvalue;
+		time_dump[count] = TIMER1_TAR_R;
+		count++;
+	}
+	else
+	{
+		flag = 1;
+		//disable both timers
+		TIMER0_IMR_R &= 0x11111110;
+		TIMER1_IMR_R &= 0x11111110;
+	}
+	
   PF2 ^= 0x04;                   // profile
 }
 int main(void){
@@ -73,7 +100,8 @@ int main(void){
   SYSCTL_RCGCGPIO_R |= 0x20;            // activate port F
   ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
   Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
-  GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
+  Timer1_Init(0, 10);										//init Timer1A
+	GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
   GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
                                         // configure PF2 as GPIO
