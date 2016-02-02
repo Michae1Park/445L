@@ -115,8 +115,8 @@ int main(void){uint32_t i;
 	int begin = NVIC_ST_CURRENT_R; //starting counter value
 	//Test1EC();
 	//Test2EC();
-  Test4EC();
-	//Test3EC();
+  //Test4EC();
+	Test3EC();
 	int end = NVIC_ST_CURRENT_R; //ending counter value
 	int time_spent = begin - end; //calculate number of cycles elapsed 
 

@@ -1,5 +1,6 @@
 ;Version 3 assembly floating point
 ; run with floating-point hardware active
+;65553*12.5ns = 819.4125 us
         AREA    DATA, ALIGN=2
 T       SPACE   4
 N       SPACE   4
