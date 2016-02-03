@@ -30,6 +30,9 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "Timer1.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -44,11 +47,20 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void calcTimeDif(void);
+void adcPMF(void);
 
 volatile uint32_t ADCvalue;
 uint32_t time_dump[1000], adc_dump[1000];
 static uint32_t count=0;
 volatile bool flag=false;
+
+uint32_t cmpfunc (const void * a, const void * b)
+{
+   return ( *(uint32_t*)a - *(uint32_t*)b );
+}
+
+
+
 // This debug function initializes Timer0A to request interrupts
 // at a 100 Hz frequency.  It is similar to FreqMeasure.c.
 void Timer0A_Init100HzInt(void){
@@ -110,7 +122,9 @@ int main(void){
     PF1 ^= 0x02;  // toggles when running in main
 		if(flag == true){
 			calcTimeDif();
+			adcPMF();
 			flag=false;
+			
 			}
 			
   }
@@ -139,7 +153,58 @@ void calcTimeDif(void){
 		}
 	}
 	jitter=max-min;
-hi++;
+	hi++;
 }
+
+void adcPMF(void){
+
+uint32_t sortADC[1000];
+uint32_t num_discreteADC = 0;
+uint32_t tmp = sortADC[0];
+uint32_t* xbuff;
+uint32_t* ybuff;
+	for(int i =0;i<1000;i++){
+		sortADC[i]=adc_dump[i];
+	}
+		qsort(sortADC, 1000,sizeof(uint32_t),cmpfunc);
+	
+	
+
+for (int i=1; i<1000; i++) //finding number of discrete ADC value
+{
+	if(sortADC[i] != tmp)
+	{
+		tmp = sortADC[i];
+		num_discreteADC++;
+	}
+}
+
+xbuff = (uint32_t*) malloc(num_discreteADC);	//allocate memory for to the buffers for the size of xbuff and y buff
+ybuff = (uint32_t*) malloc(num_discreteADC);
+num_discreteADC = 0;
+tmp = sortADC[0];	//assign values to fill up xbuff and ybuff
+*xbuff = sortADC[0];
+*ybuff = 1;
+for (int i=1; i<1000; i++) //finding number of discrete ADC value
+{
+	if(sortADC[i] != tmp)
+	{
+		tmp = sortADC[i];
+		*(xbuff + num_discreteADC) = sortADC[i]; 
+		*(ybuff + num_discreteADC) = 1;			
+	}
+	else
+	{
+		*(ybuff + num_discreteADC)+=1; //increment frequency
+	}
+}
+/*
+ST7735_XYplotInit("PMF of ADC",-450, 150, -400, 200);
+ST7735_XYplot(num_discreteADC,(uint32_t *)xbuff,(uint32_t *)ybuff);
+free(xbuff);
+free(ybuff);*/
+count++;
+}
+
 
 

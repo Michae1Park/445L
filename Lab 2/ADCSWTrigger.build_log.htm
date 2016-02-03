@@ -11,23 +11,34 @@ Rebuild target 'ADCSWTrigger'
 assembling startup.s...
 compiling ADCSWTrigger.c...
 compiling ADCTestMain.c...
-ADCTestMain.c(122): warning:  #550-D: variable "jitter" was set but never used
+ADCTestMain.c(136): warning:  #550-D: variable "jitter" was set but never used
         uint32_t jitter;
-ADCTestMain.c: 1 warning, 0 errors
+ADCTestMain.c(169): warning:  #167-D: argument of type "uint32_t (*)(const void *, const void *)" is incompatible with parameter of type "int (*)(const void *, const void *)"
+                qsort(sortADC, 1000,sizeof(uint32_t),cmpfunc);
+ADCTestMain.c: 2 warnings, 0 errors
 compiling PLL.c...
 compiling Timer1.c...
 linking...
-Program Size: Code=2028 RO-data=32 RW-data=16 ZI-data=9120  
-".\ADCSWTrigger.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=3408 RO-data=32 RW-data=16 ZI-data=9120  
+".\ADCSWTrigger.axf" - 0 Error(s), 2 Warning(s).
+tMain.c: 4 warnings, 0 errors
+compiling PLL.c...
+compiling Timer1.c...
+linking...
+Program Size: Code=3328 RO-data=32 RW-data=16 ZI-data=9120  
+".\ADCSWTrigger.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\Jack\\Documents\\GitHub\\445L\\Lab 2\\ADCSWTrigger.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-\Lab 2\\ADCSWTrigger.axf" 
+ng Done.
+Verify OK.
+720 RO-data=32 RW-data=16 ZI-data=9120  
+".\ADCSWTrigger.axf" - 0 Error(s), 6 Warning(s).
+Load "C:\\Users\\Jack\\Documents\\GitHub\\445L\\Lab 2\\ADCSWTrigger.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-axf" - 1 Error(s), 3 Warning(s).
-Target not created
+d
