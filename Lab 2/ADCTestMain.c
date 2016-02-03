@@ -159,45 +159,38 @@ void calcTimeDif(void){
 void adcPMF(void){
 
 uint32_t sortADC[1000];
+int32_t xBuffer[1000];
+int32_t yBuffer[1000];
+uint32_t uVal = sortADC[0];
 uint32_t num_discreteADC = 0;
-uint32_t tmp = sortADC[0];
-uint32_t* xbuff;
-uint32_t* ybuff;
+uint32_t newNum=1;
+uint32_t count=0;
+
+
 	for(int i =0;i<1000;i++){
 		sortADC[i]=adc_dump[i];
+		xBuffer[i]=-1;
+		yBuffer[i]=-1;
 	}
 		qsort(sortADC, 1000,sizeof(uint32_t),cmpfunc);
-	
-	
-
-for (int i=1; i<1000; i++) //finding number of discrete ADC value
+	xBuffer[0]=uVal;
+for (int j=1; j<1000; j++) //finding number of discrete ADC value
 {
-	if(sortADC[i] != tmp)
+	if(sortADC[j] != uVal)
 	{
-		tmp = sortADC[i];
+		
+		uVal = sortADC[j];
+		yBuffer[count]=newNum;
+		xBuffer[count]=uVal;
 		num_discreteADC++;
+		newNum=1;
+		count++;
+	}
+	else{
+		newNum++;
 	}
 }
-
-xbuff = (uint32_t*) malloc(num_discreteADC);	//allocate memory for to the buffers for the size of xbuff and y buff
-ybuff = (uint32_t*) malloc(num_discreteADC);
-num_discreteADC = 0;
-tmp = sortADC[0];	//assign values to fill up xbuff and ybuff
-*xbuff = sortADC[0];
-*ybuff = 1;
-for (int i=1; i<1000; i++) //finding number of discrete ADC value
-{
-	if(sortADC[i] != tmp)
-	{
-		tmp = sortADC[i];
-		*(xbuff + num_discreteADC) = sortADC[i]; 
-		*(ybuff + num_discreteADC) = 1;			
-	}
-	else
-	{
-		*(ybuff + num_discreteADC)+=1; //increment frequency
-	}
-}
+	
 /*
 ST7735_XYplotInit("PMF of ADC",-450, 150, -400, 200);
 ST7735_XYplot(num_discreteADC,(uint32_t *)xbuff,(uint32_t *)ybuff);
