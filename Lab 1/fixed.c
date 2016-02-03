@@ -129,9 +129,10 @@ void ST7735_uBinOut8(uint32_t n)
 		n1 = n1/10;
 		n1++;
 	}
-	
-	//n1 = n1/10; //version 1 = discarding digits below second decimal
-			
+	else
+	{
+		n1 = n1/10; //version 1 = discarding digits below second decimal
+	}		
 	//build string and then output
 	if (n1 > 99999) //error case
 	{
@@ -178,7 +179,7 @@ void ST7735_XYplotInit(char *title, int32_t minX, int32_t maxX, int32_t minY, in
 	Output_Clear();
 	
 	char* graphtitle  = title; 
-	gb_res = 100;
+	gb_res = 80;
 	
 	gb_ymax = (maxY - minY)/gb_res;
 	gb_ymin = minY/gb_res;
@@ -208,15 +209,23 @@ void ST7735_XYplot(uint32_t num, int32_t bufX[], int32_t bufY[])
 {
 	int32_t x;
 	int32_t y;
+	uint32_t xplot, yplot;
 	for(int i=0;i<num;i++)
 	{
 		x=bufX[i]/gb_res;
 		y=bufY[i]/gb_res;
-
-		int32_t yplot = (y - gb_ymin)+32;
-		int32_t xplot = (x - gb_xmin);
 		
-		if(xplot<0) yplot = 0;
+		if (gb_ymin < 0)
+		{
+			yplot = (gb_ymax + gb_ymin) -y +32; //int32_t yplot = (y - gb_ymin)+32;
+		}
+		else
+		{
+			yplot = (gb_ymax - gb_ymin) -y +32;
+		}
+		xplot = (x - gb_xmin);
+		
+		if(xplot<0) xplot = 0;
 		if(xplot>gb_xmax) xplot = gb_xmax;
 		if(yplot<32) yplot = 32;
 		if(yplot>gb_ymax+32) yplot = gb_ymax+32;
