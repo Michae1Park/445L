@@ -1,6 +1,6 @@
 ;*****************EXTRA CREDIT************************
 ;version 4, assembly fixed point
-;49183cycles(one instruction = one clock cycle)*12.5ns = 614.7875us
+;49183cycles*12.5ns = 614.7875us
         AREA    DATA, ALIGN=2
 T       SPACE   4
 N       SPACE   4
