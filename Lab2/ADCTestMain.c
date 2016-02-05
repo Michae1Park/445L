@@ -52,7 +52,7 @@ void calcTimeDif(void);
 void adcPMF(void);
 
 volatile uint32_t ADCvalue;
-uint32_t time_dump[1000], adc_dump[1000], sorted_ADC[1000], xBuffer[1000], yBuffer[1000];
+uint32_t time_dump[1000], adc_dump[1000], sorted_ADC[1000], yBuffer[4096];
 static uint32_t count=0;
 volatile bool flag=false;
 
@@ -162,47 +162,69 @@ void calcTimeDif(void){
 void adcPMF(void){
 //Function for building the PMF on the LCD
 	
-	
-uint32_t counter=0;		//counter for the buffers
-uint32_t checker=0;		//checker for repeated values
-uint32_t numDiscrete=0;
+uint32_t counter=0;		//counter for the yBuffer
+uint32_t range=0;
+uint32_t maxfreq=0;
+uint32_t maxfreqpos=0;
 
+	
+	
 //sort ADC values
 	for(int i =0;i<1000;i++){
 		sorted_ADC[i]=adc_dump[i];
 	}
-		qsort(sorted_ADC, 1000, sizeof(uint32_t), cmpfunc);
-	
+	qsort(sorted_ADC, 1000, sizeof(uint32_t), cmpfunc);
+	range=sorted_ADC[999]-sorted_ADC[0];
 	
 //create xBuffer and yBuffer
-	checker=sorted_ADC[0];
-	xBuffer[counter]=checker;
-	for (int j=1; j<1000; j++) 
+	for(int j=0; j<4096; j++) 
 	{
-		if(sorted_ADC[j] != checker)
-		{	
+		while( (sorted_ADC[counter]==j) && (counter<1000) )
+		{
+			yBuffer[j]++;
 			counter++;
-			xBuffer[counter]=sorted_ADC[j];
-			yBuffer[counter]++;
-			checker=sorted_ADC[j];
+			if(yBuffer[j]>=maxfreq)
+			{
+				maxfreq=yBuffer[j];
+				maxfreqpos=j;
+			}
 		}
-		else
-			yBuffer[counter]++;
 	}
+	
 //"PMF of ADC"
-ST7735_SetCursor(0,0);
+ST7735_SetCursor(0,0); 
 ST7735_OutString("PMF of ADC");
-ST7735_PlotClear(0,150);
-	for(int k =0;k<1000;k++){
-		ST7735_PlotPoint(xBuffer[k],yBuffer[k]);
-	}
+ST7735_SetCursor(0,159); 
+ST7735_PlotClear(32,159); 
 	
-	
-	
-
-free(xBuffer);
-free(yBuffer);
+if(maxfreqpos<63)
+{
+	for(int i =0; i<128; i++)
+	{
+		ST7735_PlotBar(yBuffer[i]);
+		ST7735_PlotNext(); 
+	}	
+	count++;
+}
+else if(maxfreqpos>4033)
+{
+	for(int i=4033-128;i<4033;i++)
+	{
+		ST7735_PlotBar(yBuffer[i]);
+		ST7735_PlotNext(); 
+	}	
+}
+else
+{
+	for(int i =maxfreqpos-63; i<maxfreqpos+63; i++)
+	{
+		ST7735_PlotBar(yBuffer[i]);
+		ST7735_PlotNext(); 
+	}	
+}
 count++;
+
+
 }
 
 
