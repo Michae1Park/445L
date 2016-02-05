@@ -108,7 +108,8 @@ void Timer0A_Handler(void){
 }
 int main(void){
   PLL_Init(Bus80MHz);                   // 80 MHz
-  SYSCTL_RCGCGPIO_R |= 0x20;            // activate port F
+  SYSCTL_RCGCGPIO_R |= 0x20;            // activate port 
+	ST7735_InitR(INITR_REDTAB);
   ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
   Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
 	Timer1_Init(0,12);
@@ -123,7 +124,7 @@ int main(void){
   while(1){
     PF1 ^= 0x02;  // toggles when running in main
 		if(flag == true){
-			//calcTimeDif();
+			calcTimeDif();
 			adcPMF();
 			flag=false;
 			
@@ -189,8 +190,8 @@ uint32_t numDiscrete=0;
 			yBuffer[counter]++;
 	}
 //"PMF of ADC"
-	
-	
+ST7735_SetCursor(0,0);
+ST7735_OutString("PMF of ADC");
 ST7735_PlotClear(0,150);
 	for(int k =0;k<1000;k++){
 		ST7735_PlotPoint(xBuffer[k],yBuffer[k]);
