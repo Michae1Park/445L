@@ -32,6 +32,8 @@
 #include "Timer1.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "ST7735.h"
+#include "tm4c123gh6pm.h"
 
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
@@ -50,13 +52,13 @@ void calcTimeDif(void);
 void adcPMF(void);
 
 volatile uint32_t ADCvalue;
-uint32_t time_dump[1000], adc_dump[1000];
+uint32_t time_dump[1000], adc_dump[1000], sorted_ADC[1000], xBuffer[1000], yBuffer[1000];
 static uint32_t count=0;
 volatile bool flag=false;
 
-uint32_t cmpfunc (const void * a, const void * b)
+int cmpfunc (const void * a, const void * b)
 {
-   return ( *(uint32_t*)a - *(uint32_t*)b );
+   return ( *(int*)a - *(int*)b );
 }
 
 
@@ -121,7 +123,7 @@ int main(void){
   while(1){
     PF1 ^= 0x02;  // toggles when running in main
 		if(flag == true){
-			calcTimeDif();
+			//calcTimeDif();
 			adcPMF();
 			flag=false;
 			
@@ -157,45 +159,48 @@ void calcTimeDif(void){
 }
 
 void adcPMF(void){
-
-uint32_t sortADC[1000];
-int32_t xBuffer[1000];
-int32_t yBuffer[1000];
-uint32_t uVal = sortADC[0];
-uint32_t num_discreteADC = 0;
-uint32_t newNum=1;
-uint32_t count=0;
-
-
-	for(int i =0;i<1000;i++){
-		sortADC[i]=adc_dump[i];
-		xBuffer[i]=-1;
-		yBuffer[i]=-1;
-	}
-		qsort(sortADC, 1000,sizeof(uint32_t),cmpfunc);
-	xBuffer[0]=uVal;
-for (int j=1; j<1000; j++) //finding number of discrete ADC value
-{
-	if(sortADC[j] != uVal)
-	{
-		
-		uVal = sortADC[j];
-		yBuffer[count]=newNum;
-		xBuffer[count]=uVal;
-		num_discreteADC++;
-		newNum=1;
-		count++;
-	}
-	else{
-		newNum++;
-	}
-}
+//Function for building the PMF on the LCD
 	
-/*
-ST7735_XYplotInit("PMF of ADC",-450, 150, -400, 200);
-ST7735_XYplot(num_discreteADC,(uint32_t *)xbuff,(uint32_t *)ybuff);
-free(xbuff);
-free(ybuff);*/
+	
+uint32_t counter=0;		//counter for the buffers
+uint32_t checker=0;		//checker for repeated values
+uint32_t numDiscrete=0;
+
+//sort ADC values
+	for(int i =0;i<1000;i++){
+		sorted_ADC[i]=adc_dump[i];
+	}
+		qsort(sorted_ADC, 1000, sizeof(uint32_t), cmpfunc);
+	
+	
+//create xBuffer and yBuffer
+	checker=sorted_ADC[0];
+	xBuffer[counter]=checker;
+	for (int j=1; j<1000; j++) 
+	{
+		if(sorted_ADC[j] != checker)
+		{	
+			counter++;
+			xBuffer[counter]=sorted_ADC[j];
+			yBuffer[counter]++;
+			checker=sorted_ADC[j];
+		}
+		else
+			yBuffer[counter]++;
+	}
+//"PMF of ADC"
+	
+	
+ST7735_PlotClear(0,150);
+	for(int k =0;k<1000;k++){
+		ST7735_PlotPoint(xBuffer[k],yBuffer[k]);
+	}
+	
+	
+	
+
+free(xBuffer);
+free(yBuffer);
 count++;
 }
 

@@ -228,7 +228,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>253</TopLine>
+      <TopLine>254</TopLine>
       <CurrentLine>265</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup.s</PathWithFileName>
@@ -244,7 +244,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>50</TopLine>
+      <TopLine>51</TopLine>
       <CurrentLine>55</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\PLL.c</PathWithFileName>
@@ -274,10 +274,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>1</ColumnNumber>
+      <ColumnNumber>13</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>114</TopLine>
-      <CurrentLine>167</CurrentLine>
+      <TopLine>159</TopLine>
+      <CurrentLine>182</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\fixed.c</PathWithFileName>
       <FilenameWithoutPath>fixed.c</FilenameWithoutPath>
@@ -290,9 +290,9 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>3</ColumnNumber>
+      <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>110</TopLine>
+      <TopLine>111</TopLine>
       <CurrentLine>119</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Lab1.c</PathWithFileName>
