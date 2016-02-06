@@ -35,14 +35,15 @@
 #include "ST7735.h"
 #include "tm4c123gh6pm.h"
 
-
-#define PF2             (*((volatile uint32_t *)0x40025010))
-#define PF1             (*((volatile uint32_t *)0x40025008))
-
 typedef int bool;
 #define true 1
 #define false 0
+	
+#define PF2             (*((volatile uint32_t *)0x40025010))
+#define PF1             (*((volatile uint32_t *)0x40025008))
+#define DEBUG //Debugging Feature for collecting 1000 samples. Uncomment to Enable the debugging feature
 
+//********function prototypes*******************************************************************//
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
@@ -50,7 +51,9 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void calcTimeDif(void);
 void adcPMF(void);
+uint32_t findmaxidx(uint32_t *ybuff, uint32_t size);
 
+//*******global variables***********************************************************************//
 volatile uint32_t ADCvalue;
 uint32_t time_dump[1000], adc_dump[1000], sorted_ADC[1000], yBuffer[4096];
 static uint32_t count=0;
@@ -90,7 +93,8 @@ void Timer0A_Handler(void){
   PF2 ^= 0x04;                   // profile
   PF2 ^= 0x04;                   // profile
   ADCvalue = ADC0_InSeq3();
-	
+
+#ifdef DEBUG					//debugging feature for collecting 1000 samples
 	if(count<1000){
 		adc_dump[count]=ADCvalue;
 		time_dump[count] = TIMER1_TAR_R;
@@ -102,6 +106,7 @@ void Timer0A_Handler(void){
 		flag=true;
 		
 	}
+#endif
 	
   PF2 ^= 0x04;                   // profile
 	
@@ -224,8 +229,83 @@ else
 }
 count++;
 
-
 }
 
+uint32_t findmaxidx(uint32_t *ybuff, uint32_t size)
+{
+	uint32_t max = ybuff[0];
+	uint32_t maxidx = 0;
+	
+	for (int i=1; i<count; i++)
+	{
+		if (ybuff[i] > max)
+		{
+			max = ybuff[i]; //new max
+			maxidx = i;
+		}	
+	}
+	return maxidx;
+}
 
+/*original
+void adcPMF(void){
+	//Function for building the PMF on the LCD	
+	uint32_t counter=0;		//counter for the buffers
+	uint32_t checker=0;		//checker for repeated values
+	uint32_t numDiscrete=0;
+	uint32_t maxfreqidx;
+	
+	//sort ADC values
+	for(int i =0;i<1000;i++){
+		sorted_ADC[i]=adc_dump[i];
+	}
+	
+	qsort(sorted_ADC, 1000, sizeof(uint32_t), cmpfunc);
+	
+	//create xBuffer and yBuffer
+	checker=sorted_ADC[0];
+	xBuffer[counter]=checker;
+	
+	for (int j=1; j<1000; j++) 
+	{
+		if(sorted_ADC[j] != checker) //get discrete ADC values
+		{	
+			counter++;
+			xBuffer[counter]=sorted_ADC[j];
+			yBuffer[counter]++;
+			checker=sorted_ADC[j];
+		}
+		else
+		{
+			yBuffer[counter]++;
+		}
+	}
+	
+	maxfreqidx = findmaxidx(yBuffer, count); //index of adc value with max frequency. Will print left and right to this
+	
+	//"PMF of ADC"
+	//set cursor for string
+	ST7735_SetCursor(0,0);
+	ST7735_OutString("PMF of ADC");
+	ST7735_PlotClear(0,159);
+	
+	if (xBuffer[maxfreqidx] <63)
+	{
+		
+	}
+	else if (xBuffer[maxfreqidx] > 4033)
+	{
+		
+	}
+	else
+	{
+		for (int k=0; k<counter; k++)
+		{
+			ST7735_PlotBar(yBuffer[k]);
+			ST7735_PlotNext();
+		}
+	}
+	
+}
+*/
 
