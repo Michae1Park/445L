@@ -92,12 +92,16 @@
 #include <stdint.h>
 #include "ST7735.h"
 #include "tm4c123gh6pm.h"
+#include <math.h>
 
 // 16 rows (0 to 15) and 21 characters (0 to 20)
 // Requires (11 + size*size*6*8) bytes of transmission for each character
 uint32_t StX=0; // position along the horizonal axis 0 to 20
 uint32_t StY=0; // position along the vertical axis 0 to 15
 uint16_t StTextColor = ST7735_YELLOW;
+
+#define POSITIVE 1
+#define NEGATIVE -1
 
 #define ST7735_NOP     0x00
 #define ST7735_SWRESET 0x01
@@ -1279,7 +1283,73 @@ void ST7735_InvertDisplay(int i) {
 // x coordinates 0 to 127   128 pixels wide
 
 int32_t Ymax,Ymin,X;        // X goes from 0 to 127
+int32_t X_min, X_max;
 int32_t Yrange; //YrangeDiv2;
+
+
+//*************ST7735_Line******************************************** 
+//  Draws one line on the ST7735 color LCD 
+//  Inputs: (x1,y1) is the start point 
+//          (x2,y2) is the end point 
+// x1,x2 are horizontal positions, columns from the left edge 
+//               must be less than 128 
+//               0 is on the left, 126 is near the right 
+// y1,y2 are vertical positions, rows from the top edge 
+//               must be less than 160 
+//               159 is near the wires, 0 is the side opposite the wires 
+//        color 16-bit color, which can be produced by ST7735_Color565()  
+// Output: none 
+void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color){
+
+	// TODO - validate input
+	int32_t num, denom;
+	uint16_t currentX, currentY;
+	int32_t inc = 0;
+	num = y2 - y1;
+	denom = x2 - x1;
+	currentX = x1;
+	currentY = y1;
+
+	if ( abs(denom) > abs(num) )
+	{
+		int numSteps = 1;
+		if (denom > 0){
+			inc = POSITIVE;
+		} else {
+			inc = NEGATIVE;
+		}
+		uint32_t baseY = y1 * denom;
+		while (currentX != x2){
+			ST7735_DrawPixel(currentX, currentY, color);
+			currentX += inc;
+			currentY = (baseY + numSteps * num) / (denom); 
+			++numSteps;
+		}
+	}
+
+	else {
+		int numSteps = 1;
+		if (num > 0){
+			inc = POSITIVE;
+		} else {
+			inc = NEGATIVE;
+		}
+		uint32_t baseX = x1 * num;
+		
+		while (currentY != y2){
+			ST7735_DrawPixel(currentX, currentY, color);
+			currentY += inc;
+			currentX = (baseX + numSteps * denom) / (num);
+			++numSteps;
+			
+		}
+	}
+	
+	
+	
+	
+}
+
 
 // *************** ST7735_PlotClear ********************
 // Clear the graphics buffer, set X coordinate to 0

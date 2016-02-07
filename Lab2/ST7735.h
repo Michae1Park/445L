@@ -407,7 +407,7 @@ void ST7735_PlotNextErase(void);
 //        ST7735_PlotdBfs(mag[i++]);
 //        ST7735_PlotNext();
 //    }   // called 128 times
-
+void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
 // *************** ST7735_OutChar ********************
 // Output one character to the LCD
 // Position determined by ST7735_SetCursor command

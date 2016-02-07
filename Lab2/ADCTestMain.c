@@ -30,20 +30,21 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "Timer1.h"
+//#include "Timer2.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "ST7735.h"
 #include "tm4c123gh6pm.h"
 
+
+#define PF2             (*((volatile uint32_t *)0x40025010))
+#define PF1             (*((volatile uint32_t *)0x40025008))
+#define DEBUG
+
 typedef int bool;
 #define true 1
 #define false 0
-	
-#define PF2             (*((volatile uint32_t *)0x40025010))
-#define PF1             (*((volatile uint32_t *)0x40025008))
-#define DEBUG //Debugging Feature for collecting 1000 samples. Uncomment to Enable the debugging feature
 
-//********function prototypes*******************************************************************//
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
@@ -51,9 +52,8 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void calcTimeDif(void);
 void adcPMF(void);
-uint32_t findmaxidx(uint32_t *ybuff, uint32_t size);
+void partG(void);
 
-//*******global variables***********************************************************************//
 volatile uint32_t ADCvalue;
 uint32_t time_dump[1000], adc_dump[1000], sorted_ADC[1000], yBuffer[4096];
 static uint32_t count=0;
@@ -93,9 +93,11 @@ void Timer0A_Handler(void){
   PF2 ^= 0x04;                   // profile
   PF2 ^= 0x04;                   // profile
   ADCvalue = ADC0_InSeq3();
-
-#ifdef DEBUG					//debugging feature for collecting 1000 samples
+	
+	
+#ifdef DEBUG 
 	if(count<1000){
+		PF1 = (PF1*12345678)/1234567+0x02;  // this line causes jitter 
 		adc_dump[count]=ADCvalue;
 		time_dump[count] = TIMER1_TAR_R;
 		count++;
@@ -104,7 +106,6 @@ void Timer0A_Handler(void){
 		TIMER1_IMR_R &= 0x11111110; 
 		TIMER0_IMR_R &= 0x11111110;
 		flag=true;
-		
 	}
 #endif
 	
@@ -118,6 +119,7 @@ int main(void){
   ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
   Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
 	Timer1_Init(0,12);
+	//Timer2_Init(0,99000);
   GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
   GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
@@ -127,11 +129,13 @@ int main(void){
   PF2 = 0;                      // turn off LED
   EnableInterrupts();
   while(1){
-    PF1 ^= 0x02;  // toggles when running in main
+    //PF1 ^= 0x02;  // toggles when running in main
+		GPIO_PORTF_DATA_R ^= 0x02;    //toggles when running in main
 		if(flag == true){
 			calcTimeDif();
 			adcPMF();
 			flag=false;
+			partG();
 			
 			}
 			
@@ -231,81 +235,16 @@ count++;
 
 }
 
-uint32_t findmaxidx(uint32_t *ybuff, uint32_t size)
-{
-	uint32_t max = ybuff[0];
-	uint32_t maxidx = 0;
+void partG(void){
+ST7735_SetCursor(0,0); 
+ST7735_OutString("Part G");
+ST7735_SetCursor(63,95); 
+ST7735_PlotClear(32,159); 
 	
-	for (int i=1; i<count; i++)
-	{
-		if (ybuff[i] > max)
-		{
-			max = ybuff[i]; //new max
-			maxidx = i;
-		}	
-	}
-	return maxidx;
+ST7735_Line(63, 95, 63, 32, ST7735_BLUE);
+	
+	
 }
 
-/*original
-void adcPMF(void){
-	//Function for building the PMF on the LCD	
-	uint32_t counter=0;		//counter for the buffers
-	uint32_t checker=0;		//checker for repeated values
-	uint32_t numDiscrete=0;
-	uint32_t maxfreqidx;
-	
-	//sort ADC values
-	for(int i =0;i<1000;i++){
-		sorted_ADC[i]=adc_dump[i];
-	}
-	
-	qsort(sorted_ADC, 1000, sizeof(uint32_t), cmpfunc);
-	
-	//create xBuffer and yBuffer
-	checker=sorted_ADC[0];
-	xBuffer[counter]=checker;
-	
-	for (int j=1; j<1000; j++) 
-	{
-		if(sorted_ADC[j] != checker) //get discrete ADC values
-		{	
-			counter++;
-			xBuffer[counter]=sorted_ADC[j];
-			yBuffer[counter]++;
-			checker=sorted_ADC[j];
-		}
-		else
-		{
-			yBuffer[counter]++;
-		}
-	}
-	
-	maxfreqidx = findmaxidx(yBuffer, count); //index of adc value with max frequency. Will print left and right to this
-	
-	//"PMF of ADC"
-	//set cursor for string
-	ST7735_SetCursor(0,0);
-	ST7735_OutString("PMF of ADC");
-	ST7735_PlotClear(0,159);
-	
-	if (xBuffer[maxfreqidx] <63)
-	{
-		
-	}
-	else if (xBuffer[maxfreqidx] > 4033)
-	{
-		
-	}
-	else
-	{
-		for (int k=0; k<counter; k++)
-		{
-			ST7735_PlotBar(yBuffer[k]);
-			ST7735_PlotNext();
-		}
-	}
-	
-}
-*/
+
 
