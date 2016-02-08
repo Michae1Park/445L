@@ -241,7 +241,7 @@ ST7735_OutString("Part G");
 ST7735_SetCursor(63,95); 
 ST7735_PlotClear(32,159); 
 	
-ST7735_Line(63, 95, 63, 32, ST7735_BLUE);
+ST7735_Line(0, 32, 63, 63, ST7735_BLUE);
 	
 	
 }
