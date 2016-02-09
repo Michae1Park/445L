@@ -1302,14 +1302,29 @@ int32_t Yrange; //YrangeDiv2;
 void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color){
 
 	// TODO - validate input
-	int32_t num, denom;
+	int16_t num, denom;
 	uint16_t currentX, currentY;
 	int32_t inc = 0;
 	num = y2 - y1;
 	denom = x2 - x1;
 	currentX = x1;
 	currentY = y1;
-
+	int32_t store=0;
+	
+	if(denom<0){
+		store=x2;
+		x2=x1;
+		x1=store;
+	}
+	if(num<0){
+		store=y2;
+		y2=y1;
+		y1=store;
+	}
+	currentX = x1;
+	currentY = y1;
+	num = y2 - y1;
+	denom = x2 - x1;
 	if ( abs(denom) > abs(num) )
 	{
 		int numSteps = 1;

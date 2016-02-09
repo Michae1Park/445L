@@ -129,13 +129,13 @@ int main(void){
   PF2 = 0;                      // turn off LED
   EnableInterrupts();
   while(1){
-    //PF1 ^= 0x02;  // toggles when running in main
-		GPIO_PORTF_DATA_R ^= 0x02;    //toggles when running in main
+    PF1 ^= 0x02;  // toggles when running in main
+		//GPIO_PORTF_DATA_R ^= 0x02;    //toggles when running in main
 		if(flag == true){
 			calcTimeDif();
 			adcPMF();
 			flag=false;
-			partG();
+			//partG();
 			
 			}
 			
@@ -237,11 +237,11 @@ count++;
 
 void partG(void){
 ST7735_SetCursor(0,0); 
-ST7735_OutString("Part G");
+ST7735_OutString("Part G            ");
 ST7735_SetCursor(63,95); 
 ST7735_PlotClear(32,159); 
 	
-ST7735_Line(0, 32, 63, 63, ST7735_BLUE);
+ST7735_Line(47, 47, 47, 47, ST7735_BLUE);
 	
 	
 }
