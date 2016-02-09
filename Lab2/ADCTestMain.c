@@ -30,7 +30,7 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "Timer1.h"
-//#include "Timer2.h"
+#include "Timer2.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "ST7735.h"
@@ -119,7 +119,7 @@ int main(void){
   ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
   Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
 	Timer1_Init(0,12);
-	//Timer2_Init(0,99000);
+	Timer2_Init(0,99000);
   GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
   GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
