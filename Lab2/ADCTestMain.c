@@ -39,12 +39,13 @@
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
-#define DEBUG
+#define DEBUG	//Debugging Feature for collecting 1000 samples. Uncomment to Enable the debugging feature
 
 typedef int bool;
 #define true 1
 #define false 0
 
+//********function prototypes*******************************************************************//
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
@@ -53,17 +54,18 @@ void WaitForInterrupt(void);  // low power mode
 void calcTimeDif(void);
 void adcPMF(void);
 void partG(void);
-
+		
+//*******global variables***********************************************************************//
 volatile uint32_t ADCvalue;
 uint32_t time_dump[1000], adc_dump[1000], sorted_ADC[1000], yBuffer[4096];
 static uint32_t count=0;
 volatile bool flag=false;
 
+//**cmpfunc for qsort**************************//
 int cmpfunc (const void * a, const void * b)
 {
    return ( *(int*)a - *(int*)b );
 }
-
 
 
 // This debug function initializes Timer0A to request interrupts
@@ -95,7 +97,7 @@ void Timer0A_Handler(void){
   ADCvalue = ADC0_InSeq3();
 	
 	
-#ifdef DEBUG 
+#ifdef DEBUG 				//debugging feature for collecting 1000 samples
 	if(count<1000){
 		PF1 = (PF1*12345678)/1234567+0x02;  // this line causes jitter 
 		adc_dump[count]=ADCvalue;
@@ -112,7 +114,8 @@ void Timer0A_Handler(void){
   PF2 ^= 0x04;                   // profile
 	
 }
-int main(void){
+int main(void)
+{
   PLL_Init(Bus80MHz);                   // 80 MHz
   SYSCTL_RCGCGPIO_R |= 0x20;            // activate port 
 	ST7735_InitR(INITR_REDTAB);
@@ -127,22 +130,34 @@ int main(void){
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF00F)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;               // disable analog functionality on PF
   PF2 = 0;                      // turn off LED
+	
+//*****Hardware Averaging Option*********************//
+	//ADC0_SAC_R &= 0xFFFFFFF8;	//no hardware oversample  
+	//ADC0_SAC_R &= 0xFFFFFFF8; //4x hardware oversample
+	//ADC0_SAC_R |= 0x2; 
+	ADC0_SAC_R &= 0xFFFFFFF8;		//16x hardware oversample
+	ADC0_SAC_R |= 0x4; 
+	//ADC0_SAC_R &= 0xFFFFFFF8; //64x hardware oversample
+	//ADC0_SAC_R |= 0x6; 
+					
   EnableInterrupts();
-  while(1){
+
+  while(1)
+	{
     PF1 ^= 0x02;  // toggles when running in main
 		//GPIO_PORTF_DATA_R ^= 0x02;    //toggles when running in main
-		if(flag == true){
+		if(flag == true)
+		{
 			calcTimeDif();
 			adcPMF();
 			flag=false;
-			//partG();
-			
-			}
-			
+			//partG();	
+		}	
   }
 }
 
-void calcTimeDif(void){
+void calcTimeDif(void)
+{
 	uint32_t timeDif[999];
 	uint32_t min=0, max=0;
 	uint32_t jitter;
@@ -176,8 +191,6 @@ uint32_t range=0;
 uint32_t maxfreq=0;
 uint32_t maxfreqpos=0;
 
-	
-	
 //sort ADC values
 	for(int i =0;i<1000;i++){
 		sorted_ADC[i]=adc_dump[i];
@@ -199,51 +212,49 @@ uint32_t maxfreqpos=0;
 			}
 		}
 	}
-	
-//"PMF of ADC"
-ST7735_SetCursor(0,0); 
-ST7735_OutString("PMF of ADC");
-ST7735_SetCursor(0,159); 
-ST7735_PlotClear(32,159); 
-	
-if(maxfreqpos<63)
-{
-	for(int i =0; i<128; i++)
+		
+	//"PMF of ADC"
+	ST7735_SetCursor(0,0); 
+	ST7735_OutString("PMF of ADC");
+	ST7735_SetCursor(0,159); 
+	ST7735_PlotClear(32,159); 
+		
+	if(maxfreqpos<63)
 	{
-		ST7735_PlotBar(yBuffer[i]);
-		ST7735_PlotNext(); 
-	}	
+		for(int i =0; i<128; i++)
+		{
+			ST7735_PlotBar(yBuffer[i]);
+			ST7735_PlotNext(); 
+		}	
+		count++;
+	}
+	else if(maxfreqpos>4033)
+	{
+		for(int i=4033-128;i<4033;i++)
+		{
+			ST7735_PlotBar(yBuffer[i]);
+			ST7735_PlotNext(); 
+		}	
+	}
+	else
+	{
+		for(int i =maxfreqpos-63; i<maxfreqpos+63; i++)
+		{
+			ST7735_PlotBar(yBuffer[i]);
+			ST7735_PlotNext(); 
+		}	
+	}
 	count++;
 }
-else if(maxfreqpos>4033)
-{
-	for(int i=4033-128;i<4033;i++)
-	{
-		ST7735_PlotBar(yBuffer[i]);
-		ST7735_PlotNext(); 
-	}	
-}
-else
-{
-	for(int i =maxfreqpos-63; i<maxfreqpos+63; i++)
-	{
-		ST7735_PlotBar(yBuffer[i]);
-		ST7735_PlotNext(); 
-	}	
-}
-count++;
 
-}
-
-void partG(void){
-ST7735_SetCursor(0,0); 
-ST7735_OutString("Part G            ");
-ST7735_SetCursor(63,95); 
-ST7735_PlotClear(32,159); 
-	
-ST7735_Line(47, 47, 47, 47, ST7735_BLUE);
-	
-	
+void partG(void)
+{
+	ST7735_SetCursor(0,0); 
+	ST7735_OutString("Part G            ");
+	ST7735_SetCursor(63,95); 
+	ST7735_PlotClear(32,159); 
+		
+	ST7735_Line(47, 47, 47, 47, ST7735_BLUE);	
 }
 
 
