@@ -1293,7 +1293,7 @@ int32_t Yrange; //YrangeDiv2;
 //          (x2,y2) is the end point 
 // x1,x2 are horizontal positions, columns from the left edge 
 //               must be less than 128 
-//               0 is on the left, 126 is near the right 
+//               0 is y the left, 126 is near the right 
 // y1,y2 are vertical positions, rows from the top edge 
 //               must be less than 160 
 //               159 is near the wires, 0 is the side opposite the wires 
@@ -1301,7 +1301,10 @@ int32_t Yrange; //YrangeDiv2;
 // Output: none 
 void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color){
 
-	// TODO - validate input
+	if(y1<32)
+		y1=32;
+	if(y2<32)
+		y2=32;
 	int16_t num, denom;
 	uint16_t currentX, currentY;
 	int32_t inc = 0;
@@ -1311,20 +1314,6 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 	currentY = y1;
 	int32_t store=0;
 	
-	if(denom<0){
-		store=x2;
-		x2=x1;
-		x1=store;
-	}
-	if(num<0){
-		store=y2;
-		y2=y1;
-		y1=store;
-	}
-	currentX = x1;
-	currentY = y1;
-	num = y2 - y1;
-	denom = x2 - x1;
 	if ( abs(denom) > abs(num) )
 	{
 		int numSteps = 1;
@@ -1332,7 +1321,9 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 			inc = POSITIVE;
 		} else {
 			inc = NEGATIVE;
+			denom=-denom;
 		}
+		//num=abs(num);
 		uint32_t baseY = y1 * denom;
 		while (currentX != x2){
 			ST7735_DrawPixel(currentX, currentY, color);
@@ -1348,6 +1339,7 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 			inc = POSITIVE;
 		} else {
 			inc = NEGATIVE;
+			num=-num;
 		}
 		uint32_t baseX = x1 * num;
 		

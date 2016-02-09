@@ -122,7 +122,7 @@ int main(void)
   ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
   Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
 	Timer1_Init(0,12);
-	Timer2_Init(0,99000);
+//	Timer2_Init(0,99000);
   GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
   GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
   GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
@@ -132,12 +132,12 @@ int main(void)
   PF2 = 0;                      // turn off LED
 	
 //*****Hardware Averaging Option*********************//
-	//ADC0_SAC_R &= 0xFFFFFFF8;	//no hardware oversample  
+	ADC0_SAC_R &= 0xFFFFFFF8;	//no hardware oversample  
 	//ADC0_SAC_R &= 0xFFFFFFF8; //4x hardware oversample
 	//ADC0_SAC_R |= 0x2; 
-	ADC0_SAC_R &= 0xFFFFFFF8;		//16x hardware oversample
-	ADC0_SAC_R |= 0x4; 
-	//ADC0_SAC_R &= 0xFFFFFFF8; //64x hardware oversample
+	//ADC0_SAC_R &= 0xFFFFFFF8;		//16x hardware oversample
+	//ADC0_SAC_R |= 0x4; 
+//	ADC0_SAC_R &= 0xFFFFFFF8; //64x hardware oversample
 	//ADC0_SAC_R |= 0x6; 
 					
   EnableInterrupts();
@@ -151,7 +151,7 @@ int main(void)
 			calcTimeDif();
 			adcPMF();
 			flag=false;
-			//partG();	
+			partG();	
 		}	
   }
 }
@@ -254,7 +254,8 @@ void partG(void)
 	ST7735_SetCursor(63,95); 
 	ST7735_PlotClear(32,159); 
 		
-	ST7735_Line(47, 47, 47, 47, ST7735_BLUE);	
+	ST7735_Line(0, 32, 127, 159, ST7735_BLUE);	
+	ST7735_Line(0, 159, 127, 32, ST7735_BLUE);
 }
 
 
