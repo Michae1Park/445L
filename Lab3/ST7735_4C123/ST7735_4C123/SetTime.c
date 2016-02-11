@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "SetTime.h"
 #include "Timer1.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 
 volatile uint16_t hours, minutes;
 

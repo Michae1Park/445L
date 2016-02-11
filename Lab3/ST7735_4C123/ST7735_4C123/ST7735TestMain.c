@@ -75,7 +75,16 @@
 #include "Timer1.h"
 #include "Switch.h"
 #include "SetAlarm.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
+
+
+//#define PF2             (*((volatile uint32_t *)0x40025010))
+//#define PF1             (*((volatile uint32_t *)0x40025008))
+void DisableInterrupts(void); // Disable interrupts
+void EnableInterrupts(void);  // Enable interrupts
+long StartCritical (void);    // previous I bit, disable interrupts
+void EndCritical(long sr);    // restore I bit to previous value
+void WaitForInterrupt(void);  // low power mode
 
 void DelayWait10ms(uint32_t n);
 
@@ -506,11 +515,20 @@ const uint16_t Logo[] = {
 
 
 int main(void){
-  PLL_Init(Bus80MHz);                  // set system clock to 80 MHz
-	
-  Output_Init();
-  printf("hello world");
+  PLL_Init(Bus80MHz);                   // 80 MHz
+  SYSCTL_RCGCGPIO_R |= 0x20;            // activate port F
+  //ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
+  Timer1_Init(0,12);              // set up Timer0A for 100 Hz interrupts
+  GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
+  GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
+  GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
+                                        // configure PF2 as GPIO
+  GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF00F)+0x00000000;
+  GPIO_PORTF_AMSEL_R = 0;               // disable analog functionality on PF
+  //PF2 = 0;                      // turn off LED
+  EnableInterrupts();
   while(1){
+    //PF1 ^= 0x02;  // toggles when running in main
   }
 }
 int main1(void){uint32_t j; // main 1

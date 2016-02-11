@@ -6,4 +6,4 @@
 .\st7735testmain.o: Timer1.h
 .\st7735testmain.o: Switch.h
 .\st7735testmain.o: SetAlarm.h
-.\st7735testmain.o: ..\../inc/tm4c123gh6pm.h
+.\st7735testmain.o: ..\../Shared/tm4c123gh6pm.h

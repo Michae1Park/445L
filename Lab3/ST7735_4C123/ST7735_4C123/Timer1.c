@@ -21,7 +21,7 @@
  http://users.ece.utexas.edu/~valvano/
  */
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 #include "Timer1.h"
 
 #define CLOCK_TIME  		0x04C4B400

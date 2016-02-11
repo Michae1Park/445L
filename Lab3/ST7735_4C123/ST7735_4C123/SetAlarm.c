@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "SetAlarm.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 
 volatile uint16_t alarm_hours, alarm_minutes;
 volatile uint16_t alarm_flag;

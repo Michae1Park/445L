@@ -7,7 +7,7 @@
 // Last Revised: 02/15/16
 #include <stdio.h>
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 
 //global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
 

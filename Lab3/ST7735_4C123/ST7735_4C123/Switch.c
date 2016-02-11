@@ -45,7 +45,7 @@
 // debugger out of the processor and make it permanently unable to be
 // debugged or re-programmed.
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 #include "SysTick.h"
 #include "Switch.h"
 #include "SetTime.h"
