@@ -1,0 +1,49 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Jack\Documents\EE445L\ST7735_4C123\ST7735_4C123\ST7735.uvproj
+Project File Date:  02/11/2016
+
+<h2>Output:</h2>
+Rebuild target 'ST7735'
+assembling startup.s...
+compiling PLL.c...
+compiling ST7735.c...
+compiling ST7735TestMain.c...
+SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
+  void AlarmToggleOFF(void);
+ST7735TestMain.c: 1 warning, 0 errors
+compiling SysTick.c...
+compiling Switch.c...
+SetTime.h(24): warning:  #1-D: last line of file ends without a newline
+  void decrementMin(void);
+SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
+  void AlarmToggleOFF(void);
+Switch.c: 2 warnings, 0 errors
+compiling Timer1.c...
+compiling SetTime.c...
+SetTime.h(24): warning:  #1-D: last line of file ends without a newline
+  void decrementMin(void);
+SetTime.c(56): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--hours)<0) {hours = 23;} //if hour below 0, reset to 23
+SetTime.c(68): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--minutes)<0) {minutes = 59;} //if min below 0, reset to 59
+SetTime.c(70): warning:  #1-D: last line of file ends without a newline
+  }
+SetTime.c: 4 warnings, 0 errors
+compiling SetAlarm.c...
+SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
+  void AlarmToggleOFF(void);
+SetAlarm.c(55): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--alarm_hours)<0) {alarm_hours = 23;} //if hour below 0, reset to 23
+SetAlarm.c(67): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--alarm_minutes)<0) {alarm_minutes = 59;} //if min below 0, reset to 59
+SetAlarm.c(82): warning:  #1-D: last line of file ends without a newline
+  }
+SetAlarm.c: 4 warnings, 0 errors
+compiling PWM.c...
+linking...
+Program Size: Code=6312 RO-data=2052 RW-data=68 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 11 Warning(s).
