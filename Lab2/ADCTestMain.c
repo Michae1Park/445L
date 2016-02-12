@@ -6,6 +6,14 @@
 // Daniel Valvano
 // September 5, 2015
 
+// ADCTestMain.c
+// Michael Park, Jack Zhao
+// Date Modified: 02/2/16
+// Main file. Includes hardware averaging options, jitter calculation function, adc plot function, and draw line function.
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 02/8/16
+
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2015
@@ -156,6 +164,10 @@ int main(void)
   }
 }
 
+
+//*********calcTimeDif function*********************
+//This is used along with the debugging feature implemented inside Timer0A_Handler.
+//This function calculates the jitter of collected ADC value by maxtime - mintime.
 void calcTimeDif(void)
 {
 	uint32_t timeDif[999];
@@ -183,6 +195,10 @@ void calcTimeDif(void)
 	hi++;
 }
 
+
+//*********adcPMF function*********************
+//This is used along with the debugging feature implemented inside Timer0A_Handler.
+//This function calculates the frequency of each ADC value and outputs a PMF to ST7735 LCD screen.
 void adcPMF(void){
 //Function for building the PMF on the LCD
 	
@@ -247,6 +263,8 @@ uint32_t maxfreqpos=0;
 	count++;
 }
 
+//*********partG function*********************
+//This function allows to draw lines to ST7735 LCD screen in any direction and any length the user wants.
 void partG(void)
 {
 	ST7735_SetCursor(0,0); 

@@ -26,6 +26,14 @@
 // Augmented 7/17/2014 to have a simple graphics facility
 // Tested with LaunchPadDLL.dll simulator 9/2/2014
 
+// ST7735.c
+// Michael Park, Jack Zhao
+// Date Modified: 02/2/16
+// Added ST7735_Line function. 
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 02/8/16
+
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to ARM Cortex M Microcontrollers",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2015
