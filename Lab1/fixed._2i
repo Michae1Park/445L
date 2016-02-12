@@ -1,0 +1,6 @@
+-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99
+-I C:\Keil\ARM\RV31\INC
+-I C:\Keil\ARM\CMSIS\Include
+-I C:\Keil\ARM\Inc\Luminary
+-Drvmdk -DPART_LM4F120H5QR
+-o .\fixed.o --omf_browse .\fixed.crf --depend .\fixed.d --feedback ".\ST7735.fed" "fixed.c"
