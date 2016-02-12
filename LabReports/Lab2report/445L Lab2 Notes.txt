@@ -1,0 +1,54 @@
+445L Lab2 Notes
+
+A.  Resistive Load - resists current flow linearly and produces light and heat (could be desirable or undesirable)
+	Capacitive Laod - current leads voltage. (voltage lags), If the voltage changes too quickly in the input, we would not be able to see the change in the oscope. Therefore we have capactive load(limit)
+
+B.  Logic analyzer - interrupt takes 3.4% of the main
+
+C.  0x000012C4 480D      LDR           r0,[pc,#52]  ; @0x000012FC
+	0x000012C6 6800      LDR           r0,[r0,#0x00]
+	0x000012C8 F0800002  EOR           r0,r0,#0x02  ; during the first execution, the value in r0 becomes x400253FE
+	0x000012CC 490A      LDR           r1,[pc,#40]  ; @0x000012F8
+	0x000012CE F8C103FC  STR           r0,[r1,#0x3FC] ; 
+
+	0x000012FC 			 DCW 		   0x400253FC
+	0x000012F8			 DCW		   0x40025000
+	0x000016F4			 DCW		   0x400253FE ;value after xor
+
+	-PF2 is incorrect becuase it is overwritten in the main
+	-r0^=0x02 is stored into the 
+
+D. Measure time jitter with just the one sampling interrupt active.
+
+   Before Adding (PF1 = (PF1*12345678)/1234567+0x02;)
+	-Jitter 1: 4 cyles = 4*12.5ns = 50ns
+	-Jitter 2: 4 cyles = 4*12.5ns = 50ns
+	-Jitter 3: 4 cyles = 4*12.5ns = 50ns
+   After Adding (PF1 = (PF1*12345678)/1234567+0x02;)
+   	-Jitter 1: 0x14 cyles = 20*12.5ns = 250ns
+
+   Activated Timer1 and Timer2 (99us)
+     -Jitter: 0x0C cyles = 12*12.5ns = 150ns
+
+   Deliverable: Measure time jitter with two or more interrupts active. Try to generalize the results deriving a theoretical estimate of the time jitter of the periodic ADC sampling using software triggering.  
+    - Theoretically, since we added an extra timer with higher priority, we can generalize the jitter to be: result = ADC sampling jitter + Timer2 Interrupt
+
+E. Generate Constant Votage between 0 - 3.3v
+	AC Voltage: 0.015V; orig: 0.018V
+	DC Voltage: 3.282V; orig: 3.305V
+
+	Use the software in preparations 4 and 6 to create the probability mass function for the ADC noise.
+	How would you describe the shape of the noise process? When you run it over and over do you get the same shape of the PMF? Hint: you should not get the same PMF because the noise is not stationary. 
+
+	-
+
+
+F. Look up the ADC Sample Averaging Control (ADC0_SAC_R) register in the Chapter 13 of the data sheet. 
+
+Deliverable: Plot PMF for hardware averaging of none, 4x, 16x, and 64x. In each case the sampling rate is fixed and there are 1000 data points used to plot the PMF function. Describe qualitatively the effect of hardware averaging on the noise process. Consider two issues 1) the shape of the PMF and 2) the signal to noise ratio. Hint: CTL.
+
+Deliverable: Use the logic analyzer or scope to determine the effect of hardware averaging on the time to execute the ISR. Why is the thread profile like Figure 2.1 very different with hardware averaging?
+
+
+
+G.
