@@ -11,9 +11,11 @@
 
 //global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
 
-void setTimeInit(void);
+void SetTime_Init(void);
 //Assuming Time interrupt is disalbed
-void setTimeBase(uint32_t choice);
+void DisplaySetTime(void);
+
+void changeTime(uint32_t buttonSelect);
 
 void incrementHour(void);
 

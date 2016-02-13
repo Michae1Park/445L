@@ -4,3 +4,4 @@
 .\settime.o: SetTime.h
 .\settime.o: ..\../Shared/tm4c123gh6pm.h
 .\settime.o: Timer1.h
+.\settime.o: TimeDisplay.h

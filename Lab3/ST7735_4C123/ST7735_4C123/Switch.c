@@ -155,6 +155,7 @@ void Switch_Init3(void){
 // Input: none
 // Output: 0x02 if PB1 is high
 //         0x00 if PB1 is low
+/*
 uint32_t Switch_Input3(void){ 
 	//need to set which bit triggers what case
 	switch(menu_mode)
@@ -200,8 +201,8 @@ void mainMenu(void){//check to see which button is pressed in which method
 
 void setTime(void){//time set method
 		if(PB0){
-		setTimeInit();
-		setTimeBase(0);
+		//setTimeInit();
+		//setTimeBase(0);
 	}
 	if(PB1){
 		setTimeInit();
@@ -268,7 +269,7 @@ void displayAlarm(void){
 
 
 
-
+*/
 
 
 

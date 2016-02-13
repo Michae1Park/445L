@@ -4,33 +4,42 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Jack\Documents\GitHub\445L\Lab3\ST7735_4C123\ST7735_4C123\ST7735.uvproj
-Project File Date:  02/11/2016
+Project File Date:  02/12/2016
 
 <h2>Output:</h2>
 Rebuild target 'ST7735'
 assembling startup.s...
 compiling PLL.c...
 compiling ST7735.c...
+ST7735.c(1646): warning:  #177-D: variable "store" was declared but never referenced
+        int32_t store=0;        
+ST7735.c: 1 warning, 0 errors
 compiling ST7735TestMain.c...
+SetTime.h(26): warning:  #1-D: last line of file ends without a newline
+  void decrementMin(void);
 SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
   void AlarmToggleOFF(void);
-ST7735TestMain.c: 1 warning, 0 errors
+ST7735TestMain.c(71): warning:  #1-D: last line of file ends without a newline
+  }
+ST7735TestMain.c(29): warning:  #177-D: variable "j" was declared but never referenced
+  int main(void){uint32_t j; // main 1
+ST7735TestMain.c: 4 warnings, 0 errors
 compiling SysTick.c...
 compiling Switch.c...
-SetTime.h(24): warning:  #1-D: last line of file ends without a newline
+SetTime.h(26): warning:  #1-D: last line of file ends without a newline
   void decrementMin(void);
 SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
   void AlarmToggleOFF(void);
 Switch.c: 2 warnings, 0 errors
 compiling Timer1.c...
 compiling SetTime.c...
-SetTime.h(24): warning:  #1-D: last line of file ends without a newline
+SetTime.h(26): warning:  #1-D: last line of file ends without a newline
   void decrementMin(void);
-SetTime.c(56): warning:  #186-D: pointless comparison of unsigned integer with zero
-    if((--hours)<0) {hours = 23;} //if hour below 0, reset to 23
-SetTime.c(68): warning:  #186-D: pointless comparison of unsigned integer with zero
-    if((--minutes)<0) {minutes = 59;} //if min below 0, reset to 59
-SetTime.c(70): warning:  #1-D: last line of file ends without a newline
+SetTime.c(67): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--Time_Hours)<0) {Time_Hours = 23;} //if hour below 0, reset to 23
+SetTime.c(79): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--Time_Minutes)<0) {Time_Minutes = 59;} //if min below 0, reset to 59
+SetTime.c(81): warning:  #1-D: last line of file ends without a newline
   }
 SetTime.c: 4 warnings, 0 errors
 compiling SetAlarm.c...
@@ -44,17 +53,45 @@ SetAlarm.c(82): warning:  #1-D: last line of file ends without a newline
   }
 SetAlarm.c: 4 warnings, 0 errors
 compiling PWM.c...
+compiling TimeDisplay.c...
 linking...
-Program Size: Code=1244 RO-data=32 RW-data=20 ZI-data=1028  
-".\ST7735.axf" - 0 Error(s), 11 Warning(s).
-</pre>
-</body>
-</html>
-Shared/tm4c123gh6pm.h"
-SetAlarm.c: 1 warning, 1 error
+Program Size: Code=7608 RO-data=2344 RW-data=72 ZI-data=1024  
+".\ST7735.axf" - 0 Error(s), 15 Warning(s).
+n below 0, reset to 59
+SetTime.c(81): warning:  #1-D: last line of file ends without a newline
+  }
+SetTime.c: 4 warnings, 0 errors
+compiling SetAlarm.c...
+SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
+  void AlarmToggleOFF(void);
+SetAlarm.c(55): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--alarm_hours)<0) {alarm_hours = 23;} //if hour below 0, reset to 23
+SetAlarm.c(67): warning:  #186-D: pointless comparison of unsigned integer with zero
+    if((--alarm_minutes)<0) {alarm_minutes = 59;} //if min below 0, reset to 59
+SetAlarm.c(82): warning:  #1-D: last line of file ends without a newline
+  }
+SetAlarm.c: 4 warnings, 0 errors
 compiling PWM.c...
-".\ST7735.axf" - 8 Error(s), 2 Warning(s).
+compiling TimeDisplay.c...
+linking...
+.\ST7735.axf: Error: L6218E: Undefined symbol setTimeBase (referred from switch.o).
+.\ST7735.axf: Error: L6218E: Undefined symbol setTimeInit (referred from switch.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 2 error messages.
+".\ST7735.axf" - 2 Error(s), 23 Warning(s).
 Target not created
-</pre>
-</body>
-</html>
+
+.\ST7735.axf: Error: L6218E: Undefined symbol MainMenu_Init (referred from st7735testmain.o).
+.\ST7735.axf: Error: L6218E: Undefined symbol SetAlarm_Init (referred from st7735testmain.o).
+.\ST7735.axf: Error: L6218E: Undefined symbol ToggleAlarm_Init (referred from st7735testmain.o).
+.\ST7735.axf: Error: L6218E: Undefined symbol setTimeBase (referred from switch.o).
+.\ST7735.axf: Error: L6218E: Undefined symbol setTimeInit (referred from switch.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 5 error messages.
+".\ST7735.axf" - 5 Error(s), 26 Warning(s).
+Target not created
+citly
+        ST7732_outString(ch);
+TimeDisplay.c: 4 warnings, 4 errors
+".\ST7735.axf" - 5 Error(s), 22 Warning(s).
+Target not created

@@ -24,15 +24,13 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "Timer1.h"
 
-#define CLOCK_TIME  		0x04C4B400
 #define SECONDS_TIME  	0x3c
 #define MINUTES_TIME  	0x3c
 #define HOURS_TIME	  	0x17
 
 void (*PeriodicTask)(void);   // user function
 
-volatile uint16_t time_hours, time_minutes, time_seconds;
-volatile uint32_t prevTime, ticker;
+extern volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
 
 // ***************** TIMER1_Init ****************
 // Activate TIMER1 interrupts to run user task periodically
@@ -54,25 +52,20 @@ void Timer1_Init(void(*task)(void), uint32_t period){
 // vector number 37, interrupt number 21
   NVIC_EN0_R = 1<<21;           // 9) enable IRQ 21 in NVIC
   TIMER1_CTL_R = 0x00000001;    // 10) enable TIMER1A
-	prevTime=0xFFFFFF;
 }
 
 void Timer1A_Handler(void){
-  TIMER1_ICR_R = TIMER_ICR_TATOCINT;// acknowledge TIMER1A timeout
-	ticker =prevTime-NVIC_ST_CURRENT_R;
-	if(ticker>=CLOCK_TIME){													//ticker may have to be cleaned or cannot be used as GLOBAL
-		time_seconds++;
-		prevTime=NVIC_ST_CURRENT_R;										//May have to reset NVIC_ST_CURRENT_R
+  TIMER1_ICR_R = TIMER_ICR_TATOCINT;	// acknowledge TIMER1A timeout
+	Time_Seconds++;											//Add 1 Second when the interrupt is triggered. 
+	if(Time_Seconds>=SECONDS_TIME){
+		Time_Minutes++;
+		Time_Seconds=0;
 	}
-	if(time_seconds>=60){
-		time_minutes++;
-		time_seconds=0;
+	if(Time_Minutes>=MINUTES_TIME){
+		Time_Hours++;
+		Time_Minutes=0;
 	}
-	if(time_minutes>=60){
-		time_hours++;
-		time_minutes=0;
-	}
-	if(time_hours>=23){
-		time_hours=0;
+	if(Time_Hours>=HOURS_TIME){
+		Time_Hours=0;
 	}
 }
