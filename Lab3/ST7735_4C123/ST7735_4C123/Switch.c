@@ -51,6 +51,7 @@
 #include "SetTime.h"
 #include "SetAlarm.h"
 #include "TimeDisplay.h"
+#include "ST7735.h"
 
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
 #define PF0                     (*((volatile uint32_t *)0x40025004))
@@ -75,14 +76,20 @@ volatile uint16_t hours2,minutes2;
 // Input: none
 // Output: none
 void Switch_Init(void){ 
-  SysTick_Init();
-  SYSCTL_RCGCGPIO_R |= 0x00000001;     // 1) activate clock for Port A
-  while((SYSCTL_PRGPIO_R&0x01) == 0){};// ready?
-  GPIO_PORTA_AMSEL_R &= ~0x20;      // 3) disable analog on PA5
-  GPIO_PORTA_PCTL_R &= ~0x00F00000; // 4) PCTL GPIO on PA5
-  GPIO_PORTA_DIR_R &= ~0x20;        // 5) direction PA5 input
-  GPIO_PORTA_AFSEL_R &= ~0x20;      // 6) PA5 regular port function
-  GPIO_PORTA_DEN_R |= 0x20;         // 7) enable PA5 digital port
+  SYSCTL_RCGCGPIO_R |= 0x02;        // 1) activate clock for Port B
+ // while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
+  GPIO_PORTB_DIR_R &= ~0x0F;        // PB0-3 is an input
+  //GPIO_PORTB_AFSEL_R &= ~0x0F;      // regular port function
+  GPIO_PORTB_AMSEL_R &= ~0x0F;      // disable analog on PB0-3
+  //GPIO_PORTB_PCTL_R &= ~0x0000FFFF; // PCTL GPIO on PB1 
+  GPIO_PORTB_DEN_R |= 0x0F;         // PB3-0 enabled as a digital port
+	GPIO_PORTB_IS_R &= ~0x0F;						// PB 0-3 is edge-sensitive
+	GPIO_PORTB_IBE_R &= ~0x0F;					// PB 0-3 is not both edges
+	GPIO_PORTB_IEV_R &= ~0x0F;					// PB 0-3 falling edge event
+	GPIO_PORTB_ICR_R = 0x0F;						// clear flag 0-3
+	GPIO_PORTB_IM_R |= 0x0F;						// arm interrupt on PB 0-3
+	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
+	NVIC_EN0_R = 0x00000002; 						//enable interrupt 1(PB) in NVIC
 }
 //------------Switch_Input------------
 // Read and return the status of GPIO Port A bit 5 
@@ -138,18 +145,27 @@ uint32_t Board_Input(void){
 #define PB2 (*((volatile uint32_t *)0x40005010))
 #define PB3 (*((volatile uint32_t *)0x40005020))
 //------------Switch_Init3------------
-// Initialize GPIO Port B bit 1 for input
+// Initialize GPIO Port B bit 0-3 for input
 // Input: none
 // Output: none
 void Switch_Init3(void){
   SYSCTL_RCGCGPIO_R |= 0x02;        // 1) activate clock for Port B
   while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
-  GPIO_PORTB_DIR_R &= ~0x02;        // PB1 is an input
-  GPIO_PORTB_AFSEL_R &= ~0x02;      // regular port function
-  GPIO_PORTB_AMSEL_R &= ~0x02;      // disable analog on PB1 
-  GPIO_PORTB_PCTL_R &= ~0x000000F0; // PCTL GPIO on PB1 
-  GPIO_PORTB_DEN_R |= 0x02;         // PB3-0 enabled as a digital port
+  GPIO_PORTB_DIR_R &= ~0x0F;        // PB0-3 is an input
+  //GPIO_PORTB_AFSEL_R &= ~0x0F;      // regular port function
+  //GPIO_PORTB_AMSEL_R &= ~0x0F;      // disable analog on PB0-3
+  //GPIO_PORTB_PCTL_R &= ~0x0000FFFF; // PCTL GPIO on PB1 
+  GPIO_PORTB_DEN_R |= 0x0F;         // PB3-0 enabled as a digital port
+	GPIO_PORTC_IS_R &= ~0x0F;						// PB 0-3 is edge-sensitive
+	GPIO_PORTC_IBE_R &= ~0x0F;					// PB 0-3 is not both edges
+	GPIO_PORTC_IEV_R &= ~0x0F;					// PB 0-3 falling edge event
+	GPIO_PORTC_ICR_R = 0x0F;						// clear flag 0-3
+	GPIO_PORTC_IM_R |= 0x0F;						// arm interrupt on PB 0-3
+	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
+	NVIC_EN0_R = 0x00000002; 						//enable interrupt 1(PB) in NVIC
 }
+
+
 //------------Switch_Input3------------
 // Read and return the status of GPIO Port B bit 1 
 // Input: none
@@ -183,21 +199,23 @@ uint32_t Switch_Input3(void){
 void mainMenu(void){//check to see which button is pressed in which method
 	if(PB0){
 		menu_mode=MENU_SET_TIME;
-		setTime();
+	//	setTime();
 	}
 	if(PB1){
 		menu_mode=MENU_SET_ALARM;
-		setAlarm();
+	//	setAlarm();
 	}
 	if(PB2){
 		menu_mode=MENU_DISPLAY_TIME;
-		displayTime();
+//		displayTime();
 	}
 	if(PB3){
 		menu_mode=MENU_ALARM;
-		displayAlarm();
+	//	displayAlarm();
 	}
 }
+
+
 
 void setTime(void){//time set method
 		if(PB0){
@@ -268,8 +286,8 @@ void displayAlarm(void){
 }
 
 
-
 */
+
 
 
 

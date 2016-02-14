@@ -7,12 +7,11 @@
 // Output: none
 
 
-
-
 void TimeDisplay_Init(void);
 void DisplayMinute(void);
 void DisplayHour(void);
 void DisplayDigital(void);
 void DisplayRefresh(void);
 void SwitchMode(void);
-
+void drawClockHands(void);
+void ClockFace_Init(void);

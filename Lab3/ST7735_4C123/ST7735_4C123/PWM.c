@@ -61,21 +61,20 @@
 // PWM clock rate = processor clock rate/SYSCTL_RCC_PWMDIV
 //                = BusClock/2
 //                = 50 MHz/2 = 25 MHz (in this example)
-void PWM0A_Init(uint16_t period, uint16_t duty){
-                                   // 1) activate clock for PWM0
-  SYSCTL_RCGCPWM_R |= SYSCTL_RCGCPWM_R0;
-                                   // allow time to finish activating
-  while((SYSCTL_PRPWM_R&SYSCTL_PRPWM_R0)==0){};
-                                   // activate clock for Port B
-  SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R1;
-                                   // allow time to finish activating
-  while((SYSCTL_PRGPIO_R&SYSCTL_PRGPIO_R1)==0){};
-  GPIO_PORTB_AFSEL_R |= 0x40;      // 2) enable alt funct on PB6
-  GPIO_PORTB_ODR_R &= ~0x40;       //    disable open drain on PB6
-  GPIO_PORTB_DEN_R |= 0x40;        //    enable digital I/O on PB6
-  GPIO_PORTB_AMSEL_R &= ~0x40;     //    disable analog function on PB6
-                                   //    configure PB6 as PWM
-  GPIO_PORTB_PCTL_R = (GPIO_PORTB_PCTL_R&0xF0FFFFFF)+0x04000000;
+void PWM0A_Init(uint16_t period, uint16_t duty)
+{                                  
+  SYSCTL_RCGCPWM_R |= SYSCTL_RCGCPWM_R0; 					// 1) activate clock for PWM0
+  while((SYSCTL_PRPWM_R&SYSCTL_PRPWM_R0)==0){}; // allow time to finish activating
+  SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R1;				// activate clock for Port B
+  while((SYSCTL_PRGPIO_R&SYSCTL_PRGPIO_R1)==0){}; // allow time to finish activating
+
+  GPIO_PORTB_AFSEL_R |= 0x10;      //enable alt funct on PB4
+  GPIO_PORTB_ODR_R &= ~0x10;       //disable open drain on PB4
+  GPIO_PORTB_DEN_R |= 0x10;        //enable digital I/O on PB4
+  GPIO_PORTB_AMSEL_R &= ~0x10;     //disable analog function on PB4
+  GPIO_PORTB_PCTL_R &= 0xFFF0FFFF; //configure PB6 as PWM
+	GPIO_PORTB_PCTL_R |= 0x00040000;
+	
   SYSCTL_RCC_R = SYSCTL_RCC_USEPWMDIV |        // 3) use PWM divider
     ((SYSCTL_RCC_R & (~SYSCTL_RCC_PWMDIV_M)) + //    clear PWM divider field
     SYSCTL_RCC_PWMDIV_2);                      //    configure for /2 divider

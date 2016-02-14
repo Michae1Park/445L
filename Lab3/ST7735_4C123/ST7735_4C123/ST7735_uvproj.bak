@@ -455,6 +455,11 @@
               <FileType>1</FileType>
               <FilePath>.\PWM.c</FilePath>
             </File>
+            <File>
+              <FileName>TimeDisplay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TimeDisplay.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

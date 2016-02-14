@@ -7,14 +7,15 @@
 // Last Revised: 02/15/16
 
 //global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
-void SetAlarm_Init(void);
 
-void DisplayAlarmTime(void);
+void setAlarmTimeInit(void);
 //Assuming Time interrupt is disalbed
-void changeAlarmTime(uint32_t choice);
+void setAlarmTimeBase(uint32_t choice);
 
 void incrementAlarmHour(void);
 void decrementAlarmHour(void);
 void incrementAlarmMin(void);
+
 void decrementAlarmMin(void);
-void DisplayAlarm(void);
+void AlarmToggleON(void);
+void AlarmToggleOFF(void);

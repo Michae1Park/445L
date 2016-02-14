@@ -1631,6 +1631,11 @@ void Output_Color(uint32_t newColor){ // Set color of future output
 // Output: none
 
 void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color){
+
+	if(y1<32)
+		y1=32;
+	if(y2<32)
+		y2=32;
 	int16_t num, denom;
 	uint16_t currentX, currentY;
 	int32_t inc = 0;
@@ -1638,6 +1643,7 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 	denom = x2 - x1;
 	currentX = x1;
 	currentY = y1;
+	int32_t store=0; 	
 	
 	if (abs(denom) > abs(num) )
 	{
@@ -1677,3 +1683,42 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 	}
 }
 
+// *************** ST7735_DrawCircle ********************
+// Inputs: x0, center x coordinate
+//             y0, center left y coordinate
+//               r,  radius of circle
+//             color, color of circle r,g,b
+// Outputs: none
+void ST7735_DrawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
+  int16_t f = 1 - r;
+  int16_t ddF_x = 1;
+  int16_t ddF_y = -2 * r;
+  int16_t x = 0;
+  int16_t y = r;
+ 
+  ST7735_DrawPixel(x0, y0+r, color);
+  ST7735_DrawPixel(x0, y0-r, color);
+  ST7735_DrawPixel(x0+r, y0, color);
+  ST7735_DrawPixel(x0-r, y0, color);
+ 
+  while (x<y) {
+    if (f >= 0) {
+      y--;
+      ddF_y += 2;
+      f += ddF_y;
+    }
+    x++;
+    ddF_x += 2;
+    f += ddF_x;
+   
+    ST7735_DrawPixel(x0 + x, y0 + y, color);
+    ST7735_DrawPixel(x0 - x, y0 + y, color);
+    ST7735_DrawPixel(x0 + x, y0 - y, color);
+    ST7735_DrawPixel(x0 - x, y0 - y, color);
+    ST7735_DrawPixel(x0 + y, y0 + x, color);
+    ST7735_DrawPixel(x0 - y, y0 + x, color);
+    ST7735_DrawPixel(x0 + y, y0 - x, color);
+    ST7735_DrawPixel(x0 - y, y0 - x, color);
+     
+  }
+}

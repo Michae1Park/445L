@@ -9,36 +9,21 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "SetAlarm.h"
-#include "ST7735.h"
 #include "../Shared/tm4c123gh6pm.h"
 
-extern long StartCritical (void);    // previous I bit, disable interrupts
-extern void EndCritical(long sr);    // restore I bit to previous value
-extern volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; //from Main Class
-volatile uint16_t Alarm_Seconds, Alarm_Minutes, Alarm_Hours; //from Main Class
+volatile uint16_t alarm_hours, alarm_minutes;
+volatile uint16_t alarm_flag;
+//global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
 
-void SetAlarm_Init(void)
+void setAlarmTimeInit(void)
 {
-	Alarm_Seconds=0;
-	Alarm_Minutes=0;
-	Alarm_Hours=0;
+//disable interrupts
 }
-void DisplayAlarmTime(void){
-	//disable interrupts
-	long critical=StartCritical();
-	DisplayAlarm();
-	EndCritical(critical);
-}
+
 //Assuming Time interrupt is disalbed
-void changeAlarmTime(uint32_t buttonSelect)
+void setAlarmTimeBase(uint32_t choice)
 {
-		//enable critical section
-		long critical=StartCritical();
-	
-		//set time seconds to 0
-		Alarm_Seconds=0;
-	
-    switch(buttonSelect) 
+    switch(choice) 
     {
       case 0:
         incrementAlarmHour();
@@ -52,36 +37,46 @@ void changeAlarmTime(uint32_t buttonSelect)
       case 3:
         decrementAlarmMin();
         break;
+      //default:
+        //incrementHour();  //increment both for debugging
+        //incrementMin();
 		}
-		EndCritical(critical);
+
 }
 
 void incrementAlarmHour(void)
 {
-  if((++Alarm_Hours)>23) {Alarm_Hours = 0;} //if hour exceeds 23, reset to 0
-  else {Alarm_Hours++;}
+  if((++alarm_hours)>23) {alarm_hours = 0;} //if hour exceeds 23, reset to 0
+  else {alarm_hours++;}
 }
 
 void decrementAlarmHour(void)
 {
-  if((--Alarm_Hours)<0) {Alarm_Hours = 23;} //if hour below 0, reset to 23
-  else {Alarm_Hours--;}
+  if((--alarm_hours)<0) {alarm_hours = 23;} //if hour below 0, reset to 23
+  else {alarm_hours--;}
 }
 
 void incrementAlarmMin(void)
 {
-  if((++Alarm_Minutes)>59) {Alarm_Minutes = 0;} //if min exceeds 59, reset to 0
-  else {Alarm_Minutes++;}
+  if((++alarm_minutes)>59) {alarm_minutes = 0;} //if min exceeds 59, reset to 0
+  else {alarm_minutes++;}
 }
 
 void decrementAlarmMin(void)
 {
-  if((--Alarm_Minutes)<0) {Alarm_Minutes = 59;} //if min below 0, reset to 59
-  else {Alarm_Minutes--;}
+  if((--alarm_minutes)<0) {alarm_minutes = 59;} //if min below 0, reset to 59
+  else {alarm_minutes--;}
 }
-void DisplayAlarm(void){
-	char ch[5];
-	sprintf(ch,"%.2d:%.2d",Alarm_Hours, Alarm_Minutes);
-	ST7735_SetCursor(50, 79);
-	ST7735_OutString(ch);
+void AlarmToggleON(void){
+
+		if(alarm_flag==0)
+			alarm_flag =1;
+
+	
+	
+}
+void AlarmToggleOFF(void){
+			if(alarm_flag==1)
+			alarm_flag =0;
+	
 }
