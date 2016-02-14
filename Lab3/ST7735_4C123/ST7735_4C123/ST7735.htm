@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\ST7735.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\ST7735.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sun Feb 14 06:07:19 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sun Feb 14 06:24:31 2016
 <BR><P>
-<H3>Maximum Stack Usage =        336 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        328 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; DisplayRefresh &rArr; DisplayMinute &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 <P>
@@ -13,11 +13,11 @@ main &rArr; DisplayRefresh &rArr; DisplayMinute &rArr; sin &rArr; __ieee754_rem_
 Functions with no stack information
 </H3><UL>
  <LI><a href="#[7e]">Reset_Handler</a>
- <LI><a href="#[c4]">DisableInterrupts</a>
+ <LI><a href="#[c3]">DisableInterrupts</a>
  <LI><a href="#[bc]">EnableInterrupts</a>
- <LI><a href="#[c5]">StartCritical</a>
- <LI><a href="#[c6]">EndCritical</a>
- <LI><a href="#[c7]">WaitForInterrupt</a>
+ <LI><a href="#[c4]">StartCritical</a>
+ <LI><a href="#[c5]">EndCritical</a>
+ <LI><a href="#[c6]">WaitForInterrupt</a>
 </UL>
 </UL>
 <P>
@@ -580,7 +580,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Reset_Handler
 </UL>
 
-<P><STRONG><a name="[be]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[bd]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[80]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -590,27 +590,27 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[bf]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[be]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[c0]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[bf]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[c1]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[c0]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[c2]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[c1]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[c3]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[c2]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
-<P><STRONG><a name="[c4]"></a>DisableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<P><STRONG><a name="[c3]"></a>DisableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
 
 <P><STRONG><a name="[bc]"></a>EnableInterrupts</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c5]"></a>StartCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<P><STRONG><a name="[c4]"></a>StartCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
 
-<P><STRONG><a name="[c6]"></a>EndCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<P><STRONG><a name="[c5]"></a>EndCritical</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
 
-<P><STRONG><a name="[c7]"></a>WaitForInterrupt</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
+<P><STRONG><a name="[c6]"></a>WaitForInterrupt</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, startup.o(.text), UNUSED)
 
 <P><STRONG><a name="[82]"></a>__aeabi_dadd</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, dadd.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
@@ -692,7 +692,7 @@ Global Symbols
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayHour
 </UL>
 
-<P><STRONG><a name="[c8]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
+<P><STRONG><a name="[c7]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
 
 <P><STRONG><a name="[b3]"></a>__aeabi_uidivmod</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
@@ -703,7 +703,7 @@ Global Symbols
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 
-<P><STRONG><a name="[c9]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
+<P><STRONG><a name="[c8]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
 <P><STRONG><a name="[8d]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
@@ -711,15 +711,15 @@ Global Symbols
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 
-<P><STRONG><a name="[ca]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
+<P><STRONG><a name="[c9]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
 
 <P><STRONG><a name="[84]"></a>__aeabi_lasr</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, llsshr.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 
-<P><STRONG><a name="[cb]"></a>_ll_sshift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llsshr.o(.text), UNUSED)
+<P><STRONG><a name="[ca]"></a>_ll_sshift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llsshr.o(.text), UNUSED)
 
-<P><STRONG><a name="[cc]"></a>__I$use$fp</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, iusefp.o(.text), UNUSED)
+<P><STRONG><a name="[cb]"></a>__I$use$fp</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, iusefp.o(.text), UNUSED)
 
 <P><STRONG><a name="[86]"></a>_double_round</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, depilogue.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _double_round
@@ -753,7 +753,7 @@ Global Symbols
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
 
-<P><STRONG><a name="[cd]"></a>scalbn</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, dscalb.o(.text), UNUSED)
+<P><STRONG><a name="[cc]"></a>scalbn</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, dscalb.o(.text), UNUSED)
 
 <P><STRONG><a name="[81]"></a>__scatterload</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, init.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main_after_scatterload
@@ -761,7 +761,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[ce]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[cd]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
 <P><STRONG><a name="[8f]"></a>__aeabi_ui2d</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, dfltui.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = __aeabi_ui2d &rArr; _double_epilogue &rArr; _double_round
@@ -869,12 +869,6 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bd]"></a>ST7735_Color565</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, st7735.o(i.ST7735_Color565))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ST7735_Color565
-</UL>
-<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
 <P><STRONG><a name="[9f]"></a>ST7735_DrawCharS</STRONG> (Thumb, 232 bytes, Stack size 48 bytes, st7735.o(i.ST7735_DrawCharS))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = ST7735_DrawCharS &rArr; ST7735_FillRect &rArr; setAddrWindow
 </UL>
@@ -910,8 +904,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;writedata
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setAddrWindow
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
+<BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillScreen
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_DrawCharS
 </UL>
 
@@ -992,7 +985,7 @@ Global Symbols
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[cf]"></a>__1sprintf$1</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
+<P><STRONG><a name="[ce]"></a>__1sprintf$1</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
 
 <P><STRONG><a name="[92]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
@@ -1068,11 +1061,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 </UL>
 
-<P><STRONG><a name="[d0]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[cf]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[d1]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[d0]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[d2]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[d1]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
 <P><STRONG><a name="[b5]"></a>__set_errno</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, errno.o(i.__set_errno))
 <BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sin
@@ -1093,12 +1086,11 @@ Global Symbols
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayHour
 </UL>
 
-<P><STRONG><a name="[7c]"></a>main</STRONG> (Thumb, 238 bytes, Stack size 8 bytes, alarmclockmain.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 336 + Unknown Stack Size
+<P><STRONG><a name="[7c]"></a>main</STRONG> (Thumb, 210 bytes, Stack size 0 bytes, alarmclockmain.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 328 + Unknown Stack Size
 <LI>Call Chain = main &rArr; DisplayRefresh &rArr; DisplayMinute &rArr; sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainMenu_Init
+<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MainMenu_Init
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayMinute
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayHour
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayDigital
@@ -1107,9 +1099,8 @@ Global Symbols
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetTime_Init
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer1_Init
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Switch_Init
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_InitR
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_FillRect
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7735_Color565
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Output_Clear
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PLL_Init
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableInterrupts

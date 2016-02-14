@@ -77,8 +77,8 @@
       </OPTFL>
       <CpuCode>255</CpuCode>
       <DebugOpt>
-        <uSim>1</uSim>
-        <uTrg>0</uTrg>
+        <uSim>0</uSim>
+        <uTrg>1</uTrg>
         <sLdApp>1</sLdApp>
         <sGomain>1</sGomain>
         <sRbreak>1</sRbreak>
@@ -96,7 +96,7 @@
         <tRtrace>0</tRtrace>
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
-        <tPdscDbg>1</tPdscDbg>
+        <tPdscDbg>0</tPdscDbg>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <nTsel>3</nTsel>
@@ -113,11 +113,6 @@
         <pMon>BIN\lmidk-agdi.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name>ÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÌÈ`äŒû&amp;&lt;Àò&amp;</Name>
-        </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
@@ -144,7 +139,24 @@
           <Name>-U-O4622 -O4622 -S3 -FO29</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>79</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>4016</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\Switch.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+      </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -200,8 +212,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>271</TopLine>
+      <CurrentLine>277</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup.s</PathWithFileName>
       <FilenameWithoutPath>startup.s</FilenameWithoutPath>
@@ -230,10 +242,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>37</ColumnNumber>
+      <ColumnNumber>8</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>34</TopLine>
-      <CurrentLine>54</CurrentLine>
+      <TopLine>1587</TopLine>
+      <CurrentLine>1601</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ST7735.c</PathWithFileName>
       <FilenameWithoutPath>ST7735.c</FilenameWithoutPath>
@@ -246,10 +258,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>14</ColumnNumber>
+      <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>34</TopLine>
-      <CurrentLine>42</CurrentLine>
+      <TopLine>2</TopLine>
+      <CurrentLine>12</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ST7735TestMain.c</PathWithFileName>
       <FilenameWithoutPath>ST7735TestMain.c</FilenameWithoutPath>
@@ -278,10 +290,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>133</TopLine>
-      <CurrentLine>143</CurrentLine>
+      <TopLine>83</TopLine>
+      <CurrentLine>93</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Switch.c</PathWithFileName>
       <FilenameWithoutPath>Switch.c</FilenameWithoutPath>
@@ -294,10 +306,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>1</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>16</TopLine>
-      <CurrentLine>34</CurrentLine>
+      <TopLine>41</TopLine>
+      <CurrentLine>55</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Timer1.c</PathWithFileName>
       <FilenameWithoutPath>Timer1.c</FilenameWithoutPath>
@@ -312,7 +324,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
+      <TopLine>10</TopLine>
       <CurrentLine>23</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\SetTime.c</PathWithFileName>
@@ -358,10 +370,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>2</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>30</TopLine>
+      <CurrentLine>31</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\TimeDisplay.c</PathWithFileName>
       <FilenameWithoutPath>TimeDisplay.c</FilenameWithoutPath>

@@ -11,6 +11,9 @@ I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C87C24)
 I (ST7735.h)(0x56C068F6)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (C:\Keil\ARM\ARMCC\include\math.h)(0x51C87C24)
+F (.\SysTick.c)(0x56BE5E49)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
+I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 F (.\Switch.c)(0x56C0180E)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
@@ -46,7 +49,7 @@ I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (ST7735.h)(0x56C068F6)
 I (C:\Keil\ARM\ARMCC\include\math.h)(0x51C87C24)
 I (TimeDisplay.h)(0x56C068DA)
-F (.\AlarmClockMain.c)(0x56C06DE3)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\alarmclockmain.o --omf_browse .\alarmclockmain.crf --depend .\alarmclockmain.d)
+F (.\AlarmClockMain.c)(0x56C06E17)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\alarmclockmain.o --omf_browse .\alarmclockmain.crf --depend .\alarmclockmain.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (ST7735.h)(0x56C068F6)
@@ -59,6 +62,3 @@ I (Switch.h)(0x56BE5E49)
 I (SetAlarm.h)(0x56BE5E49)
 I (PWM.h)(0x56BE5E49)
 I (SystickInts.h)(0x56A7C9DE)
-F (.\SysTick.c)(0x56BE5E49)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
-I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
