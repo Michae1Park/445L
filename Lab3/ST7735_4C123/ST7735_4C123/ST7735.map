@@ -105,10 +105,14 @@ Section Cross References
     st7735testmain.o(i.main) refers to switch.o(i.Switch_Init) for Switch_Init
     st7735testmain.o(i.main) refers to timedisplay.o(i.TimeDisplay_Init) for TimeDisplay_Init
     st7735testmain.o(i.main) refers to settime.o(i.SetTime_Init) for SetTime_Init
+    st7735testmain.o(i.main) refers to setalarm.o(i.SetAlarm_Init) for SetAlarm_Init
+    st7735testmain.o(i.main) refers to togglealarm.o(i.ToggleAlarm_Init) for ToggleAlarm_Init
+    st7735testmain.o(i.main) refers to mainmenu.o(i.MainMenu_Init) for MainMenu_Init
     st7735testmain.o(i.main) refers to startup.o(.text) for EnableInterrupts
     st7735testmain.o(i.main) refers to timedisplay.o(i.DisplayRefresh) for DisplayRefresh
     st7735testmain.o(i.main) refers to settime.o(i.DisplaySetTime) for DisplaySetTime
-    st7735testmain.o(i.main) refers to st7735testmain.o(.data) for TimeDisplay_Mode
+    st7735testmain.o(i.main) refers to setalarm.o(i.DisplayAlarmTime) for DisplayAlarmTime
+    st7735testmain.o(i.main) refers to st7735testmain.o(.data) for MainMenu_Mode
     systick.o(i.SysTick_Wait10ms) refers to systick.o(i.SysTick_Wait) for SysTick_Wait
     switch.o(i.Switch_Debounce) refers to switch.o(i.Switch_Input) for Switch_Input
     switch.o(i.Switch_Debounce) refers to systick.o(i.SysTick_Wait) for SysTick_Wait
@@ -120,6 +124,7 @@ Section Cross References
     settime.o(i.DisplaySetTime) refers to startup.o(.text) for StartCritical
     settime.o(i.DisplaySetTime) refers to timedisplay.o(i.DisplayRefresh) for DisplayRefresh
     settime.o(i.DisplaySetTime) refers to timedisplay.o(.data) for Display_Mode
+    settime.o(i.SetTime_Init) refers to st7735testmain.o(.data) for Time_Seconds
     settime.o(i.changeTime) refers to startup.o(.text) for StartCritical
     settime.o(i.changeTime) refers to settime.o(i.incrementHour) for incrementHour
     settime.o(i.changeTime) refers to settime.o(i.decrementHour) for decrementHour
@@ -130,16 +135,23 @@ Section Cross References
     settime.o(i.decrementMin) refers to st7735testmain.o(.data) for Time_Minutes
     settime.o(i.incrementHour) refers to st7735testmain.o(.data) for Time_Hours
     settime.o(i.incrementMin) refers to st7735testmain.o(.data) for Time_Minutes
-    setalarm.o(i.AlarmToggleOFF) refers to setalarm.o(.data) for alarm_flag
-    setalarm.o(i.AlarmToggleON) refers to setalarm.o(.data) for alarm_flag
-    setalarm.o(i.decrementAlarmHour) refers to setalarm.o(.data) for alarm_hours
-    setalarm.o(i.decrementAlarmMin) refers to setalarm.o(.data) for alarm_minutes
-    setalarm.o(i.incrementAlarmHour) refers to setalarm.o(.data) for alarm_hours
-    setalarm.o(i.incrementAlarmMin) refers to setalarm.o(.data) for alarm_minutes
-    setalarm.o(i.setAlarmTimeBase) refers to setalarm.o(i.incrementAlarmHour) for incrementAlarmHour
-    setalarm.o(i.setAlarmTimeBase) refers to setalarm.o(i.decrementAlarmHour) for decrementAlarmHour
-    setalarm.o(i.setAlarmTimeBase) refers to setalarm.o(i.incrementAlarmMin) for incrementAlarmMin
-    setalarm.o(i.setAlarmTimeBase) refers to setalarm.o(i.decrementAlarmMin) for decrementAlarmMin
+    setalarm.o(i.DisplayAlarm) refers to printf1.o(i.__0sprintf$1) for __2sprintf
+    setalarm.o(i.DisplayAlarm) refers to st7735.o(i.ST7735_SetCursor) for ST7735_SetCursor
+    setalarm.o(i.DisplayAlarm) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
+    setalarm.o(i.DisplayAlarm) refers to setalarm.o(.data) for Alarm_Minutes
+    setalarm.o(i.DisplayAlarmTime) refers to startup.o(.text) for StartCritical
+    setalarm.o(i.DisplayAlarmTime) refers to setalarm.o(i.DisplayAlarm) for DisplayAlarm
+    setalarm.o(i.SetAlarm_Init) refers to setalarm.o(.data) for Alarm_Seconds
+    setalarm.o(i.changeAlarmTime) refers to startup.o(.text) for StartCritical
+    setalarm.o(i.changeAlarmTime) refers to setalarm.o(i.incrementAlarmHour) for incrementAlarmHour
+    setalarm.o(i.changeAlarmTime) refers to setalarm.o(i.decrementAlarmHour) for decrementAlarmHour
+    setalarm.o(i.changeAlarmTime) refers to setalarm.o(i.incrementAlarmMin) for incrementAlarmMin
+    setalarm.o(i.changeAlarmTime) refers to setalarm.o(i.decrementAlarmMin) for decrementAlarmMin
+    setalarm.o(i.changeAlarmTime) refers to setalarm.o(.data) for Alarm_Seconds
+    setalarm.o(i.decrementAlarmHour) refers to setalarm.o(.data) for Alarm_Hours
+    setalarm.o(i.decrementAlarmMin) refers to setalarm.o(.data) for Alarm_Minutes
+    setalarm.o(i.incrementAlarmHour) refers to setalarm.o(.data) for Alarm_Hours
+    setalarm.o(i.incrementAlarmMin) refers to setalarm.o(.data) for Alarm_Minutes
     timedisplay.o(i.DisplayDigital) refers to printf1.o(i.__0sprintf$1) for __2sprintf
     timedisplay.o(i.DisplayDigital) refers to st7735.o(i.ST7735_SetCursor) for ST7735_SetCursor
     timedisplay.o(i.DisplayDigital) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
@@ -168,8 +180,20 @@ Section Cross References
     timedisplay.o(i.DisplayRefresh) refers to timedisplay.o(.data) for Display_Mode
     timedisplay.o(i.SwitchMode) refers to startup.o(.text) for StartCritical
     timedisplay.o(i.SwitchMode) refers to timedisplay.o(.data) for Display_Mode
-    timedisplay.o(i.TimeDisplay_Init) refers to timedisplay.o(i.DisplayRefresh) for DisplayRefresh
     timedisplay.o(i.TimeDisplay_Init) refers to timedisplay.o(.data) for Display_Mode
+    togglealarm.o(i.CheckAlarmTime) refers to togglealarm.o(i.ToggleAlarmTrigger) for ToggleAlarmTrigger
+    togglealarm.o(i.CheckAlarmTime) refers to st7735testmain.o(.data) for Time_Minutes
+    togglealarm.o(i.CheckAlarmTime) refers to setalarm.o(.data) for Alarm_Minutes
+    togglealarm.o(i.CheckAlarmTrigger) refers to togglealarm.o(i.CheckAlarmTime) for CheckAlarmTime
+    togglealarm.o(i.CheckAlarmTrigger) refers to togglealarm.o(.data) for Alarm_Triggered
+    togglealarm.o(i.ToggleAlarmTrigger) refers to startup.o(.text) for StartCritical
+    togglealarm.o(i.ToggleAlarmTrigger) refers to togglealarm.o(.data) for Alarm_Triggered
+    togglealarm.o(i.ToggleAlarm_Init) refers to togglealarm.o(.data) for Alarm_Triggered
+    mainmenu.o(i.DisplayMainMenu) refers to togglealarm.o(i.CheckAlarmTrigger) for CheckAlarmTrigger
+    mainmenu.o(i.DisplayMainMenu) refers to st7735.o(i.ST7735_SetCursor) for ST7735_SetCursor
+    mainmenu.o(i.DisplayMainMenu) refers to st7735.o(i.ST7735_OutString) for ST7735_OutString
+    mainmenu.o(i.DisplayMainMenu) refers to st7735testmain.o(.data) for ToggleAlarm_Mode
+    mainmenu.o(i.MainMenu_Init) refers to mainmenu.o(i.DisplayMainMenu) for DisplayMainMenu
     cos.o(i.__softfp_cos) refers (Special) to iusefp.o(.text) for __I$use$fp
     cos.o(i.__softfp_cos) refers to cos.o(i.cos) for cos
     cos.o(i.cos) refers (Special) to iusefp.o(.text) for __I$use$fp
@@ -568,22 +592,18 @@ Removing Unused input sections from the image.
     Removing settime.o(i.decrementMin), (40 bytes).
     Removing settime.o(i.incrementHour), (40 bytes).
     Removing settime.o(i.incrementMin), (40 bytes).
-    Removing setalarm.o(i.AlarmToggleOFF), (20 bytes).
-    Removing setalarm.o(i.AlarmToggleON), (20 bytes).
+    Removing setalarm.o(i.changeAlarmTime), (72 bytes).
     Removing setalarm.o(i.decrementAlarmHour), (40 bytes).
     Removing setalarm.o(i.decrementAlarmMin), (40 bytes).
     Removing setalarm.o(i.incrementAlarmHour), (40 bytes).
     Removing setalarm.o(i.incrementAlarmMin), (40 bytes).
-    Removing setalarm.o(i.setAlarmTimeBase), (48 bytes).
-    Removing setalarm.o(i.setAlarmTimeInit), (2 bytes).
-    Removing setalarm.o(.data), (6 bytes).
     Removing pwm.o(i.PWM0A_Duty), (12 bytes).
     Removing pwm.o(i.PWM0A_Init), (208 bytes).
     Removing timedisplay.o(i.SwitchMode), (40 bytes).
     Removing dfixul.o(.text), (48 bytes).
     Removing cdrcmple.o(.text), (40 bytes).
 
-59 unused section(s) (total 3658 bytes) removed from the image.
+55 unused section(s) (total 3634 bytes) removed from the image.
 
 ==============================================================================
 
@@ -594,47 +614,47 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     RESET                                    0x00000000   Section      644  startup.o(RESET)
-    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/errno.c                 0x00000000   Number         0  errno.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
     ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixi.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixi.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
-    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
     ../fplib/microlib/fpscalb.c              0x00000000   Number         0  dscalb.o ABSOLUTE
     ../mathlib/cos.c                         0x00000000   Number         0  cos_x.o ABSOLUTE
@@ -646,8 +666,9 @@ Image Symbol Table
     ../mathlib/rred.c                        0x00000000   Number         0  rred.o ABSOLUTE
     ../mathlib/sin.c                         0x00000000   Number         0  sin_x.o ABSOLUTE
     ../mathlib/sin.c                         0x00000000   Number         0  sin.o ABSOLUTE
-    ../mathlib/sin_i.c                       0x00000000   Number         0  sin_i.o ABSOLUTE
     ../mathlib/sin_i.c                       0x00000000   Number         0  sin_i_x.o ABSOLUTE
+    ../mathlib/sin_i.c                       0x00000000   Number         0  sin_i.o ABSOLUTE
+    MainMenu.c                               0x00000000   Number         0  mainmenu.o ABSOLUTE
     PLL.c                                    0x00000000   Number         0  pll.o ABSOLUTE
     PWM.c                                    0x00000000   Number         0  pwm.o ABSOLUTE
     ST7735.c                                 0x00000000   Number         0  st7735.o ABSOLUTE
@@ -658,6 +679,7 @@ Image Symbol Table
     SysTick.c                                0x00000000   Number         0  systick.o ABSOLUTE
     TimeDisplay.c                            0x00000000   Number         0  timedisplay.o ABSOLUTE
     Timer1.c                                 0x00000000   Number         0  timer1.o ABSOLUTE
+    ToggleAlarm.c                            0x00000000   Number         0  togglealarm.o ABSOLUTE
     cdrcmple.s                               0x00000000   Number         0  cdrcmple.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
@@ -689,73 +711,82 @@ Image Symbol Table
     .text                                    0x00000794   Section       36  init.o(.text)
     .text                                    0x000007b8   Section        0  dfltui.o(.text)
     .text                                    0x000007d2   Section        0  dfixi.o(.text)
-    i.Delay1ms                               0x00000810   Section        0  st7735.o(i.Delay1ms)
-    i.DisplayDigital                         0x00000830   Section        0  timedisplay.o(i.DisplayDigital)
-    i.DisplayHour                            0x00000868   Section        0  timedisplay.o(i.DisplayHour)
-    i.DisplayMinute                          0x00000934   Section        0  timedisplay.o(i.DisplayMinute)
-    i.DisplayRefresh                         0x00000a00   Section        0  timedisplay.o(i.DisplayRefresh)
-    i.DisplaySetTime                         0x00000a1c   Section        0  settime.o(i.DisplaySetTime)
-    i.PLL_Init                               0x00000a3c   Section        0  pll.o(i.PLL_Init)
-    i.ST7735_DrawCharS                       0x00000ab8   Section        0  st7735.o(i.ST7735_DrawCharS)
-    i.ST7735_DrawPixel                       0x00000bac   Section        0  st7735.o(i.ST7735_DrawPixel)
-    i.ST7735_DrawString                      0x00000bf4   Section        0  st7735.o(i.ST7735_DrawString)
-    i.ST7735_FillRect                        0x00000c4c   Section        0  st7735.o(i.ST7735_FillRect)
-    i.ST7735_FillScreen                      0x00000cf8   Section        0  st7735.o(i.ST7735_FillScreen)
-    i.ST7735_InitR                           0x00000d1c   Section        0  st7735.o(i.ST7735_InitR)
-    i.ST7735_Line                            0x00000d98   Section        0  st7735.o(i.ST7735_Line)
-    i.ST7735_OutChar                         0x00000e80   Section        0  st7735.o(i.ST7735_OutChar)
-    i.ST7735_OutString                       0x00000f54   Section        0  st7735.o(i.ST7735_OutString)
-    i.ST7735_SetCursor                       0x00000f6c   Section        0  st7735.o(i.ST7735_SetCursor)
-    i.SetTime_Init                           0x00000f8c   Section        0  settime.o(i.SetTime_Init)
-    i.Switch_Init                            0x00000f90   Section        0  switch.o(i.Switch_Init)
-    i.SysTick_Init                           0x00001004   Section        0  systick.o(i.SysTick_Init)
-    i.TimeDisplay_Init                       0x0000101c   Section        0  timedisplay.o(i.TimeDisplay_Init)
-    i.Timer1A_Handler                        0x00001030   Section        0  timer1.o(i.Timer1A_Handler)
-    i.Timer1_Init                            0x00001090   Section        0  timer1.o(i.Timer1_Init)
-    i.__0sprintf$1                           0x000010f0   Section        0  printf1.o(i.__0sprintf$1)
-    i.__ARM_fpclassify                       0x00001118   Section        0  fpclassify.o(i.__ARM_fpclassify)
-    i.__ieee754_rem_pio2                     0x00001140   Section        0  rred.o(i.__ieee754_rem_pio2)
-    i.__kernel_cos                           0x000014c8   Section        0  cos_i.o(i.__kernel_cos)
-    i.__kernel_poly                          0x000015c4   Section        0  poly.o(i.__kernel_poly)
-    i.__kernel_sin                           0x00001670   Section        0  sin_i.o(i.__kernel_sin)
-    i.__mathlib_dbl_underflow                0x0000175c   Section        0  dunder.o(i.__mathlib_dbl_underflow)
-    i.__scatterload_copy                     0x0000176c   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x0000177a   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x0000177c   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.__set_errno                            0x0000178c   Section        0  errno.o(i.__set_errno)
-    i._printf_core                           0x00001798   Section        0  printf1.o(i._printf_core)
-    _printf_core                             0x00001799   Thumb Code   334  printf1.o(i._printf_core)
-    i._sputc                                 0x000018ec   Section        0  printf1.o(i._sputc)
-    _sputc                                   0x000018ed   Thumb Code    10  printf1.o(i._sputc)
-    i.commandList                            0x000018f6   Section        0  st7735.o(i.commandList)
-    commandList                              0x000018f7   Thumb Code    86  st7735.o(i.commandList)
-    i.commonInit                             0x0000194c   Section        0  st7735.o(i.commonInit)
-    commonInit                               0x0000194d   Thumb Code   340  st7735.o(i.commonInit)
-    i.cos                                    0x00001ad0   Section        0  cos.o(i.cos)
-    i.main                                   0x00001b7c   Section        0  st7735testmain.o(i.main)
-    i.pushColor                              0x00001c30   Section        0  st7735.o(i.pushColor)
-    pushColor                                0x00001c31   Thumb Code    18  st7735.o(i.pushColor)
-    i.setAddrWindow                          0x00001c44   Section        0  st7735.o(i.setAddrWindow)
-    setAddrWindow                            0x00001c45   Thumb Code   106  st7735.o(i.setAddrWindow)
-    i.sin                                    0x00001cb8   Section        0  sin.o(i.sin)
-    i.writecommand                           0x00001d68   Section        0  st7735.o(i.writecommand)
-    writecommand                             0x00001d69   Thumb Code    40  st7735.o(i.writecommand)
-    i.writedata                              0x00001d98   Section        0  st7735.o(i.writedata)
-    writedata                                0x00001d99   Thumb Code    24  st7735.o(i.writedata)
-    .constdata                               0x00001db8   Section     2018  st7735.o(.constdata)
-    Font                                     0x00001db8   Data        1275  st7735.o(.constdata)
-    Bcmd                                     0x000022b3   Data         103  st7735.o(.constdata)
-    Rcmd1                                    0x0000231a   Data          59  st7735.o(.constdata)
-    Rcmd2green                               0x00002355   Data          13  st7735.o(.constdata)
-    Rcmd2red                                 0x00002362   Data          13  st7735.o(.constdata)
-    Rcmd3                                    0x0000236f   Data          43  st7735.o(.constdata)
-    .constdata                               0x000025a0   Section       48  cos_i.o(.constdata)
-    C                                        0x000025a0   Data          48  cos_i.o(.constdata)
-    .constdata                               0x000025d0   Section      200  rred.o(.constdata)
-    pio2s                                    0x000025d0   Data          48  rred.o(.constdata)
-    twooverpi                                0x00002600   Data         152  rred.o(.constdata)
-    .constdata                               0x00002698   Section       40  sin_i.o(.constdata)
-    S                                        0x00002698   Data          40  sin_i.o(.constdata)
+    i.CheckAlarmTime                         0x00000810   Section        0  togglealarm.o(i.CheckAlarmTime)
+    i.CheckAlarmTrigger                      0x00000840   Section        0  togglealarm.o(i.CheckAlarmTrigger)
+    i.Delay1ms                               0x00000854   Section        0  st7735.o(i.Delay1ms)
+    i.DisplayAlarm                           0x00000874   Section        0  setalarm.o(i.DisplayAlarm)
+    i.DisplayAlarmTime                       0x000008ac   Section        0  setalarm.o(i.DisplayAlarmTime)
+    i.DisplayDigital                         0x000008c0   Section        0  timedisplay.o(i.DisplayDigital)
+    i.DisplayHour                            0x000008f8   Section        0  timedisplay.o(i.DisplayHour)
+    i.DisplayMainMenu                        0x000009c4   Section        0  mainmenu.o(i.DisplayMainMenu)
+    i.DisplayMinute                          0x00000a54   Section        0  timedisplay.o(i.DisplayMinute)
+    i.DisplayRefresh                         0x00000b20   Section        0  timedisplay.o(i.DisplayRefresh)
+    i.DisplaySetTime                         0x00000b3c   Section        0  settime.o(i.DisplaySetTime)
+    i.MainMenu_Init                          0x00000b5c   Section        0  mainmenu.o(i.MainMenu_Init)
+    i.PLL_Init                               0x00000b64   Section        0  pll.o(i.PLL_Init)
+    i.ST7735_DrawCharS                       0x00000be0   Section        0  st7735.o(i.ST7735_DrawCharS)
+    i.ST7735_DrawPixel                       0x00000cd4   Section        0  st7735.o(i.ST7735_DrawPixel)
+    i.ST7735_DrawString                      0x00000d1c   Section        0  st7735.o(i.ST7735_DrawString)
+    i.ST7735_FillRect                        0x00000d74   Section        0  st7735.o(i.ST7735_FillRect)
+    i.ST7735_FillScreen                      0x00000e20   Section        0  st7735.o(i.ST7735_FillScreen)
+    i.ST7735_InitR                           0x00000e44   Section        0  st7735.o(i.ST7735_InitR)
+    i.ST7735_Line                            0x00000ec0   Section        0  st7735.o(i.ST7735_Line)
+    i.ST7735_OutChar                         0x00000fa0   Section        0  st7735.o(i.ST7735_OutChar)
+    i.ST7735_OutString                       0x00001074   Section        0  st7735.o(i.ST7735_OutString)
+    i.ST7735_SetCursor                       0x0000108c   Section        0  st7735.o(i.ST7735_SetCursor)
+    i.SetAlarm_Init                          0x000010ac   Section        0  setalarm.o(i.SetAlarm_Init)
+    i.SetTime_Init                           0x000010c8   Section        0  settime.o(i.SetTime_Init)
+    i.Switch_Init                            0x000010e4   Section        0  switch.o(i.Switch_Init)
+    i.SysTick_Init                           0x00001158   Section        0  systick.o(i.SysTick_Init)
+    i.TimeDisplay_Init                       0x00001170   Section        0  timedisplay.o(i.TimeDisplay_Init)
+    i.Timer1A_Handler                        0x0000117c   Section        0  timer1.o(i.Timer1A_Handler)
+    i.Timer1_Init                            0x000011dc   Section        0  timer1.o(i.Timer1_Init)
+    i.ToggleAlarmTrigger                     0x0000123c   Section        0  togglealarm.o(i.ToggleAlarmTrigger)
+    i.ToggleAlarm_Init                       0x00001264   Section        0  togglealarm.o(i.ToggleAlarm_Init)
+    i.__0sprintf$1                           0x00001270   Section        0  printf1.o(i.__0sprintf$1)
+    i.__ARM_fpclassify                       0x00001298   Section        0  fpclassify.o(i.__ARM_fpclassify)
+    i.__ieee754_rem_pio2                     0x000012c0   Section        0  rred.o(i.__ieee754_rem_pio2)
+    i.__kernel_cos                           0x00001648   Section        0  cos_i.o(i.__kernel_cos)
+    i.__kernel_poly                          0x00001744   Section        0  poly.o(i.__kernel_poly)
+    i.__kernel_sin                           0x000017f0   Section        0  sin_i.o(i.__kernel_sin)
+    i.__mathlib_dbl_underflow                0x000018dc   Section        0  dunder.o(i.__mathlib_dbl_underflow)
+    i.__scatterload_copy                     0x000018ec   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x000018fa   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x000018fc   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.__set_errno                            0x0000190c   Section        0  errno.o(i.__set_errno)
+    i._printf_core                           0x00001918   Section        0  printf1.o(i._printf_core)
+    _printf_core                             0x00001919   Thumb Code   334  printf1.o(i._printf_core)
+    i._sputc                                 0x00001a6c   Section        0  printf1.o(i._sputc)
+    _sputc                                   0x00001a6d   Thumb Code    10  printf1.o(i._sputc)
+    i.commandList                            0x00001a76   Section        0  st7735.o(i.commandList)
+    commandList                              0x00001a77   Thumb Code    86  st7735.o(i.commandList)
+    i.commonInit                             0x00001acc   Section        0  st7735.o(i.commonInit)
+    commonInit                               0x00001acd   Thumb Code   340  st7735.o(i.commonInit)
+    i.cos                                    0x00001c50   Section        0  cos.o(i.cos)
+    i.main                                   0x00001cfc   Section        0  st7735testmain.o(i.main)
+    i.pushColor                              0x00001dd8   Section        0  st7735.o(i.pushColor)
+    pushColor                                0x00001dd9   Thumb Code    18  st7735.o(i.pushColor)
+    i.setAddrWindow                          0x00001dec   Section        0  st7735.o(i.setAddrWindow)
+    setAddrWindow                            0x00001ded   Thumb Code   106  st7735.o(i.setAddrWindow)
+    i.sin                                    0x00001e60   Section        0  sin.o(i.sin)
+    i.writecommand                           0x00001f10   Section        0  st7735.o(i.writecommand)
+    writecommand                             0x00001f11   Thumb Code    40  st7735.o(i.writecommand)
+    i.writedata                              0x00001f40   Section        0  st7735.o(i.writedata)
+    writedata                                0x00001f41   Thumb Code    24  st7735.o(i.writedata)
+    .constdata                               0x00001f60   Section     2018  st7735.o(.constdata)
+    Font                                     0x00001f60   Data        1275  st7735.o(.constdata)
+    Bcmd                                     0x0000245b   Data         103  st7735.o(.constdata)
+    Rcmd1                                    0x000024c2   Data          59  st7735.o(.constdata)
+    Rcmd2green                               0x000024fd   Data          13  st7735.o(.constdata)
+    Rcmd2red                                 0x0000250a   Data          13  st7735.o(.constdata)
+    Rcmd3                                    0x00002517   Data          43  st7735.o(.constdata)
+    .constdata                               0x00002748   Section       48  cos_i.o(.constdata)
+    C                                        0x00002748   Data          48  cos_i.o(.constdata)
+    .constdata                               0x00002778   Section      200  rred.o(.constdata)
+    pio2s                                    0x00002778   Data          48  rred.o(.constdata)
+    twooverpi                                0x000027a8   Data         152  rred.o(.constdata)
+    .constdata                               0x00002840   Section       40  sin_i.o(.constdata)
+    S                                        0x00002840   Data          40  sin_i.o(.constdata)
     .data                                    0x20000000   Section       44  st7735.o(.data)
     _width                                   0x2000000a   Data           2  st7735.o(.data)
     _height                                  0x2000000c   Data           2  st7735.o(.data)
@@ -765,11 +796,13 @@ Image Symbol Table
     TabColor                                 0x20000017   Data           1  st7735.o(.data)
     .data                                    0x2000002c   Section       16  st7735testmain.o(.data)
     .data                                    0x2000003c   Section        4  timer1.o(.data)
-    .data                                    0x20000040   Section        4  timedisplay.o(.data)
-    .data                                    0x20000044   Section        4  errno.o(.data)
-    _errno                                   0x20000044   Data           4  errno.o(.data)
-    STACK                                    0x20000048   Section     1024  startup.o(STACK)
-    StackMem                                 0x20000048   Data           0  startup.o(STACK)
+    .data                                    0x20000040   Section        6  setalarm.o(.data)
+    .data                                    0x20000048   Section        4  timedisplay.o(.data)
+    .data                                    0x2000004c   Section        2  togglealarm.o(.data)
+    .data                                    0x20000050   Section        4  errno.o(.data)
+    _errno                                   0x20000050   Data           4  errno.o(.data)
+    STACK                                    0x20000058   Section     1024  startup.o(STACK)
+    StackMem                                 0x20000058   Data           0  startup.o(STACK)
 
     Global Symbols
 
@@ -985,48 +1018,57 @@ Image Symbol Table
     __scatterload_rt2                        0x00000795   Thumb Code     0  init.o(.text)
     __aeabi_ui2d                             0x000007b9   Thumb Code    26  dfltui.o(.text)
     __aeabi_d2iz                             0x000007d3   Thumb Code    62  dfixi.o(.text)
-    Delay1ms                                 0x00000811   Thumb Code    32  st7735.o(i.Delay1ms)
-    DisplayDigital                           0x00000831   Thumb Code    34  timedisplay.o(i.DisplayDigital)
-    DisplayHour                              0x00000869   Thumb Code   176  timedisplay.o(i.DisplayHour)
-    DisplayMinute                            0x00000935   Thumb Code   176  timedisplay.o(i.DisplayMinute)
-    DisplayRefresh                           0x00000a01   Thumb Code    24  timedisplay.o(i.DisplayRefresh)
-    DisplaySetTime                           0x00000a1d   Thumb Code    26  settime.o(i.DisplaySetTime)
-    PLL_Init                                 0x00000a3d   Thumb Code   118  pll.o(i.PLL_Init)
-    ST7735_DrawCharS                         0x00000ab9   Thumb Code   232  st7735.o(i.ST7735_DrawCharS)
-    ST7735_DrawPixel                         0x00000bad   Thumb Code    64  st7735.o(i.ST7735_DrawPixel)
-    ST7735_DrawString                        0x00000bf5   Thumb Code    86  st7735.o(i.ST7735_DrawString)
-    ST7735_FillRect                          0x00000c4d   Thumb Code   164  st7735.o(i.ST7735_FillRect)
-    ST7735_FillScreen                        0x00000cf9   Thumb Code    28  st7735.o(i.ST7735_FillScreen)
-    ST7735_InitR                             0x00000d1d   Thumb Code    90  st7735.o(i.ST7735_InitR)
-    ST7735_Line                              0x00000d99   Thumb Code   232  st7735.o(i.ST7735_Line)
-    ST7735_OutChar                           0x00000e81   Thumb Code   176  st7735.o(i.ST7735_OutChar)
-    ST7735_OutString                         0x00000f55   Thumb Code    24  st7735.o(i.ST7735_OutString)
-    ST7735_SetCursor                         0x00000f6d   Thumb Code    22  st7735.o(i.ST7735_SetCursor)
-    SetTime_Init                             0x00000f8d   Thumb Code     2  settime.o(i.SetTime_Init)
-    Switch_Init                              0x00000f91   Thumb Code   100  switch.o(i.Switch_Init)
-    SysTick_Init                             0x00001005   Thumb Code    24  systick.o(i.SysTick_Init)
-    TimeDisplay_Init                         0x0000101d   Thumb Code    14  timedisplay.o(i.TimeDisplay_Init)
-    Timer1A_Handler                          0x00001031   Thumb Code    80  timer1.o(i.Timer1A_Handler)
-    Timer1_Init                              0x00001091   Thumb Code    76  timer1.o(i.Timer1_Init)
-    __0sprintf$1                             0x000010f1   Thumb Code    34  printf1.o(i.__0sprintf$1)
-    __1sprintf$1                             0x000010f1   Thumb Code     0  printf1.o(i.__0sprintf$1)
-    __2sprintf                               0x000010f1   Thumb Code     0  printf1.o(i.__0sprintf$1)
-    __ARM_fpclassify                         0x00001119   Thumb Code    40  fpclassify.o(i.__ARM_fpclassify)
-    __ieee754_rem_pio2                       0x00001141   Thumb Code   832  rred.o(i.__ieee754_rem_pio2)
-    __kernel_cos                             0x000014c9   Thumb Code   230  cos_i.o(i.__kernel_cos)
-    __kernel_poly                            0x000015c5   Thumb Code   170  poly.o(i.__kernel_poly)
-    __kernel_sin                             0x00001671   Thumb Code   224  sin_i.o(i.__kernel_sin)
-    __mathlib_dbl_underflow                  0x0000175d   Thumb Code    10  dunder.o(i.__mathlib_dbl_underflow)
-    __scatterload_copy                       0x0000176d   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x0000177b   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x0000177d   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    __set_errno                              0x0000178d   Thumb Code     6  errno.o(i.__set_errno)
-    cos                                      0x00001ad1   Thumb Code   164  cos.o(i.cos)
-    main                                     0x00001b7d   Thumb Code   142  st7735testmain.o(i.main)
-    sin                                      0x00001cb9   Thumb Code   166  sin.o(i.sin)
-    dBfs                                     0x0000239a   Data         512  st7735.o(.constdata)
-    Region$$Table$$Base                      0x000026c0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000026e0   Number         0  anon$$obj.o(Region$$Table)
+    CheckAlarmTime                           0x00000811   Thumb Code    32  togglealarm.o(i.CheckAlarmTime)
+    CheckAlarmTrigger                        0x00000841   Thumb Code    14  togglealarm.o(i.CheckAlarmTrigger)
+    Delay1ms                                 0x00000855   Thumb Code    32  st7735.o(i.Delay1ms)
+    DisplayAlarm                             0x00000875   Thumb Code    34  setalarm.o(i.DisplayAlarm)
+    DisplayAlarmTime                         0x000008ad   Thumb Code    20  setalarm.o(i.DisplayAlarmTime)
+    DisplayDigital                           0x000008c1   Thumb Code    34  timedisplay.o(i.DisplayDigital)
+    DisplayHour                              0x000008f9   Thumb Code   176  timedisplay.o(i.DisplayHour)
+    DisplayMainMenu                          0x000009c5   Thumb Code    72  mainmenu.o(i.DisplayMainMenu)
+    DisplayMinute                            0x00000a55   Thumb Code   176  timedisplay.o(i.DisplayMinute)
+    DisplayRefresh                           0x00000b21   Thumb Code    24  timedisplay.o(i.DisplayRefresh)
+    DisplaySetTime                           0x00000b3d   Thumb Code    26  settime.o(i.DisplaySetTime)
+    MainMenu_Init                            0x00000b5d   Thumb Code     8  mainmenu.o(i.MainMenu_Init)
+    PLL_Init                                 0x00000b65   Thumb Code   118  pll.o(i.PLL_Init)
+    ST7735_DrawCharS                         0x00000be1   Thumb Code   232  st7735.o(i.ST7735_DrawCharS)
+    ST7735_DrawPixel                         0x00000cd5   Thumb Code    64  st7735.o(i.ST7735_DrawPixel)
+    ST7735_DrawString                        0x00000d1d   Thumb Code    86  st7735.o(i.ST7735_DrawString)
+    ST7735_FillRect                          0x00000d75   Thumb Code   164  st7735.o(i.ST7735_FillRect)
+    ST7735_FillScreen                        0x00000e21   Thumb Code    28  st7735.o(i.ST7735_FillScreen)
+    ST7735_InitR                             0x00000e45   Thumb Code    90  st7735.o(i.ST7735_InitR)
+    ST7735_Line                              0x00000ec1   Thumb Code   222  st7735.o(i.ST7735_Line)
+    ST7735_OutChar                           0x00000fa1   Thumb Code   176  st7735.o(i.ST7735_OutChar)
+    ST7735_OutString                         0x00001075   Thumb Code    24  st7735.o(i.ST7735_OutString)
+    ST7735_SetCursor                         0x0000108d   Thumb Code    22  st7735.o(i.ST7735_SetCursor)
+    SetAlarm_Init                            0x000010ad   Thumb Code    16  setalarm.o(i.SetAlarm_Init)
+    SetTime_Init                             0x000010c9   Thumb Code    16  settime.o(i.SetTime_Init)
+    Switch_Init                              0x000010e5   Thumb Code   100  switch.o(i.Switch_Init)
+    SysTick_Init                             0x00001159   Thumb Code    24  systick.o(i.SysTick_Init)
+    TimeDisplay_Init                         0x00001171   Thumb Code     8  timedisplay.o(i.TimeDisplay_Init)
+    Timer1A_Handler                          0x0000117d   Thumb Code    80  timer1.o(i.Timer1A_Handler)
+    Timer1_Init                              0x000011dd   Thumb Code    76  timer1.o(i.Timer1_Init)
+    ToggleAlarmTrigger                       0x0000123d   Thumb Code    36  togglealarm.o(i.ToggleAlarmTrigger)
+    ToggleAlarm_Init                         0x00001265   Thumb Code     8  togglealarm.o(i.ToggleAlarm_Init)
+    __0sprintf$1                             0x00001271   Thumb Code    34  printf1.o(i.__0sprintf$1)
+    __1sprintf$1                             0x00001271   Thumb Code     0  printf1.o(i.__0sprintf$1)
+    __2sprintf                               0x00001271   Thumb Code     0  printf1.o(i.__0sprintf$1)
+    __ARM_fpclassify                         0x00001299   Thumb Code    40  fpclassify.o(i.__ARM_fpclassify)
+    __ieee754_rem_pio2                       0x000012c1   Thumb Code   832  rred.o(i.__ieee754_rem_pio2)
+    __kernel_cos                             0x00001649   Thumb Code   230  cos_i.o(i.__kernel_cos)
+    __kernel_poly                            0x00001745   Thumb Code   170  poly.o(i.__kernel_poly)
+    __kernel_sin                             0x000017f1   Thumb Code   224  sin_i.o(i.__kernel_sin)
+    __mathlib_dbl_underflow                  0x000018dd   Thumb Code    10  dunder.o(i.__mathlib_dbl_underflow)
+    __scatterload_copy                       0x000018ed   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x000018fb   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x000018fd   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    __set_errno                              0x0000190d   Thumb Code     6  errno.o(i.__set_errno)
+    cos                                      0x00001c51   Thumb Code   164  cos.o(i.cos)
+    main                                     0x00001cfd   Thumb Code   182  st7735testmain.o(i.main)
+    sin                                      0x00001e61   Thumb Code   166  sin.o(i.sin)
+    dBfs                                     0x00002542   Data         512  st7735.o(.constdata)
+    Region$$Table$$Base                      0x00002868   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00002888   Number         0  anon$$obj.o(Region$$Table)
     StX                                      0x20000000   Data           4  st7735.o(.data)
     StY                                      0x20000004   Data           4  st7735.o(.data)
     StTextColor                              0x20000008   Data           2  st7735.o(.data)
@@ -1045,8 +1087,12 @@ Image Symbol Table
     Time_Minutes                             0x20000038   Data           2  st7735testmain.o(.data)
     Time_Hours                               0x2000003a   Data           2  st7735testmain.o(.data)
     PeriodicTask                             0x2000003c   Data           4  timer1.o(.data)
-    Display_Mode                             0x20000040   Data           4  timedisplay.o(.data)
-    __initial_sp                             0x20000448   Data           0  startup.o(STACK)
+    Alarm_Seconds                            0x20000040   Data           2  setalarm.o(.data)
+    Alarm_Minutes                            0x20000042   Data           2  setalarm.o(.data)
+    Alarm_Hours                              0x20000044   Data           2  setalarm.o(.data)
+    Display_Mode                             0x20000048   Data           4  timedisplay.o(.data)
+    Alarm_Triggered                          0x2000004c   Data           2  togglealarm.o(.data)
+    __initial_sp                             0x20000458   Data           0  startup.o(STACK)
 
 
 
@@ -1056,113 +1102,127 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00002728, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x000028dc, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Base: 0x00000000, Size: 0x000026e0, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x00000000, Size: 0x00002888, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000000   Code   RO          633  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000284   0x00000004   Code   RO          921    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x00000288   0x00000004   Code   RO          924    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x0000028c   0x00000000   Code   RO          926    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x0000028c   0x00000000   Code   RO          928    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x0000028c   0x00000008   Code   RO          929    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x00000294   0x00000000   Code   RO          931    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x00000294   0x00000000   Code   RO          933    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x00000294   0x00000004   Code   RO          922    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x00000284   0x00000000   Code   RO          684  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000284   0x00000004   Code   RO          972    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000288   0x00000004   Code   RO          975    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000028c   0x00000000   Code   RO          977    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000028c   0x00000000   Code   RO          979    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000028c   0x00000008   Code   RO          980    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000294   0x00000000   Code   RO          982    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000294   0x00000000   Code   RO          984    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000294   0x00000004   Code   RO          973    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x00000298   0x0000001c   Code   RO            4    .text               startup.o
-    0x000002b4   0x0000014e   Code   RO          897    .text               mf_w.l(dadd.o)
-    0x00000402   0x000000e4   Code   RO          899    .text               mf_w.l(dmul.o)
-    0x000004e6   0x000000de   Code   RO          901    .text               mf_w.l(ddiv.o)
-    0x000005c4   0x00000022   Code   RO          903    .text               mf_w.l(dflti.o)
-    0x000005e6   0x00000032   Code   RO          905    .text               mf_w.l(dfixui.o)
-    0x00000618   0x0000002c   Code   RO          936    .text               mc_w.l(uidiv.o)
-    0x00000644   0x0000001e   Code   RO          940    .text               mc_w.l(llshl.o)
-    0x00000662   0x00000020   Code   RO          942    .text               mc_w.l(llushr.o)
-    0x00000682   0x00000024   Code   RO          944    .text               mc_w.l(llsshr.o)
-    0x000006a6   0x00000000   Code   RO          953    .text               mc_w.l(iusefp.o)
-    0x000006a6   0x000000be   Code   RO          954    .text               mf_w.l(depilogue.o)
-    0x00000764   0x0000002e   Code   RO          956    .text               mf_w.l(dscalb.o)
+    0x000002b4   0x0000014e   Code   RO          948    .text               mf_w.l(dadd.o)
+    0x00000402   0x000000e4   Code   RO          950    .text               mf_w.l(dmul.o)
+    0x000004e6   0x000000de   Code   RO          952    .text               mf_w.l(ddiv.o)
+    0x000005c4   0x00000022   Code   RO          954    .text               mf_w.l(dflti.o)
+    0x000005e6   0x00000032   Code   RO          956    .text               mf_w.l(dfixui.o)
+    0x00000618   0x0000002c   Code   RO          987    .text               mc_w.l(uidiv.o)
+    0x00000644   0x0000001e   Code   RO          991    .text               mc_w.l(llshl.o)
+    0x00000662   0x00000020   Code   RO          993    .text               mc_w.l(llushr.o)
+    0x00000682   0x00000024   Code   RO          995    .text               mc_w.l(llsshr.o)
+    0x000006a6   0x00000000   Code   RO         1004    .text               mc_w.l(iusefp.o)
+    0x000006a6   0x000000be   Code   RO         1005    .text               mf_w.l(depilogue.o)
+    0x00000764   0x0000002e   Code   RO         1007    .text               mf_w.l(dscalb.o)
     0x00000792   0x00000002   PAD
-    0x00000794   0x00000024   Code   RO          968    .text               mc_w.l(init.o)
-    0x000007b8   0x0000001a   Code   RO          970    .text               mf_w.l(dfltui.o)
-    0x000007d2   0x0000003e   Code   RO          972    .text               mf_w.l(dfixi.o)
-    0x00000810   0x00000020   Code   RO           34    i.Delay1ms          st7735.o
-    0x00000830   0x00000038   Code   RO          571    i.DisplayDigital    timedisplay.o
-    0x00000868   0x000000cc   Code   RO          572    i.DisplayHour       timedisplay.o
-    0x00000934   0x000000cc   Code   RO          573    i.DisplayMinute     timedisplay.o
-    0x00000a00   0x0000001c   Code   RO          574    i.DisplayRefresh    timedisplay.o
-    0x00000a1c   0x00000020   Code   RO          447    i.DisplaySetTime    settime.o
-    0x00000a3c   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
-    0x00000ab8   0x000000f4   Code   RO           43    i.ST7735_DrawCharS  st7735.o
-    0x00000bac   0x00000048   Code   RO           46    i.ST7735_DrawPixel  st7735.o
-    0x00000bf4   0x00000056   Code   RO           47    i.ST7735_DrawString  st7735.o
-    0x00000c4a   0x00000002   PAD
-    0x00000c4c   0x000000ac   Code   RO           48    i.ST7735_FillRect   st7735.o
-    0x00000cf8   0x00000024   Code   RO           49    i.ST7735_FillScreen  st7735.o
-    0x00000d1c   0x0000007c   Code   RO           51    i.ST7735_InitR      st7735.o
-    0x00000d98   0x000000e8   Code   RO           53    i.ST7735_Line       st7735.o
-    0x00000e80   0x000000d4   Code   RO           54    i.ST7735_OutChar    st7735.o
-    0x00000f54   0x00000018   Code   RO           55    i.ST7735_OutString  st7735.o
-    0x00000f6c   0x00000020   Code   RO           65    i.ST7735_SetCursor  st7735.o
-    0x00000f8c   0x00000002   Code   RO          448    i.SetTime_Init      settime.o
-    0x00000f8e   0x00000002   PAD
-    0x00000f90   0x00000074   Code   RO          371    i.Switch_Init       switch.o
-    0x00001004   0x00000018   Code   RO          344    i.SysTick_Init      systick.o
-    0x0000101c   0x00000014   Code   RO          576    i.TimeDisplay_Init  timedisplay.o
-    0x00001030   0x00000060   Code   RO          425    i.Timer1A_Handler   timer1.o
-    0x00001090   0x00000060   Code   RO          426    i.Timer1_Init       timer1.o
-    0x000010f0   0x00000028   Code   RO          683    i.__0sprintf$1      mc_w.l(printf1.o)
-    0x00001118   0x00000028   Code   RO          964    i.__ARM_fpclassify  m_ws.l(fpclassify.o)
-    0x00001140   0x00000388   Code   RO          910    i.__ieee754_rem_pio2  m_ws.l(rred.o)
-    0x000014c8   0x000000fc   Code   RO          907    i.__kernel_cos      m_ws.l(cos_i.o)
-    0x000015c4   0x000000aa   Code   RO          966    i.__kernel_poly     m_ws.l(poly.o)
-    0x0000166e   0x00000002   PAD
-    0x00001670   0x000000ec   Code   RO          915    i.__kernel_sin      m_ws.l(sin_i.o)
-    0x0000175c   0x00000010   Code   RO          962    i.__mathlib_dbl_underflow  m_ws.l(dunder.o)
-    0x0000176c   0x0000000e   Code   RO          976    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x0000177a   0x00000002   Code   RO          977    i.__scatterload_null  mc_w.l(handlers.o)
-    0x0000177c   0x0000000e   Code   RO          978    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x0000178a   0x00000002   PAD
-    0x0000178c   0x0000000c   Code   RO          948    i.__set_errno       mc_w.l(errno.o)
-    0x00001798   0x00000154   Code   RO          688    i._printf_core      mc_w.l(printf1.o)
-    0x000018ec   0x0000000a   Code   RO          690    i._sputc            mc_w.l(printf1.o)
-    0x000018f6   0x00000056   Code   RO           69    i.commandList       st7735.o
-    0x0000194c   0x00000184   Code   RO           70    i.commonInit        st7735.o
-    0x00001ad0   0x000000ac   Code   RO          618    i.cos               m_ws.l(cos.o)
-    0x00001b7c   0x000000b4   Code   RO          323    i.main              st7735testmain.o
-    0x00001c30   0x00000012   Code   RO           75    i.pushColor         st7735.o
-    0x00001c42   0x00000002   PAD
-    0x00001c44   0x00000074   Code   RO           76    i.setAddrWindow     st7735.o
-    0x00001cb8   0x000000b0   Code   RO          626    i.sin               m_ws.l(sin.o)
-    0x00001d68   0x00000030   Code   RO           77    i.writecommand      st7735.o
-    0x00001d98   0x00000020   Code   RO           78    i.writedata         st7735.o
-    0x00001db8   0x000007e2   Data   RO           80    .constdata          st7735.o
-    0x0000259a   0x00000006   PAD
-    0x000025a0   0x00000030   Data   RO          908    .constdata          m_ws.l(cos_i.o)
-    0x000025d0   0x000000c8   Data   RO          912    .constdata          m_ws.l(rred.o)
-    0x00002698   0x00000028   Data   RO          916    .constdata          m_ws.l(sin_i.o)
-    0x000026c0   0x00000020   Data   RO          974    Region$$Table       anon$$obj.o
+    0x00000794   0x00000024   Code   RO         1019    .text               mc_w.l(init.o)
+    0x000007b8   0x0000001a   Code   RO         1021    .text               mf_w.l(dfltui.o)
+    0x000007d2   0x0000003e   Code   RO         1023    .text               mf_w.l(dfixi.o)
+    0x00000810   0x00000030   Code   RO          615    i.CheckAlarmTime    togglealarm.o
+    0x00000840   0x00000014   Code   RO          616    i.CheckAlarmTrigger  togglealarm.o
+    0x00000854   0x00000020   Code   RO           34    i.Delay1ms          st7735.o
+    0x00000874   0x00000038   Code   RO          493    i.DisplayAlarm      setalarm.o
+    0x000008ac   0x00000014   Code   RO          494    i.DisplayAlarmTime  setalarm.o
+    0x000008c0   0x00000038   Code   RO          569    i.DisplayDigital    timedisplay.o
+    0x000008f8   0x000000cc   Code   RO          570    i.DisplayHour       timedisplay.o
+    0x000009c4   0x00000090   Code   RO          649    i.DisplayMainMenu   mainmenu.o
+    0x00000a54   0x000000cc   Code   RO          571    i.DisplayMinute     timedisplay.o
+    0x00000b20   0x0000001c   Code   RO          572    i.DisplayRefresh    timedisplay.o
+    0x00000b3c   0x00000020   Code   RO          444    i.DisplaySetTime    settime.o
+    0x00000b5c   0x00000008   Code   RO          650    i.MainMenu_Init     mainmenu.o
+    0x00000b64   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
+    0x00000be0   0x000000f4   Code   RO           43    i.ST7735_DrawCharS  st7735.o
+    0x00000cd4   0x00000048   Code   RO           46    i.ST7735_DrawPixel  st7735.o
+    0x00000d1c   0x00000056   Code   RO           47    i.ST7735_DrawString  st7735.o
+    0x00000d72   0x00000002   PAD
+    0x00000d74   0x000000ac   Code   RO           48    i.ST7735_FillRect   st7735.o
+    0x00000e20   0x00000024   Code   RO           49    i.ST7735_FillScreen  st7735.o
+    0x00000e44   0x0000007c   Code   RO           51    i.ST7735_InitR      st7735.o
+    0x00000ec0   0x000000de   Code   RO           53    i.ST7735_Line       st7735.o
+    0x00000f9e   0x00000002   PAD
+    0x00000fa0   0x000000d4   Code   RO           54    i.ST7735_OutChar    st7735.o
+    0x00001074   0x00000018   Code   RO           55    i.ST7735_OutString  st7735.o
+    0x0000108c   0x00000020   Code   RO           65    i.ST7735_SetCursor  st7735.o
+    0x000010ac   0x0000001c   Code   RO          495    i.SetAlarm_Init     setalarm.o
+    0x000010c8   0x0000001c   Code   RO          445    i.SetTime_Init      settime.o
+    0x000010e4   0x00000074   Code   RO          368    i.Switch_Init       switch.o
+    0x00001158   0x00000018   Code   RO          341    i.SysTick_Init      systick.o
+    0x00001170   0x0000000c   Code   RO          574    i.TimeDisplay_Init  timedisplay.o
+    0x0000117c   0x00000060   Code   RO          422    i.Timer1A_Handler   timer1.o
+    0x000011dc   0x00000060   Code   RO          423    i.Timer1_Init       timer1.o
+    0x0000123c   0x00000028   Code   RO          617    i.ToggleAlarmTrigger  togglealarm.o
+    0x00001264   0x0000000c   Code   RO          618    i.ToggleAlarm_Init  togglealarm.o
+    0x00001270   0x00000028   Code   RO          734    i.__0sprintf$1      mc_w.l(printf1.o)
+    0x00001298   0x00000028   Code   RO         1015    i.__ARM_fpclassify  m_ws.l(fpclassify.o)
+    0x000012c0   0x00000388   Code   RO          961    i.__ieee754_rem_pio2  m_ws.l(rred.o)
+    0x00001648   0x000000fc   Code   RO          958    i.__kernel_cos      m_ws.l(cos_i.o)
+    0x00001744   0x000000aa   Code   RO         1017    i.__kernel_poly     m_ws.l(poly.o)
+    0x000017ee   0x00000002   PAD
+    0x000017f0   0x000000ec   Code   RO          966    i.__kernel_sin      m_ws.l(sin_i.o)
+    0x000018dc   0x00000010   Code   RO         1013    i.__mathlib_dbl_underflow  m_ws.l(dunder.o)
+    0x000018ec   0x0000000e   Code   RO         1027    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x000018fa   0x00000002   Code   RO         1028    i.__scatterload_null  mc_w.l(handlers.o)
+    0x000018fc   0x0000000e   Code   RO         1029    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x0000190a   0x00000002   PAD
+    0x0000190c   0x0000000c   Code   RO          999    i.__set_errno       mc_w.l(errno.o)
+    0x00001918   0x00000154   Code   RO          739    i._printf_core      mc_w.l(printf1.o)
+    0x00001a6c   0x0000000a   Code   RO          741    i._sputc            mc_w.l(printf1.o)
+    0x00001a76   0x00000056   Code   RO           69    i.commandList       st7735.o
+    0x00001acc   0x00000184   Code   RO           70    i.commonInit        st7735.o
+    0x00001c50   0x000000ac   Code   RO          669    i.cos               m_ws.l(cos.o)
+    0x00001cfc   0x000000dc   Code   RO          323    i.main              st7735testmain.o
+    0x00001dd8   0x00000012   Code   RO           75    i.pushColor         st7735.o
+    0x00001dea   0x00000002   PAD
+    0x00001dec   0x00000074   Code   RO           76    i.setAddrWindow     st7735.o
+    0x00001e60   0x000000b0   Code   RO          677    i.sin               m_ws.l(sin.o)
+    0x00001f10   0x00000030   Code   RO           77    i.writecommand      st7735.o
+    0x00001f40   0x00000020   Code   RO           78    i.writedata         st7735.o
+    0x00001f60   0x000007e2   Data   RO           80    .constdata          st7735.o
+    0x00002742   0x00000006   PAD
+    0x00002748   0x00000030   Data   RO          959    .constdata          m_ws.l(cos_i.o)
+    0x00002778   0x000000c8   Data   RO          963    .constdata          m_ws.l(rred.o)
+    0x00002840   0x00000028   Data   RO          967    .constdata          m_ws.l(sin_i.o)
+    0x00002868   0x00000020   Data   RO         1025    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000048, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000054, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x0000002c   Data   RW           81    .data               st7735.o
     0x2000002c   0x00000010   Data   RW          324    .data               st7735testmain.o
-    0x2000003c   0x00000004   Data   RW          427    .data               timer1.o
-    0x20000040   0x00000004   Data   RW          577    .data               timedisplay.o
-    0x20000044   0x00000004   Data   RW          949    .data               mc_w.l(errno.o)
+    0x2000003c   0x00000004   Data   RW          424    .data               timer1.o
+    0x20000040   0x00000006   Data   RW          501    .data               setalarm.o
+    0x20000046   0x00000002   PAD
+    0x20000048   0x00000004   Data   RW          575    .data               timedisplay.o
+    0x2000004c   0x00000002   Data   RW          619    .data               togglealarm.o
+    0x2000004e   0x00000002   PAD
+    0x20000050   0x00000004   Data   RW         1000    .data               mc_w.l(errno.o)
 
 
-    Execution Region ER_ZI (Base: 0x20000048, Size: 0x00000400, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Base: 0x20000054, Size: 0x00000404, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000048   0x00000400   Zero   RW            1    STACK               startup.o
+    0x20000054   0x00000004   PAD
+    0x20000058   0x00000400   Zero   RW            1    STACK               startup.o
 
 
 ==============================================================================
@@ -1172,20 +1232,23 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       124          6          0          0          0       4643   pll.o
-        34          6          0          0          0        788   settime.o
-      1954        190       2018         44          0      13660   st7735.o
-       180         38          0         16          0       1557   st7735testmain.o
+       152         72          0          0          0        830   mainmenu.o
+       124          6          0          0          0       4679   pll.o
+       104         34          0          6          0       2003   setalarm.o
+        60         18          0          0          0        804   settime.o
+      1944        190       2018         44          0      13576   st7735.o
+       220         38          0         16          0       1637   st7735testmain.o
        672        622          0          0       1024        924   startup.o
        116         16          0          0          0        418   switch.o
         24          0          0          0          0        379   systick.o
-       512         88          0          4          0       2872   timedisplay.o
-       192         36          0          4          0       1574   timer1.o
+       504         86          0          4          0       2856   timedisplay.o
+       192         36          0          4          0       1590   timer1.o
+       120         30          0          2          0       2462   togglealarm.o
 
     ----------------------------------------------------------------------
-      3814       1002       2056         68       1024      26815   Object Totals
+      4238       1148       2056         80       1024      32158   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         6          0          6          0          0          0   (incl. Padding)
+         6          0          6          4          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1227,8 +1290,8 @@ Image component sizes
         46          0          0          0          0         80   dscalb.o
 
     ----------------------------------------------------------------------
-      3794        164        288          4          0       2428   Library Totals
-         6          0          0          0          0          0   (incl. Padding)
+      3794        164        288          4          4       2428   Library Totals
+         6          0          0          0          4          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1239,7 +1302,7 @@ Image component sizes
       1192          0          0          0          0        908   mf_w.l
 
     ----------------------------------------------------------------------
-      3794        164        288          4          0       2428   Library Totals
+      3794        164        288          4          4       2428   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -1248,15 +1311,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      7608       1166       2344         72       1024      26643   Grand Totals
-      7608       1166       2344         72       1024      26643   ELF Image Totals
-      7608       1166       2344         72          0          0   ROM Totals
+      8032       1312       2344         84       1028      31466   Grand Totals
+      8032       1312       2344         84       1028      31466   ELF Image Totals
+      8032       1312       2344         84          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 9952 (   9.72kB)
-    Total RW  Size (RW Data + ZI Data)              1096 (   1.07kB)
-    Total ROM Size (Code + RO Data + RW Data)      10024 (   9.79kB)
+    Total RO  Size (Code + RO Data)                10376 (  10.13kB)
+    Total RW  Size (RW Data + ZI Data)              1112 (   1.09kB)
+    Total ROM Size (Code + RO Data + RW Data)      10460 (  10.21kB)
 
 ==============================================================================
 

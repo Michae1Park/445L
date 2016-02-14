@@ -455,6 +455,21 @@
               <FileType>1</FileType>
               <FilePath>.\PWM.c</FilePath>
             </File>
+            <File>
+              <FileName>TimeDisplay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\TimeDisplay.c</FilePath>
+            </File>
+            <File>
+              <FileName>ToggleAlarm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ToggleAlarm.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainMenu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainMenu.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

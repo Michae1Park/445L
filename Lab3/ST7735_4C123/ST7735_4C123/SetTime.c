@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "SetTime.h"
-#include "Timer1.h"
 #include "TimeDisplay.h"
 #include "../Shared/tm4c123gh6pm.h"
 
@@ -20,7 +19,10 @@ extern volatile uint32_t Display_Mode; //from TimeDisplay Class
 
 void SetTime_Init(void)
 {
-
+	Time_Seconds=0;
+	Time_Minutes=0;
+	Time_Hours=0;
+	
 }
 void DisplaySetTime(void){
 	//disable interrupts

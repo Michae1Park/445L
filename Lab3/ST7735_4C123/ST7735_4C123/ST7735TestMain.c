@@ -8,6 +8,8 @@
 #include "Timer1.h"
 #include "Switch.h"
 #include "SetAlarm.h"
+#include "ToggleAlarm.h"
+#include "MainMenu.h"
 #include "../Shared/tm4c123gh6pm.h"
 
 
@@ -26,7 +28,7 @@ volatile uint16_t TimeDisplay_Mode, SetTime_Mode, SetAlarm_Mode, ToggleAlarm_Mod
 volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
 
 
-int main(void){uint32_t j; // main 1
+int main(void){
   PLL_Init(Bus80MHz);                  	// set system clock to 80 MHz
 	Timer1_Init(0, PERIOD);								// Init Timer1 for global clock
   ST7735_InitR(INITR_REDTAB);						// Init PORTA and LCD initializations
@@ -45,9 +47,15 @@ int main(void){uint32_t j; // main 1
 	//USER FUNCTION INIT
 	TimeDisplay_Init();										// Self Described Init Functions
 	SetTime_Init();												
-	//SetAlarm_Init();
-	//ToggleAlarm_Init();
-	//MainMenu_Init();
+	SetAlarm_Init();
+	ToggleAlarm_Init();
+	MainMenu_Init();
+	
+	MainMenu_Mode=1;
+	TimeDisplay_Mode=0;
+	SetTime_Mode=0;
+	SetAlarm_Mode=0;
+	ToggleAlarm_Mode=0;
 	
 	EnableInterrupts();										// Enable Interrupts
 	
@@ -59,13 +67,10 @@ int main(void){uint32_t j; // main 1
 			DisplaySetTime();
 		}
 		if(SetAlarm_Mode==1){
-			
-		}
-		if(ToggleAlarm_Mode==1){
-			
+			DisplayAlarmTime();
 		}
 		if(MainMenu_Mode==1){
 			
-		}
+		}	
   }
 }

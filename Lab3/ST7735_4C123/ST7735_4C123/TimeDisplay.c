@@ -4,11 +4,10 @@
 
 #include <stdint.h>
 #include <stdio.h>
-#include "../Shared/tm4c123gh6pm.h"
-#include "ST7735.h"
 #include <math.h>
+#include "ST7735.h"
 #include "TimeDisplay.h"
-
+#include "../Shared/tm4c123gh6pm.h"
 
 #define CENTER_X 63
 #define CENTER_Y 79
@@ -28,7 +27,6 @@ volatile uint32_t Display_Mode;
 // Output: none
 void TimeDisplay_Init(void){ 
 	Display_Mode=0;
-	DisplayRefresh();
 }
 void DisplayMinute(void){
 	ST7735_Line(CENTER_X,CENTER_Y,CENTER_X+60*sin(Time_Minutes*6*PI/180),CENTER_Y+60*cos(Time_Minutes*6*PI/180),ST7735_BLACK);

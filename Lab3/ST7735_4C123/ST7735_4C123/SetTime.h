@@ -5,11 +5,6 @@
 // Lab Number: 16340
 // TA: Mahesh Srinivasan
 // Last Revised: 02/15/16
-#include <stdio.h>
-#include <stdint.h>
-#include "../Shared/tm4c123gh6pm.h"
-
-//global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
 
 void SetTime_Init(void);
 //Assuming Time interrupt is disalbed
@@ -24,3 +19,4 @@ void decrementHour(void);
 void incrementMin(void);
 
 void decrementMin(void);
+

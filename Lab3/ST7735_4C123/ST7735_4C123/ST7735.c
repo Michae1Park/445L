@@ -1631,11 +1631,6 @@ void Output_Color(uint32_t newColor){ // Set color of future output
 // Output: none
 
 void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color){
-
-	if(y1<32)
-		y1=32;
-	if(y2<32)
-		y2=32;
 	int16_t num, denom;
 	uint16_t currentX, currentY;
 	int32_t inc = 0;
@@ -1643,7 +1638,6 @@ void ST7735_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 	denom = x2 - x1;
 	currentX = x1;
 	currentY = y1;
-	int32_t store=0; 	
 	
 	if (abs(denom) > abs(num) )
 	{

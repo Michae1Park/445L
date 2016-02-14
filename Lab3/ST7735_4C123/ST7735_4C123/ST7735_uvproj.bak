@@ -425,6 +425,36 @@
               <FileType>1</FileType>
               <FilePath>.\ST7735TestMain.c</FilePath>
             </File>
+            <File>
+              <FileName>SysTick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SysTick.c</FilePath>
+            </File>
+            <File>
+              <FileName>Switch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Switch.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Timer1.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetTime.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SetTime.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetAlarm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SetAlarm.c</FilePath>
+            </File>
+            <File>
+              <FileName>PWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PWM.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
