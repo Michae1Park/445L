@@ -421,11 +421,6 @@
               <FilePath>.\ST7735.c</FilePath>
             </File>
             <File>
-              <FileName>SysTick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SysTick.c</FilePath>
-            </File>
-            <File>
               <FileName>Switch.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Switch.c</FilePath>
@@ -459,6 +454,11 @@
               <FileName>AlarmClockMain.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\AlarmClockMain.c</FilePath>
+            </File>
+            <File>
+              <FileName>SysTickInts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SysTickInts.c</FilePath>
             </File>
           </Files>
         </Group>

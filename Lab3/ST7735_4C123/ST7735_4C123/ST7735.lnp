@@ -2,7 +2,6 @@
 ".\startup.o"
 ".\pll.o"
 ".\st7735.o"
-".\systick.o"
 ".\switch.o"
 ".\timer1.o"
 ".\settime.o"
@@ -10,6 +9,7 @@
 ".\pwm.o"
 ".\timedisplay.o"
 ".\alarmclockmain.o"
+".\systickints.o"
 --library_type=microlib --ro-base 0x00000000 --entry 0x00000000 --rw-base 0x20000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\ST7735.map" -o .\ST7735.axf

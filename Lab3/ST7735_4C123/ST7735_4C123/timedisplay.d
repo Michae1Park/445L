@@ -6,3 +6,5 @@
 .\timedisplay.o: C:\Keil\ARM\ARMCC\bin\..\include\math.h
 .\timedisplay.o: TimeDisplay.h
 .\timedisplay.o: Timer1.h
+.\timedisplay.o: SetAlarm.h
+.\timedisplay.o: Common.h

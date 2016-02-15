@@ -17,8 +17,9 @@
 #include "SetAlarm.h"
 #include "../Shared/tm4c123gh6pm.h"
 #include "PWM.h"
-#include "SystickInts.h"
+#include "SysTickInts.h"
 #include "Common.h"
+#include "TimeDisplay.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -43,6 +44,7 @@ void MainMenu(void);
 volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
+volatile uint32_t timeout=0;
 
 int main(void)
 {
@@ -63,71 +65,52 @@ int main(void)
   GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF
 	
-	
 	//USER FUNCTION INIT							// Self Described Init Functions									
-	//SetAlarm_Init();
-	//ToggleAlarm_Init();
 	MainMenu();
 	counts = 0;
 	Mode = 0xFFFF;
 	SysTick_Init(80000);        		// initialize SysTick timer
 	EnableInterrupts();							// Enable Interrupts
-	
-/*	Output_Clear();
-	ClockFace_Init();
-	DisplaySecond();
-	DisplayMinute();
-	DisplayHour();
-	while(1)
-	{
-		if(displayFlag == 0x01) 
-		{
-			displayFlag = 0xFF;
-			EraseSecond();
-			DisplaySecond();
-		}
-		if(displayFlag == 0x03) 
-		{
-			displayFlag = 0xFF;
-			EraseSecond();
-			DisplaySecond();
-			EraseMinute();
-			DisplayMinute();
-		}
-		if(displayFlag == 0x07) 
-		{
-			displayFlag = 0xFF;
-			EraseSecond();
-			DisplaySecond();
-			EraseMinute();
-			DisplayMinute();
-			EraseHour();
-			DisplayHour();
-		}
-	}
-	*/
-	
+
+	//Main Loop
   while(1) 
   {	
+		if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && alarm_flag)
+		{
+			//enable PWM
+		}
+		else if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && (!alarm_flag))
+		{
+			//disable PWM
+		}
+		
 		if(Mode == SetTime_Mode)
 		{
 			Mode = 0xFFFF;	//Acknowledge mode
+			active_In10s = 1;
 			changeTime();
 			MainMenu();
 		}
 		if(Mode == SetAlarm_Mode)
 		{
 			Mode = 0xFFFF;
-			//setAlarmTimeBase();
+			active_In10s = 1;
+			setAlarmTimeBase();
 			MainMenu();
 		}
 		if(Mode == ToggleAlarm_Mode)
 		{
 			Mode = 0xFFFF;
+			active_In10s = 1;
+			alarm_flag ^= 0x1;
 		}
 		if(Mode == TimeDisplay_Mode)
 		{
 			Mode = 0xFFFF;
+			active_In10s = 1;
+			display_mode ^= 0x1;
+			ChooseMode();
+			MainMenu();
 		}
   }
 }
@@ -145,13 +128,20 @@ void MainMenu(void)
 }
 
 // Interrupt service routine
-// Executed every 12.5ns*(period)
+// Executed every 12.5ns*(period) = 1ms
 void SysTick_Handler(void)
 {
   counts = counts + 1;
-	if((counts % 1000) == 0)
+	if((counts % 1000) == 0)	//every 1s
 	{
 		PF2 ^= 0x04;                // toggle PF2
+		timeout += 1;
+	}
+	
+	if(timeout == 10)
+	{
+		active_In10s = 0;
+		timeout = 0;
 	}
 }
 
@@ -170,21 +160,25 @@ void GPIOPortB_Handler(void)
 	{
 		GPIO_PORTB_ICR_R = 0x01; //acknowledge flag1 and clear
 		Mode = SetTime_Mode;
+		timeout = 0;
 	}
 	if (GPIO_PORTB_RIS_R & 0X02) //poll PB1
 	{
 		GPIO_PORTB_ICR_R = 0x02; //acknowledge flag1 and clear	
 		Mode = SetAlarm_Mode;
+		timeout = 0;
 	}
 	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
 	{
 		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
 		Mode = ToggleAlarm_Mode;
+		timeout = 0;
 	}
 	if (GPIO_PORTB_RIS_R & 0X08) //poll PB3
 	{
 		GPIO_PORTB_ICR_R = 0x08; //acknowledge flag1 and clear
 		Mode = TimeDisplay_Mode;
+		timeout = 0;
 	}
 
 }

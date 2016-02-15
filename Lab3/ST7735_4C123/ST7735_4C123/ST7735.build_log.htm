@@ -14,32 +14,20 @@ compiling ST7735.c...
 ST7735.c(1646): warning:  #177-D: variable "store" was declared but never referenced
         int32_t store=0;        
 ST7735.c: 1 warning, 0 errors
-compiling SysTick.c...
 compiling Switch.c...
-SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
-  void AlarmToggleOFF(void);
-Switch.c: 1 warning, 0 errors
 compiling Timer1.c...
 compiling SetTime.c...
 compiling SetAlarm.c...
-SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
-  void AlarmToggleOFF(void);
-SetAlarm.c(55): warning:  #186-D: pointless comparison of unsigned integer with zero
-    if((--alarm_hours)<0) {alarm_hours = 23;} //if hour below 0, reset to 23
-SetAlarm.c(67): warning:  #186-D: pointless comparison of unsigned integer with zero
-    if((--alarm_minutes)<0) {alarm_minutes = 59;} //if min below 0, reset to 59
-SetAlarm.c(82): warning:  #1-D: last line of file ends without a newline
+SetAlarm.c(99): warning:  #1-D: last line of file ends without a newline
   }
-SetAlarm.c: 4 warnings, 0 errors
+SetAlarm.c: 1 warning, 0 errors
 compiling PWM.c...
 compiling TimeDisplay.c...
 compiling AlarmClockMain.c...
-SetAlarm.h(21): warning:  #1-D: last line of file ends without a newline
-  void AlarmToggleOFF(void);
-AlarmClockMain.c: 1 warning, 0 errors
+compiling SysTickInts.c...
 linking...
-Program Size: Code=8904 RO-data=2344 RW-data=140 ZI-data=1028  
-".\ST7735.axf" - 0 Error(s), 7 Warning(s).
+Program Size: Code=10416 RO-data=2344 RW-data=156 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 2 Warning(s).
 Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\445L\\Lab3\\ST7735_4C123\\ST7735_4C123\\ST7735.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
@@ -48,8 +36,19 @@ Verify OK.
 </pre>
 </body>
 </html>
-e: Code=8836 RO-data=2340 RW-data=136 ZI-data=1024  
-".\ST7735.axf" - 0 Error(s), 10 Warning(s).
+de=9696 RO-data=2344 RW-data=156 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 4 Warning(s).
+Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\445L\\Lab3\\ST7735_4C123\\ST7735_4C123\\ST7735.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+haelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\445L\\Lab3\\ST7735_4C123\\ST7735_4C123\\ST7735.axf" 
+_____^
+*** error 56: cannot open file
+Error: Flash Download failed  -  Could not load file 'C:\Users\MichaelPark\Desktop\UT\4-1 Spring 2016\EE 445L\Labs\445L\Lab3\ST7735_4C123\ST7735_4C123\ST7735.axf'
+  
+".\ST7735.axf" - 0 Error(s), 9 Warning(s).
 Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\445L\\Lab3\\ST7735_4C123\\ST7735_4C123\\ST7735.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.

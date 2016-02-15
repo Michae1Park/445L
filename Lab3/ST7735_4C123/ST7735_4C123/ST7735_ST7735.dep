@@ -11,59 +11,68 @@ I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C87C24)
 I (ST7735.h)(0x56C068F6)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (C:\Keil\ARM\ARMCC\include\math.h)(0x51C87C24)
-F (.\SysTick.c)(0x56BE5E49)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
-I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
-F (.\Switch.c)(0x56C140C2)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
+F (.\Switch.c)(0x56C15F7F)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (SysTick.h)(0x56BE5E49)
 I (Switch.h)(0x56C140C2)
 I (SetTime.h)(0x56C13D4E)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
-I (SetAlarm.h)(0x56BE5E49)
-I (TimeDisplay.h)(0x56C13BD5)
+I (SetAlarm.h)(0x56C15059)
+I (TimeDisplay.h)(0x56C16507)
 I (ST7735.h)(0x56C068F6)
-F (.\Timer1.c)(0x56C10423)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer1.o --omf_browse .\timer1.crf --depend .\timer1.d)
+F (.\Timer1.c)(0x56C1607F)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer1.o --omf_browse .\timer1.crf --depend .\timer1.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (Timer1.h)(0x56C103D3)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
-F (.\SetTime.c)(0x56C14000)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\settime.o --omf_browse .\settime.crf --depend .\settime.d)
+F (.\SetTime.c)(0x56C160B9)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\settime.o --omf_browse .\settime.crf --depend .\settime.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (SetTime.h)(0x56C13D4E)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (Timer1.h)(0x56C103D3)
-I (TimeDisplay.h)(0x56C13BD5)
+I (TimeDisplay.h)(0x56C16507)
 I (Common.h)(0x56C1384D)
 I (ST7735.h)(0x56C068F6)
-F (.\SetAlarm.c)(0x56BE5E49)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\setalarm.o --omf_browse .\setalarm.crf --depend .\setalarm.d)
+F (.\SetAlarm.c)(0x56C15F1B)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\setalarm.o --omf_browse .\setalarm.crf --depend .\setalarm.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
-I (SetAlarm.h)(0x56BE5E49)
+I (SetTime.h)(0x56C13D4E)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
-F (.\PWM.c)(0x56C03BD0)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pwm.o --omf_browse .\pwm.crf --depend .\pwm.d)
+I (Timer1.h)(0x56C103D3)
+I (TimeDisplay.h)(0x56C16507)
+I (Common.h)(0x56C1384D)
+I (ST7735.h)(0x56C068F6)
+I (SetAlarm.h)(0x56C15059)
+F (.\PWM.c)(0x56C147CC)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pwm.o --omf_browse .\pwm.crf --depend .\pwm.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
-F (.\TimeDisplay.c)(0x56C13D12)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timedisplay.o --omf_browse .\timedisplay.crf --depend .\timedisplay.d)
+I (..\..\..\Shared/tm4c123gh6pm.h)(0x56BD945A)
+F (.\TimeDisplay.c)(0x56C16706)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timedisplay.o --omf_browse .\timedisplay.crf --depend .\timedisplay.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (ST7735.h)(0x56C068F6)
 I (C:\Keil\ARM\ARMCC\include\math.h)(0x51C87C24)
-I (TimeDisplay.h)(0x56C13BD5)
+I (TimeDisplay.h)(0x56C16507)
 I (Timer1.h)(0x56C103D3)
-F (.\AlarmClockMain.c)(0x56C140BF)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\alarmclockmain.o --omf_browse .\alarmclockmain.crf --depend .\alarmclockmain.d)
+I (SetAlarm.h)(0x56C15059)
+I (Common.h)(0x56C1384D)
+F (.\AlarmClockMain.c)(0x56C166CD)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\alarmclockmain.o --omf_browse .\alarmclockmain.crf --depend .\alarmclockmain.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C87C24)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
 I (ST7735.h)(0x56C068F6)
-I (TimeDisplay.h)(0x56C13BD5)
+I (TimeDisplay.h)(0x56C16507)
 I (SetTime.h)(0x56C13D4E)
 I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
 I (PLL.h)(0x56BE5E49)
 I (Timer1.h)(0x56C103D3)
 I (Switch.h)(0x56C140C2)
-I (SetAlarm.h)(0x56BE5E49)
+I (SetAlarm.h)(0x56C15059)
 I (PWM.h)(0x56BE5E49)
-I (SystickInts.h)(0x56A7C9DE)
+I (SysTickInts.h)(0x56A7C9DE)
 I (Common.h)(0x56C1384D)
+F (.\SysTickInts.c)(0x56C14718)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\systickints.o --omf_browse .\systickints.crf --depend .\systickints.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C87C24)
+I (..\../Shared/tm4c123gh6pm.h)(0x56BE5E49)
+I (SysTickInts.h)(0x56A7C9DE)

@@ -9,8 +9,8 @@
 #include <math.h>
 #include "TimeDisplay.h"
 #include "Timer1.h"
-
-
+#include "SetAlarm.h"
+#include "Common.h"
 
 #define CENTER_X 64
 #define CENTER_Y 80
@@ -26,19 +26,46 @@ void DelayWait10ms(uint32_t n);
 void EraseSecond(void);
 
 //extern volatile uint16_t Time_Minutes, Time_Hours; 
-volatile uint32_t Display_Mode;
+volatile uint16_t display_mode = 0;
 volatile double x, y;
 volatile static double prevsx, prevsy, prevmx, prevmy, prevhx, prevhy;
 
-//------------TimeDisplay_Init------------
-// Initialize GPIO Port A bit 5 for input
-// Input: none
-// Output: none
-void TimeDisplay_Init(void){ 
-	Display_Mode=0;
-	DisplayRefresh();
+
+void DisplayAlarm(void)
+{
+	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
+	char ch[5];
+	ch[0] = AsciiArray[alarm_hours/10];
+	ch[1] = AsciiArray[alarm_hours%10];
+	ch[2] = ':';
+	ch[3] = AsciiArray[alarm_minutes/10];
+	ch[4] = AsciiArray[alarm_minutes%10];
+	
+	Output_Clear();
+	ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
 }
 
+void DisplaySetTime(void)
+{
+	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
+	char ch[5];
+	ch[0] = AsciiArray[Time_Hours/10];
+	ch[1] = AsciiArray[Time_Hours%10];
+	ch[2] = ':';
+	ch[3] = AsciiArray[Time_Minutes/10];
+	ch[4] = AsciiArray[Time_Minutes%10];
+	
+	Output_Clear();
+	ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+}
 
 void DisplaySecond(void)
 {
@@ -92,27 +119,78 @@ void EraseHour(void)
 	ST7735_Line(CENTER_X, CENTER_Y, prevhx, prevhy, ST7735_BLACK);
 }
 
+/*
 void DisplayDigital(void){
 	char ch[5];
 	sprintf(ch,"%.2d:%.2d",Time_Hours, Time_Minutes);
 	ST7735_SetCursor(50, CENTER_Y);
 	ST7735_OutString(ch);
+}*/
+
+void ChooseMode(void)
+{
+	if (display_mode) {DisplayAnalog();}
+	else if(!display_mode) {DisplayDigital();}
+	else {}
 }
-void DisplayRefresh(void){
-	if(Display_Mode==0){
+
+void DisplayAnalog(void)
+{
+		Output_Clear();
+		ClockFace_Init();
+		DisplaySecond();
 		DisplayMinute();
 		DisplayHour();
-	}
-	else
-		DisplayDigital();
+		
+		while(active_In10s)
+		{
+			if(displayFlag == 0x01) 
+			{
+				displayFlag = 0xFF;
+				EraseSecond();
+				DisplaySecond();
+			}
+			if(displayFlag == 0x03) 
+			{
+				displayFlag = 0xFF;
+				EraseSecond();
+				DisplaySecond();
+				EraseMinute();
+				DisplayMinute();
+			}
+			if(displayFlag == 0x07) 
+			{
+				displayFlag = 0xFF;
+				EraseSecond();
+				DisplaySecond();
+				EraseMinute();
+				DisplayMinute();
+				EraseHour();
+				DisplayHour();
+			}
+		}	
 }
-void SwitchMode(void){
-	long critical= StartCritical();
-		if(Display_Mode==0)
-			Display_Mode =1;
-		else
-			Display_Mode=0;
-		EndCritical(critical);
+
+void DisplayDigital(void)
+{
+	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
+	char ch[5];
+
+	while(active_In10s)
+	{
+			ch[0] = AsciiArray[Time_Hours/10];
+			ch[1] = AsciiArray[Time_Hours%10];
+			ch[2] = ':';
+			ch[3] = AsciiArray[Time_Minutes/10];
+			ch[4] = AsciiArray[Time_Minutes%10];
+	
+			Output_Clear();
+			ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
+			ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
+			ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
+			ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
+			ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+		}	
 }
 
 void ClockFace_Init(void)

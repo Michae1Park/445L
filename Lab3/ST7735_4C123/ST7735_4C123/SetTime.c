@@ -15,23 +15,11 @@
 #include "Common.h"
 #include "ST7735.h"
 
-extern long StartCritical (void);    // previous I bit, disable interrupts
-extern void EndCritical(long sr);    // restore I bit to previous value
-
-void changeTime(void);
-void WaitForInterrupt(void);  // low power mode
-
-
 void changeTime(void)
 {
-	active_In10s = 1;
-	
 	TIMER1_CTL_R = 0x00000000;    //disable TIMER1A 
 	Output_Clear();
-  ClockFace_Init();
-	DisplayHour();
-	DisplayMinute();
-	DisplaySecond();
+	DisplaySetTime();
   
 	while (active_In10s)
 	{
@@ -40,34 +28,26 @@ void changeTime(void)
 			case 0:
 				Mode = 0xFFFF;
         incrementHour();
-				EraseHour();
-				DelayWait10ms(2);
-				DisplayHour();
-        DelayWait10ms(2);
+				DisplaySetTime();
+				DelayWait10ms(1);
 				break;
       case 1:
 				Mode = 0xFFFF;
         decrementHour();
-				EraseHour();
-				DelayWait10ms(2);
-				DisplayHour();	
-        DelayWait10ms(2);
+				DisplaySetTime();	
+        DelayWait10ms(1);
 				break;
       case 2:
 				Mode = 0xFFFF;
-        incrementMin();
-				EraseMinute();
-				DelayWait10ms(2);
-				DisplayMinute();
-				DelayWait10ms(2);
+				incrementMin();
+				DisplaySetTime();
+				DelayWait10ms(1);
         break;
       case 3:
 				Mode = 0xFFFF;
-        decrementMin();
-				EraseMinute();
-				DelayWait10ms(2);
-				DisplayMinute();
-				DelayWait10ms(2);
+				decrementMin();
+				DisplaySetTime();
+				DelayWait10ms(1);
         break;
 			default:
 				Mode = 0xFFFF;

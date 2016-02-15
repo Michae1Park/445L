@@ -7,6 +7,8 @@
 // Output: none
 #include <stdint.h>
 
+extern volatile uint16_t display_mode;
+
 void TimeDisplay_Init(void);
 void DisplaySecond(void);
 void EraseSecond(void);
@@ -20,3 +22,8 @@ void SwitchMode(void);
 void drawClockHands(void);
 void ClockFace_Init(void);
 void DelayWait10ms(uint32_t n);
+void DisplayAlarm(void);
+void DisplaySetTime(void);
+void ChooseMode(void);
+void DisplayAnalog(void);
+void DisplayDigital(void);

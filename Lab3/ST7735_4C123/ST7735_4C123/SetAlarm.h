@@ -7,10 +7,15 @@
 // Last Revised: 02/15/16
 
 //global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
+#include <stdint.h>
+
+extern volatile uint16_t alarm_hours, alarm_minutes;
+extern volatile uint16_t alarm_flag;
+
 
 void setAlarmTimeInit(void);
 //Assuming Time interrupt is disalbed
-void setAlarmTimeBase(uint32_t choice);
+void setAlarmTimeBase(void);
 
 void incrementAlarmHour(void);
 void decrementAlarmHour(void);

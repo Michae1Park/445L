@@ -10,5 +10,6 @@
 .\alarmclockmain.o: Switch.h
 .\alarmclockmain.o: SetAlarm.h
 .\alarmclockmain.o: PWM.h
-.\alarmclockmain.o: SystickInts.h
+.\alarmclockmain.o: SysTickInts.h
 .\alarmclockmain.o: Common.h
+.\alarmclockmain.o: TimeDisplay.h

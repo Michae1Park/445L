@@ -8,71 +8,88 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include "SetAlarm.h"
+#include "SetTime.h"
+#include "Timer1.h"
+#include "TimeDisplay.h"
 #include "../Shared/tm4c123gh6pm.h"
+#include "Common.h"
+#include "ST7735.h"
+#include "SetAlarm.h"
 
-volatile uint16_t alarm_hours, alarm_minutes;
-volatile uint16_t alarm_flag;
-//global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
+volatile uint16_t alarm_hours=0;
+volatile uint16_t alarm_minutes=0;
+volatile uint16_t alarm_flag = 1;
 
-void setAlarmTimeInit(void)
-{
-//disable interrupts
-}
 
 //Assuming Time interrupt is disalbed
-void setAlarmTimeBase(uint32_t choice)
+void setAlarmTimeBase(void)
 {
-    switch(choice) 
-    {
-      case 0:
+	Output_Clear();
+	DisplayAlarm();
+  
+	while (active_In10s)
+	{
+		switch(Mode) 
+		{
+			case 0:
+				Mode = 0xFFFF;
         incrementAlarmHour();
-        break;
+				DisplayAlarm();
+				DelayWait10ms(1);
+				break;
       case 1:
+				Mode = 0xFFFF;
         decrementAlarmHour();
-        break;
+				DisplayAlarm();	
+        DelayWait10ms(1);
+				break;
       case 2:
-        incrementAlarmMin();
+				Mode = 0xFFFF;
+				incrementAlarmMin();
+				DisplayAlarm();
+				DelayWait10ms(1);
         break;
       case 3:
-        decrementAlarmMin();
+				Mode = 0xFFFF;
+				decrementAlarmMin();
+				DisplayAlarm();
+				DelayWait10ms(1);
         break;
-      //default:
-        //incrementHour();  //increment both for debugging
-        //incrementMin();
+			default:
+				Mode = 0xFFFF;
+				break;
 		}
+	}	
 
 }
 
 void incrementAlarmHour(void)
 {
-  if((++alarm_hours)>23) {alarm_hours = 0;} //if hour exceeds 23, reset to 0
+  if((alarm_hours+1)>23) {alarm_hours = 0;} //if hour exceeds 23, reset to 0
   else {alarm_hours++;}
 }
 
 void decrementAlarmHour(void)
 {
-  if((--alarm_hours)<0) {alarm_hours = 23;} //if hour below 0, reset to 23
+  if((alarm_hours-1)<0) {alarm_hours = 23;} //if hour below 0, reset to 23
   else {alarm_hours--;}
 }
 
 void incrementAlarmMin(void)
 {
-  if((++alarm_minutes)>59) {alarm_minutes = 0;} //if min exceeds 59, reset to 0
+  if((alarm_minutes+1)>59) {alarm_minutes = 0;} //if min exceeds 59, reset to 0
   else {alarm_minutes++;}
 }
 
 void decrementAlarmMin(void)
 {
-  if((--alarm_minutes)<0) {alarm_minutes = 59;} //if min below 0, reset to 59
+  if((alarm_minutes-1)<0) {alarm_minutes = 59;} //if min below 0, reset to 59
   else {alarm_minutes--;}
 }
 void AlarmToggleON(void){
 
 		if(alarm_flag==0)
 			alarm_flag =1;
-
-	
 	
 }
 void AlarmToggleOFF(void){

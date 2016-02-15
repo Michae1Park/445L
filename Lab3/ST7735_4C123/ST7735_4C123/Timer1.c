@@ -30,7 +30,9 @@
 
 void (*PeriodicTask)(void);   // user function
 
-volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
+volatile uint16_t Time_Seconds = 0;
+volatile uint16_t Time_Minutes = 0;
+volatile uint16_t Time_Hours = 0; 
 volatile uint8_t displayFlag;
 
 // ***************** TIMER1_Init ****************
