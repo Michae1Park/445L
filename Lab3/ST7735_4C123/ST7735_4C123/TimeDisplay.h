@@ -6,9 +6,12 @@
 // Input: none
 // Output: none
 
-
 void TimeDisplay_Init(void);
+void DisplaySecond(void);
+void EraseSecond(void);
 void DisplayMinute(void);
+void EraseMinute(void);
+void EraseHour(void);
 void DisplayHour(void);
 void DisplayDigital(void);
 void DisplayRefresh(void);

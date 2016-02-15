@@ -5,3 +5,5 @@
 .\settime.o: ..\../Shared/tm4c123gh6pm.h
 .\settime.o: Timer1.h
 .\settime.o: TimeDisplay.h
+.\settime.o: Common.h
+.\settime.o: ST7735.h

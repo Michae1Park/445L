@@ -5,3 +5,4 @@
 .\timedisplay.o: ST7735.h
 .\timedisplay.o: C:\Keil\ARM\ARMCC\bin\..\include\math.h
 .\timedisplay.o: TimeDisplay.h
+.\timedisplay.o: Timer1.h

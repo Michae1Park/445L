@@ -18,6 +18,7 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "PWM.h"
 #include "SystickInts.h"
+#include "Common.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -37,11 +38,9 @@ void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
-void MainMenu_Init(void);
+void MainMenu(void);
 
-volatile uint16_t Mode = 0xFFFF;
-volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
-
+volatile uint16_t Mode;
 
 int main(void)
 {
@@ -68,26 +67,55 @@ int main(void)
 	SetTime_Init();												
 	//SetAlarm_Init();
 	//ToggleAlarm_Init();
-	MainMenu_Init();
-	
+	MainMenu();
+	Mode = 0xFFFF;
 	EnableInterrupts();										// Enable Interrupts
+	
+/*	Output_Clear();
+	ClockFace_Init();
+	DisplaySecond();
+	DisplayMinute();
+	DisplayHour();
+	while(1)
+	{
+		if(displayFlag == 0x01) 
+		{
+			displayFlag = 0xFF;
+			EraseSecond();
+			DisplaySecond();
+		}
+		if(displayFlag == 0x03) 
+		{
+			displayFlag = 0xFF;
+			EraseSecond();
+			DisplaySecond();
+			EraseMinute();
+			DisplayMinute();
+		}
+		if(displayFlag == 0x07) 
+		{
+			displayFlag = 0xFF;
+			EraseSecond();
+			DisplaySecond();
+			EraseMinute();
+			DisplayMinute();
+			EraseHour();
+			DisplayHour();
+		}
+	}
+	*/
 	
   while(1) 
   {	
-		if (Mode == 0xFFFF)
-		{
-			
-		}
-
 		if(Mode == SetTime_Mode)
 		{
-			Output_Clear();
-			//ST7735_FillRect(0, 0, 127, 159, ST7735_Color565(228,228,228));
-			DisplayDigital();
+			Mode = 0xFFFF;	//Acknowledge mode
+			changeTime();
 		}
 		if(Mode == SetAlarm_Mode)
 		{
 			Mode = 0xFFFF;
+
 		}
 		if(Mode == ToggleAlarm_Mode)
 		{
@@ -95,9 +123,6 @@ int main(void)
 		}
 		if(Mode == TimeDisplay_Mode)
 		{
-			DisplayRefresh();
-			DisplayMinute();
-			DisplayHour();
 			Mode = 0xFFFF;
 		}
   }
@@ -106,7 +131,7 @@ int main(void)
 /*
 Initializes to print the Main Menu
 */
-void MainMenu_Init(void)
+void MainMenu(void)
 {
 	Output_Clear();
 	ST7735_DrawString(0, 0, "Set Time", ST7735_YELLOW);
@@ -114,6 +139,8 @@ void MainMenu_Init(void)
 	ST7735_DrawString(0, 6, "Turn On/Off Alarm", ST7735_YELLOW);
 	ST7735_DrawString(0, 9, "Display Mode", ST7735_YELLOW);
 }
+
+
 
 /*
 GIPOPortB_Handler
@@ -123,35 +150,28 @@ Output: None
 */
 void GPIOPortB_Handler(void)
 {
-	//Need to implement Debouncer
+	//Debouncer
+	Switch_Debounce();
 	
 	if (GPIO_PORTB_RIS_R & 0X01) //poll PB0
 	{
 		GPIO_PORTB_ICR_R = 0x01; //acknowledge flag1 and clear
 		Mode = SetTime_Mode;
-		//Output_Clear();
-		//ST7735_DrawString(0, 0, "stupid bitch", ST7735_YELLOW);		
 	}
 	if (GPIO_PORTB_RIS_R & 0X02) //poll PB1
 	{
 		GPIO_PORTB_ICR_R = 0x02; //acknowledge flag1 and clear	
 		Mode = SetAlarm_Mode;
-		//Output_Clear();
-		//ST7735_DrawString(0, 0, "fuck you", ST7735_YELLOW);
 	}
 	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
 	{
 		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
 		Mode = ToggleAlarm_Mode;
-		//Output_Clear();
-		//ST7735_DrawString(0, 0, "long nipples bitch", ST7735_YELLOW);
 	}
 	if (GPIO_PORTB_RIS_R & 0X08) //poll PB3
 	{
 		GPIO_PORTB_ICR_R = 0x08; //acknowledge flag1 and clear
 		Mode = TimeDisplay_Mode;
-		//Output_Clear();
-		//ST7735_DrawString(0, 0, "LOL Kevin Hart", ST7735_YELLOW);
 	}
 
 }

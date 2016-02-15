@@ -12,11 +12,13 @@
 #include "Timer1.h"
 #include "TimeDisplay.h"
 #include "../Shared/tm4c123gh6pm.h"
+#include "Common.h"
+#include "ST7735.h"
 
 extern long StartCritical (void);    // previous I bit, disable interrupts
 extern void EndCritical(long sr);    // restore I bit to previous value
-extern volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; //from Main Class
-extern volatile uint32_t Display_Mode; //from TimeDisplay Class
+
+void changeTime(void);
 
 void SetTime_Init(void)
 {
@@ -25,35 +27,48 @@ void SetTime_Init(void)
 void DisplaySetTime(void){
 	//disable interrupts
 	long critical=StartCritical();
-	Display_Mode=1;
+	//Display_Mode=1;
 	DisplayRefresh();
 	EndCritical(critical);
 }
-//Assuming Time interrupt is disalbed
-void changeTime(uint32_t buttonSelect)
+
+void changeTime(void)
 {
-		//enable critical section
-		long critical=StartCritical();
-	
-		//set time seconds to 0
-		Time_Seconds=0;
-	
-    switch(buttonSelect) 
-    {
+	TIMER1_CTL_R = 0x00000000;    //disable TIMER1A 
+	Output_Clear();
+  ClockFace_Init();
+	DisplayHour();
+	DisplayMinute();
+	DisplaySecond();
+   
+
+	switch(Mode) 
+  {
       case 0:
         incrementHour();
+				EraseHour();
+				DisplayHour();
         break;
       case 1:
         decrementHour();
+				EraseHour();
+				DisplayHour();	
         break;
       case 2:
         incrementMin();
+				EraseMinute();
+				DisplayMinute();
         break;
       case 3:
         decrementMin();
+				EraseMinute();
+				DisplayMinute();
         break;
-		}
-		EndCritical(critical);
+			default:
+				break;
+	}
+		
+	TIMER1_CTL_R = 0x00000001;    //enable TIMER1A 
 }
 
 void incrementHour(void)

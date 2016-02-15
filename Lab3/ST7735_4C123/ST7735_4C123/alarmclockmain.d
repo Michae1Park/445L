@@ -11,3 +11,4 @@
 .\alarmclockmain.o: SetAlarm.h
 .\alarmclockmain.o: PWM.h
 .\alarmclockmain.o: SystickInts.h
+.\alarmclockmain.o: Common.h

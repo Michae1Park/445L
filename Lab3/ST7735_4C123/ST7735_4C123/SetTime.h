@@ -15,7 +15,7 @@ void SetTime_Init(void);
 //Assuming Time interrupt is disalbed
 void DisplaySetTime(void);
 
-void changeTime(uint32_t buttonSelect);
+void changeTime(void);
 
 void incrementHour(void);
 

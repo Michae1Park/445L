@@ -30,7 +30,8 @@
 
 void (*PeriodicTask)(void);   // user function
 
-extern volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
+volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
+volatile uint8_t displayFlag;
 
 // ***************** TIMER1_Init ****************
 // Activate TIMER1 interrupts to run user task periodically
@@ -57,13 +58,16 @@ void Timer1_Init(void(*task)(void), uint32_t period){
 void Timer1A_Handler(void){
   TIMER1_ICR_R = TIMER_ICR_TATOCINT;	// acknowledge TIMER1A timeout
 	Time_Seconds++;											//Add 1 Second when the interrupt is triggered. 
+	displayFlag = 0x01;
 	if(Time_Seconds>=SECONDS_TIME){
 		Time_Minutes++;
 		Time_Seconds=0;
+		displayFlag = 0x03;
 	}
 	if(Time_Minutes>=MINUTES_TIME){
 		Time_Hours++;
 		Time_Minutes=0;
+		displayFlag = 0x07;
 	}
 	if(Time_Hours>=HOURS_TIME){
 		Time_Hours=0;

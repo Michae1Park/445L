@@ -22,8 +22,16 @@
  http://users.ece.utexas.edu/~valvano/
  */
 
+#include <stdio.h>
+#include <stdint.h>
+#include "../Shared/tm4c123gh6pm.h"
+
+
 #ifndef __TIMER1INTS_H__ // do not include more than once
 #define __TIMER1INTS_H__
+
+extern volatile uint16_t Time_Seconds, Time_Minutes, Time_Hours; 
+extern volatile uint8_t displayFlag;	//first three bits mean hour, min second
 
 // ***************** Timer1_Init ****************
 // Activate Timer1 interrupts to run user task periodically
@@ -33,3 +41,5 @@
 void Timer1_Init(void(*task)(void), uint32_t period);
 
 #endif // __TIMER2INTS_H__
+
+

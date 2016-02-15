@@ -115,6 +115,10 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>DLGDARM</Key>
           <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)(9108=488,334,653,552,1)(9106=-1,-1,-1,-1,0)(9104=-1,-1,-1,-1,0)(9107=-1,-1,-1,-1,0)(9102=797,249,1193,519,1)</Name>
         </SetRegEntry>
@@ -143,20 +147,42 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>79</LineNumber>
+          <LineNumber>62</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>4016</Address>
+          <Address>7346</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\Switch.c</Filename>
+          <Filename>.\AlarmClockMain.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
       </Breakpoint>
+      <WatchWindow1>
+        <Ww>
+          <count>0</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Time_Seconds,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Time_Minutes,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Time_Hours,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Mode</ItemText>
+        </Ww>
+      </WatchWindow1>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -212,7 +238,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>272</TopLine>
+      <TopLine>270</TopLine>
       <CurrentLine>277</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup.s</PathWithFileName>
@@ -242,10 +268,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>8</ColumnNumber>
+      <ColumnNumber>16</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1588</TopLine>
-      <CurrentLine>1601</CurrentLine>
+      <TopLine>1277</TopLine>
+      <CurrentLine>1295</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ST7735.c</PathWithFileName>
       <FilenameWithoutPath>ST7735.c</FilenameWithoutPath>
@@ -274,10 +300,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>84</TopLine>
-      <CurrentLine>93</CurrentLine>
+      <TopLine>292</TopLine>
+      <CurrentLine>302</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Switch.c</PathWithFileName>
       <FilenameWithoutPath>Switch.c</FilenameWithoutPath>
@@ -288,12 +314,12 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>6</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>1</ColumnNumber>
+      <ColumnNumber>48</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>41</TopLine>
-      <CurrentLine>55</CurrentLine>
+      <TopLine>40</TopLine>
+      <CurrentLine>43</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Timer1.c</PathWithFileName>
       <FilenameWithoutPath>Timer1.c</FilenameWithoutPath>
@@ -304,12 +330,12 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>7</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>52</TopLine>
-      <CurrentLine>23</CurrentLine>
+      <TopLine>34</TopLine>
+      <CurrentLine>44</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\SetTime.c</PathWithFileName>
       <FilenameWithoutPath>SetTime.c</FilenameWithoutPath>
@@ -338,10 +364,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>68</ColumnNumber>
+      <ColumnNumber>35</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>26</TopLine>
-      <CurrentLine>34</CurrentLine>
+      <TopLine>62</TopLine>
+      <CurrentLine>65</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\PWM.c</PathWithFileName>
       <FilenameWithoutPath>PWM.c</FilenameWithoutPath>
@@ -352,12 +378,12 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>10</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>2</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>31</CurrentLine>
+      <TopLine>23</TopLine>
+      <CurrentLine>41</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\TimeDisplay.c</PathWithFileName>
       <FilenameWithoutPath>TimeDisplay.c</FilenameWithoutPath>
@@ -368,12 +394,12 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>11</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>65</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>112</TopLine>
+      <CurrentLine>118</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\AlarmClockMain.c</PathWithFileName>
       <FilenameWithoutPath>AlarmClockMain.c</FilenameWithoutPath>
