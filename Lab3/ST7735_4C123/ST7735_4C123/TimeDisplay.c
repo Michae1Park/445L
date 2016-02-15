@@ -119,14 +119,6 @@ void EraseHour(void)
 	ST7735_Line(CENTER_X, CENTER_Y, prevhx, prevhy, ST7735_BLACK);
 }
 
-/*
-void DisplayDigital(void){
-	char ch[5];
-	sprintf(ch,"%.2d:%.2d",Time_Hours, Time_Minutes);
-	ST7735_SetCursor(50, CENTER_Y);
-	ST7735_OutString(ch);
-}*/
-
 void ChooseMode(void)
 {
 	if (display_mode) {DisplayAnalog();}
@@ -175,7 +167,20 @@ void DisplayDigital(void)
 {
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
 	char ch[5];
-
+	
+	ch[0] = AsciiArray[Time_Hours/10];
+	ch[1] = AsciiArray[Time_Hours%10];
+	ch[2] = ':';
+	ch[3] = AsciiArray[Time_Minutes/10];
+	ch[4] = AsciiArray[Time_Minutes%10];
+	
+	Output_Clear();
+	ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+	
 	while(active_In10s)
 	{
 			ch[0] = AsciiArray[Time_Hours/10];
@@ -183,13 +188,27 @@ void DisplayDigital(void)
 			ch[2] = ':';
 			ch[3] = AsciiArray[Time_Minutes/10];
 			ch[4] = AsciiArray[Time_Minutes%10];
-	
-			Output_Clear();
-			ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
-			ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
-			ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
-			ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
-			ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+			
+			if(displayFlag == 0x03) 
+			{
+				displayFlag = 0xFF;
+				Output_Clear();
+				ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+			}
+			if(displayFlag == 0x07) 
+			{
+				displayFlag = 0xFF;
+				Output_Clear();
+				ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
+				ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+			}
 		}	
 }
 
