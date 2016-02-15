@@ -23,6 +23,7 @@
 #include <stdint.h>
 #include "../Shared/tm4c123gh6pm.h"
 #include "Timer1.h"
+#include "TimeDisplay.h"
 
 #define SECONDS_TIME  	0x3c
 #define MINUTES_TIME  	0x3c
@@ -61,6 +62,7 @@ void Timer1A_Handler(void){
   TIMER1_ICR_R = TIMER_ICR_TATOCINT;	// acknowledge TIMER1A timeout
 	Time_Seconds++;											//Add 1 Second when the interrupt is triggered. 
 	displayFlag = 0x01;
+
 	if(Time_Seconds>=SECONDS_TIME){
 		Time_Minutes++;
 		Time_Seconds=0;

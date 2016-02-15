@@ -27,9 +27,8 @@ void EraseSecond(void);
 
 //extern volatile uint16_t Time_Minutes, Time_Hours; 
 volatile uint16_t display_mode = 0;
-volatile double x, y;
+//volatile double x, y;
 volatile static double prevsx, prevsy, prevmx, prevmy, prevhx, prevhy;
-
 
 void DisplayAlarm(void)
 {
@@ -69,10 +68,11 @@ void DisplaySetTime(void)
 
 void DisplaySecond(void)
 {
+	volatile static double x, y;
 	x = 0;
 	y = 0;
-	x = CENTER_X + LENGTH_S*cos(Time_Seconds*6*(PI/180));
-	y = CENTER_Y + LENGTH_S*sin(Time_Seconds*6*(PI/180));
+	x = CENTER_X + LENGTH_S*cos(Time_Seconds*6*(PI/180)-1.58);
+	y = CENTER_Y + LENGTH_S*sin(Time_Seconds*6*(PI/180)-1.58);
 	prevsx = x;
 	prevsy = y;
 	
@@ -86,10 +86,11 @@ void EraseSecond(void)
 }
 void DisplayMinute(void)
 {
+	volatile static double x, y;
 	x = 0;
 	y = 0;
-	x = CENTER_X + LENGTH_M*cos(Time_Minutes*6*(PI/180));
-	y = CENTER_Y + LENGTH_M*sin(Time_Minutes*6*(PI/180));
+	x = CENTER_X + LENGTH_M*cos(Time_Minutes*6*(PI/180)-1.58);
+	y = CENTER_Y + LENGTH_M*sin(Time_Minutes*6*(PI/180)-1.58);
 	prevmx = x;
 	prevmy = y;
 	
@@ -104,10 +105,11 @@ void EraseMinute(void)
 
 void DisplayHour(void)
 {
+	volatile static double x, y;
 	x = 0;
 	y = 0;
-	x = CENTER_X + LENGTH_H*cos(Time_Hours*6*(PI/180));
-	y = CENTER_Y + LENGTH_H*sin(Time_Hours*6*(PI/180));
+	x = CENTER_X + LENGTH_H*cos(Time_Hours*30*(PI/180)-1.58);
+	y = CENTER_Y + LENGTH_H*sin(Time_Hours*30*(PI/180)-1.58);
 	prevhx = x;
 	prevhy = y;
 	
@@ -129,6 +131,14 @@ void ChooseMode(void)
 void DisplayAnalog(void)
 {
 		Output_Clear();
+		ST7735_SetCursor(0, 0);
+		ST7735_OutString("alarm:");
+		ST7735_OutUDec(alarm_hours);
+		ST7735_OutString(":");
+		ST7735_OutUDec(alarm_minutes);
+		if(alarm_flag){ST7735_OutString(" alarm ON");}
+		else {ST7735_OutString(" alarm OFF");}
+		
 		ClockFace_Init();
 		DisplaySecond();
 		DisplayMinute();
@@ -136,6 +146,16 @@ void DisplayAnalog(void)
 		
 		while(active_In10s)
 		{
+			if(Mode == 3)
+			{
+				break;
+			}
+			if(Mode == 2)
+			{
+				ST7735_SetCursor(11,0);
+				if(alarm_flag){ST7735_OutString("alarm ON");}
+				else {ST7735_OutString("alarm OFF");}
+			}
 			if(displayFlag == 0x01) 
 			{
 				displayFlag = 0xFF;
@@ -175,6 +195,14 @@ void DisplayDigital(void)
 	ch[4] = AsciiArray[Time_Minutes%10];
 	
 	Output_Clear();
+	ST7735_SetCursor(0, 0);
+	ST7735_OutString("alarm:");
+	ST7735_OutUDec(alarm_hours);
+	ST7735_OutString(":");
+	ST7735_OutUDec(alarm_minutes);
+	if(alarm_flag){ST7735_OutString(" alarm ON");}
+	else {ST7735_OutString(" alarm OFF");}
+	
 	ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
@@ -183,6 +211,16 @@ void DisplayDigital(void)
 	
 	while(active_In10s)
 	{
+		if(Mode == 3)
+		{
+			break;
+		}
+		if(Mode == 2)
+		{
+			ST7735_SetCursor(11,0);
+			if(alarm_flag){ST7735_OutString("alarm ON");}
+			else {ST7735_OutString("alarm OFF");}
+		}
 			ch[0] = AsciiArray[Time_Hours/10];
 			ch[1] = AsciiArray[Time_Hours%10];
 			ch[2] = ':';

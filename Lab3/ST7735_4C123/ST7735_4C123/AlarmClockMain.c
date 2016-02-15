@@ -77,11 +77,11 @@ int main(void)
   {	
 		if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && alarm_flag)
 		{
-			//enable PWM
+			ST7735_DrawString(0, 11, "AlarmON BITCH", ST7735_YELLOW);//enable PWM
 		}
 		else if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && (!alarm_flag))
 		{
-			//disable PWM
+			ST7735_DrawString(0, 11, "AlarmOFF BITCH", ST7735_YELLOW);//disable PWM
 		}
 		
 		if(Mode == SetTime_Mode)
@@ -102,7 +102,6 @@ int main(void)
 		{
 			Mode = 0xFFFF;
 			active_In10s = 1;
-			alarm_flag ^= 0x1;
 		}
 		if(Mode == TimeDisplay_Mode)
 		{
@@ -172,6 +171,7 @@ void GPIOPortB_Handler(void)
 	{
 		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
 		Mode = ToggleAlarm_Mode;
+		alarm_flag ^= 0x1;
 		timeout = 0;
 	}
 	if (GPIO_PORTB_RIS_R & 0X08) //poll PB3
