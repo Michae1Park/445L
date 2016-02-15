@@ -5,6 +5,7 @@
 // Initialize GPIO Port A bit 5 for input
 // Input: none
 // Output: none
+#include <stdint.h>
 
 void TimeDisplay_Init(void);
 void DisplaySecond(void);
@@ -18,3 +19,4 @@ void DisplayRefresh(void);
 void SwitchMode(void);
 void drawClockHands(void);
 void ClockFace_Init(void);
+void DelayWait10ms(uint32_t n);

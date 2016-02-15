@@ -19,55 +19,61 @@ extern long StartCritical (void);    // previous I bit, disable interrupts
 extern void EndCritical(long sr);    // restore I bit to previous value
 
 void changeTime(void);
+void WaitForInterrupt(void);  // low power mode
 
-void SetTime_Init(void)
-{
-
-}
-void DisplaySetTime(void){
-	//disable interrupts
-	long critical=StartCritical();
-	//Display_Mode=1;
-	DisplayRefresh();
-	EndCritical(critical);
-}
 
 void changeTime(void)
 {
+	active_In10s = 1;
+	
 	TIMER1_CTL_R = 0x00000000;    //disable TIMER1A 
 	Output_Clear();
   ClockFace_Init();
 	DisplayHour();
 	DisplayMinute();
 	DisplaySecond();
-   
-
-	switch(Mode) 
-  {
-      case 0:
+  
+	while (active_In10s)
+	{
+		switch(Mode) 
+		{
+			case 0:
+				Mode = 0xFFFF;
         incrementHour();
 				EraseHour();
+				DelayWait10ms(2);
 				DisplayHour();
-        break;
+        DelayWait10ms(2);
+				break;
       case 1:
+				Mode = 0xFFFF;
         decrementHour();
 				EraseHour();
+				DelayWait10ms(2);
 				DisplayHour();	
-        break;
+        DelayWait10ms(2);
+				break;
       case 2:
+				Mode = 0xFFFF;
         incrementMin();
 				EraseMinute();
+				DelayWait10ms(2);
 				DisplayMinute();
+				DelayWait10ms(2);
         break;
       case 3:
+				Mode = 0xFFFF;
         decrementMin();
 				EraseMinute();
+				DelayWait10ms(2);
 				DisplayMinute();
+				DelayWait10ms(2);
         break;
 			default:
+				Mode = 0xFFFF;
 				break;
-	}
-		
+		}
+	}	
 	TIMER1_CTL_R = 0x00000001;    //enable TIMER1A 
 }
 

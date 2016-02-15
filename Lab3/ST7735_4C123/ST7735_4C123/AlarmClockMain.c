@@ -41,6 +41,8 @@ void WaitForInterrupt(void);  // low power mode
 void MainMenu(void);
 
 volatile uint16_t Mode;
+volatile uint16_t active_In10s = 1;
+volatile uint32_t counts;
 
 int main(void)
 {
@@ -62,14 +64,14 @@ int main(void)
   GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF
 	
 	
-	//USER FUNCTION INIT
-	//TimeDisplay_Init();										// Self Described Init Functions
-	SetTime_Init();												
+	//USER FUNCTION INIT							// Self Described Init Functions									
 	//SetAlarm_Init();
 	//ToggleAlarm_Init();
 	MainMenu();
+	counts = 0;
 	Mode = 0xFFFF;
-	EnableInterrupts();										// Enable Interrupts
+	SysTick_Init(80000);        		// initialize SysTick timer
+	EnableInterrupts();							// Enable Interrupts
 	
 /*	Output_Clear();
 	ClockFace_Init();
@@ -111,11 +113,13 @@ int main(void)
 		{
 			Mode = 0xFFFF;	//Acknowledge mode
 			changeTime();
+			MainMenu();
 		}
 		if(Mode == SetAlarm_Mode)
 		{
 			Mode = 0xFFFF;
-
+			//setAlarmTimeBase();
+			MainMenu();
 		}
 		if(Mode == ToggleAlarm_Mode)
 		{
@@ -140,7 +144,16 @@ void MainMenu(void)
 	ST7735_DrawString(0, 9, "Display Mode", ST7735_YELLOW);
 }
 
-
+// Interrupt service routine
+// Executed every 12.5ns*(period)
+void SysTick_Handler(void)
+{
+  counts = counts + 1;
+	if((counts % 1000) == 0)
+	{
+		PF2 ^= 0x04;                // toggle PF2
+	}
+}
 
 /*
 GIPOPortB_Handler

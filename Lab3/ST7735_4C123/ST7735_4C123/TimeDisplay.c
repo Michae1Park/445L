@@ -79,8 +79,8 @@ void DisplayHour(void)
 {
 	x = 0;
 	y = 0;
-	x = CENTER_X + LENGTH_H*cos(Time_Minutes*6*(PI/180));
-	y = CENTER_Y + LENGTH_H*sin(Time_Minutes*6*(PI/180));
+	x = CENTER_X + LENGTH_H*cos(Time_Hours*6*(PI/180));
+	y = CENTER_Y + LENGTH_H*sin(Time_Hours*6*(PI/180));
 	prevhx = x;
 	prevhy = y;
 	

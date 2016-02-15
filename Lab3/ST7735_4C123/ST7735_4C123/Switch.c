@@ -91,6 +91,7 @@ void Switch_Init(void){
 	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
 	NVIC_EN0_R = 0x00000002; 						//enable interrupt 1(PB) in NVIC
 }
+
 //------------Switch_Input------------
 // Read and return the status of GPIO Port A bit 5 
 // Input: none

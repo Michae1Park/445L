@@ -45,6 +45,9 @@
 // debugger out of the processor and make it permanently unable to be
 // debugged or re-programmed.
 
+
+#include <stdint.h>
+
 //------------Switch_Init------------
 // Initialize GPIO Port A bit 5 for input.
 // Input: none

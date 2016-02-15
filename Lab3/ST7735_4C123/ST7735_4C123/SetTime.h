@@ -9,11 +9,6 @@
 #include <stdint.h>
 #include "../Shared/tm4c123gh6pm.h"
 
-//global: hour, min, alarmflag, displayflag, switchflag(for interrupt)
-
-void SetTime_Init(void);
-//Assuming Time interrupt is disalbed
-void DisplaySetTime(void);
 
 void changeTime(void);
 
