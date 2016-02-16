@@ -460,6 +460,11 @@
               <FileType>1</FileType>
               <FilePath>.\SysTickInts.c</FilePath>
             </File>
+            <File>
+              <FileName>Timer0A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Timer0A.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

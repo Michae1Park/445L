@@ -60,7 +60,7 @@ int main(void)
 	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
   ST7735_InitR(INITR_REDTAB);						// Init PORTA and LCD initializations
 	Switch_Init(); 												// Init PORTB and switch initialization
-	PWM0A_Init(40000, 30000);							// Init PWM Sound module
+	//PWM0A_Init(40000, 30000);							// Init PWM Sound module
 	SysTick_Init(80000);
 	
 	//PORTE INIT (For Alarm Sound)
@@ -76,7 +76,6 @@ int main(void)
   GPIO_PORTE_AMSEL_R &= ~0x02;
 	Timer0A_Init(0,A_440);
 
-	
 	
 	//PORTF INIT (For Heart Beat)
   SYSCTL_RCGCGPIO_R |= 0x20;  // activate port F
@@ -100,26 +99,18 @@ int main(void)
 		AllowAlarmChangeMode();
 		if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && alarm_flag)
 		{
-			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
-			ST7735_DrawString(0, 11, "Time Up", ST7735_YELLOW);//enable PWM
 			toggleSound =1;
 		}
 		else if(alarm_flag)
 		{
-			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
-			ST7735_DrawString(0, 11, "Alarm Mode On", ST7735_YELLOW);
 			toggleSound =0;
 		}
 		else if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes)&& (!alarm_flag))
 		{
-			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
-			ST7735_DrawString(0, 11, "Alarm is Off", ST7735_YELLOW);//disable PWM
 			toggleSound =0;
 		}	
 		else if(!alarm_flag)
 		{
-			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
-			ST7735_DrawString(0, 11, "Alarm Mode Off", ST7735_YELLOW);//disable PWM
 			toggleSound =0;
 		}
 		
@@ -131,29 +122,26 @@ int main(void)
 			DisAllowAlarmChangeMode();
 			changeTime();
 			AllowAlarmChangeMode();
-			MainMenu();
-
-			
+			MainMenu();	
 		}
+		
 		if(Mode == SetAlarm_Mode)
 		{
-			
 			Mode = 0xFFFF;
 			active_In10s = 1;
 			DisAllowAlarmChangeMode();
 			setAlarmTimeBase();
 			AllowAlarmChangeMode();
 			MainMenu();
-
 		}
 		if(Mode == ToggleAlarm_Mode)
 		{
 			Mode = 0xFFFF;
 			active_In10s = 1;
+			MainMenu();
 		}
 		if(Mode == TimeDisplay_Mode)
 		{
-			//DisAllowAlarmChangeMode();
 			Mode = 0xFFFF;
 			active_In10s = 1;
 			display_mode ^= 0x1;
@@ -161,7 +149,6 @@ int main(void)
 			ChooseMode();
 			DisAllowAlarmChangeMode();
 			MainMenu();
-			//AllowAlarmChangeMode();
 		}
   }
 }
@@ -174,7 +161,8 @@ void MainMenu(void)
 	Output_Clear();
 	ST7735_DrawString(0, 0, "Set Time", ST7735_YELLOW);
 	ST7735_DrawString(0, 3, "Set Alarm", ST7735_YELLOW);
-	ST7735_DrawString(0, 6, "Turn On/Off Alarm", ST7735_YELLOW);
+	if (alarm_flag){ST7735_DrawString(0, 6, "Alarm On", ST7735_YELLOW);}
+	else {ST7735_DrawString(0, 6, "Alarm Off", ST7735_YELLOW); }
 	ST7735_DrawString(0, 9, "Display Mode", ST7735_YELLOW);
 }
 
@@ -204,7 +192,6 @@ Output: None
 */
 void GPIOPortB_Handler(void)
 {
-	long sr;
 	//Debouncer
 	Switch_Debounce();
 	
@@ -222,14 +209,11 @@ void GPIOPortB_Handler(void)
 	}
 	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
 	{
-		
 		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
-		Mode = ToggleAlarm_Mode;
-		//sr= StartCritical(); 
+		Mode = ToggleAlarm_Mode; 
 		if(AllowAlarmChange==1){
 		alarm_flag ^= 0x1;
 		}
-		//EndCritical(sr);
 		timeout = 0;
 
 	}
@@ -239,7 +223,6 @@ void GPIOPortB_Handler(void)
 		Mode = TimeDisplay_Mode;
 		timeout = 0;
 	}
-
 }
 void AllowAlarmChangeMode(void){
 	AllowAlarmChange=1;
