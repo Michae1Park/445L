@@ -20,11 +20,14 @@
 #include "SysTickInts.h"
 #include "Common.h"
 #include "TimeDisplay.h"
+#include "Timer0A.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
 #define PERIOD					0x04C4B400
 #define Tensec					0x2FAF0800	//number of cycle for 10s when each cycle = 12.5ns
+#define A_440 181818
+
 
 enum ModeSetting
 {  
@@ -40,11 +43,15 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void MainMenu(void);
+void AllowAlarmChangeMode(void);
+void DisAllowAlarmChangeMode(void);
 
 volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
 volatile uint32_t timeout=0;
+volatile uint16_t toggleSound=1;
+volatile uint16_t AllowAlarmChange=1;
 
 int main(void)
 {
@@ -55,6 +62,21 @@ int main(void)
 	Switch_Init(); 												// Init PORTB and switch initialization
 	PWM0A_Init(40000, 30000);							// Init PWM Sound module
 	SysTick_Init(80000);
+	
+	//PORTE INIT (For Alarm Sound)
+	volatile uint32_t delay;
+  SYSCTL_RCGCGPIO_R |= 0x00000010;  // 1) activate clock for Port E
+  delay = SYSCTL_RCGCGPIO_R;        // allow time for clock to start
+  GPIO_PORTE_CR_R |= 0x02;           // allow changes to PE1
+	GPIO_PORTE_DIR_R |= 0x02;        // make PE1 op
+  GPIO_PORTE_AFSEL_R &= ~0x02;     // disable alt funct on PE1
+  GPIO_PORTE_DEN_R |= 0x02;        // enable digital I/O on PE1
+                                   // configure PE1 as GPIO
+  GPIO_PORTE_PCTL_R = (GPIO_PORTE_PCTL_R&0xFFFFFF0F);
+  GPIO_PORTE_AMSEL_R &= ~0x02;
+	Timer0A_Init(0,A_440);
+
+	
 	
 	//PORTF INIT (For Heart Beat)
   SYSCTL_RCGCGPIO_R |= 0x20;  // activate port F
@@ -75,28 +97,54 @@ int main(void)
 	//Main Loop
   while(1) 
   {	
+		AllowAlarmChangeMode();
 		if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && alarm_flag)
 		{
-			ST7735_DrawString(0, 11, "AlarmON BITCH", ST7735_YELLOW);//enable PWM
+			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
+			ST7735_DrawString(0, 11, "Time Up", ST7735_YELLOW);//enable PWM
+			toggleSound =1;
 		}
-		else if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && (!alarm_flag))
+		else if(alarm_flag)
 		{
-			ST7735_DrawString(0, 11, "AlarmOFF BITCH", ST7735_YELLOW);//disable PWM
+			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
+			ST7735_DrawString(0, 11, "Alarm Mode On", ST7735_YELLOW);
+			toggleSound =0;
+		}
+		else if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes)&& (!alarm_flag))
+		{
+			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
+			ST7735_DrawString(0, 11, "Alarm is Off", ST7735_YELLOW);//disable PWM
+			toggleSound =0;
+		}	
+		else if(!alarm_flag)
+		{
+			ST7735_DrawString(0, 11, "1111111111111111111111111111111", ST7735_BLACK);//disable PWM
+			ST7735_DrawString(0, 11, "Alarm Mode Off", ST7735_YELLOW);//disable PWM
+			toggleSound =0;
 		}
 		
 		if(Mode == SetTime_Mode)
 		{
+			
 			Mode = 0xFFFF;	//Acknowledge mode
 			active_In10s = 1;
+			DisAllowAlarmChangeMode();
 			changeTime();
+			AllowAlarmChangeMode();
 			MainMenu();
+
+			
 		}
 		if(Mode == SetAlarm_Mode)
 		{
+			
 			Mode = 0xFFFF;
 			active_In10s = 1;
+			DisAllowAlarmChangeMode();
 			setAlarmTimeBase();
+			AllowAlarmChangeMode();
 			MainMenu();
+
 		}
 		if(Mode == ToggleAlarm_Mode)
 		{
@@ -105,11 +153,15 @@ int main(void)
 		}
 		if(Mode == TimeDisplay_Mode)
 		{
+			//DisAllowAlarmChangeMode();
 			Mode = 0xFFFF;
 			active_In10s = 1;
 			display_mode ^= 0x1;
+			DisAllowAlarmChangeMode();
 			ChooseMode();
+			DisAllowAlarmChangeMode();
 			MainMenu();
+			//AllowAlarmChangeMode();
 		}
   }
 }
@@ -152,6 +204,7 @@ Output: None
 */
 void GPIOPortB_Handler(void)
 {
+	long sr;
 	//Debouncer
 	Switch_Debounce();
 	
@@ -169,10 +222,16 @@ void GPIOPortB_Handler(void)
 	}
 	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
 	{
+		
 		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
 		Mode = ToggleAlarm_Mode;
+		//sr= StartCritical(); 
+		if(AllowAlarmChange==1){
 		alarm_flag ^= 0x1;
+		}
+		//EndCritical(sr);
 		timeout = 0;
+
 	}
 	if (GPIO_PORTB_RIS_R & 0X08) //poll PB3
 	{
@@ -182,4 +241,9 @@ void GPIOPortB_Handler(void)
 	}
 
 }
-	
+void AllowAlarmChangeMode(void){
+	AllowAlarmChange=1;
+}
+void DisAllowAlarmChangeMode(void){
+		AllowAlarmChange=0;
+}

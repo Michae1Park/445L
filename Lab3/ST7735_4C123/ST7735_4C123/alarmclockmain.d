@@ -1,6 +1,6 @@
 .\alarmclockmain.o: AlarmClockMain.c
-.\alarmclockmain.o: D:\Program Files (x86)\ARM\ARMCC\bin\..\include\stdio.h
-.\alarmclockmain.o: D:\Program Files (x86)\ARM\ARMCC\bin\..\include\stdint.h
+.\alarmclockmain.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\alarmclockmain.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
 .\alarmclockmain.o: ST7735.h
 .\alarmclockmain.o: TimeDisplay.h
 .\alarmclockmain.o: SetTime.h
@@ -13,3 +13,4 @@
 .\alarmclockmain.o: SysTickInts.h
 .\alarmclockmain.o: Common.h
 .\alarmclockmain.o: TimeDisplay.h
+.\alarmclockmain.o: Timer0A.h
