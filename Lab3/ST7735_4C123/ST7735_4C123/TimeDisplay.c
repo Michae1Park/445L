@@ -12,6 +12,7 @@
 #include "SetAlarm.h"
 #include "Common.h"
 #include "Systick.h"
+#include "Stopwatch.h"
 
 #define CENTER_X 64
 #define CENTER_Y 80
@@ -30,7 +31,10 @@ void EraseSecond(void);
 volatile uint16_t display_mode = 0;
 //volatile double x, y;
 volatile static double prevsx, prevsy, prevmx, prevmy, prevhx, prevhy;
-
+extern volatile uint16_t Stopwatch_Triggered;
+extern volatile uint16_t alarm_minutes, alarm_hours;
+extern volatile uint16_t Time_minutes, Time_hours;
+extern volatile uint16_t alarm_flag;
 void DisplayAlarm(void)
 {
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
@@ -124,13 +128,14 @@ void EraseHour(void)
 
 void ChooseMode(void)
 {
-	if (display_mode) {DisplayAnalog();}
-	else if(!display_mode) {DisplayDigital();}
+	if (display_mode==1) {DisplayAnalog();}
+	else if(display_mode==0) {DisplayDigital();}
 	else {}
 }
 
 void DisplayAnalog(void)
-{
+{int32_t timeDisplay;
+	timeDisplay=NVIC_ST_CURRENT_R;
 		Output_Clear();
 		ST7735_SetCursor(0, 0);
 		ST7735_OutString("alarm:");
@@ -142,9 +147,10 @@ void DisplayAnalog(void)
 		DisplaySecond();
 		DisplayMinute();
 		DisplayHour();
-		
+		timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
 		while(active_In10s)
 		{
+			timeDisplay=NVIC_ST_CURRENT_R;
 			if(Mode == 3)
 			{
 				break;
@@ -173,12 +179,14 @@ void DisplayAnalog(void)
 				EraseHour();
 				DisplayHour();
 			}
+			timeDisplay=NVIC_ST_CURRENT_R-timeDisplay;
+			timeDisplay++;
 		}	
 }
 
 void DisplayDigital(void)
-{int32_t timeDisplay;
-	timeDisplay=NVIC_ST_CURRENT_R;
+{//int32_t timeDisplay;
+	//timeDisplay=NVIC_ST_CURRENT_R;
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
 	char ch[5];
 	
@@ -200,15 +208,24 @@ void DisplayDigital(void)
 	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
-	timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
+	//timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
 	
 	while(active_In10s)
 	{
-		timeDisplay=NVIC_ST_CURRENT_R;
+		//timeDisplay=NVIC_ST_CURRENT_R;
 		if(Mode == 3)
 		{
 			break;
 		}
+		if(Mode==0){
+			if((Time_Minutes+5)<60){
+				alarm_minutes=Time_Minutes+5;
+			alarm_hours=Time_Hours;
+				alarm_flag=1;
+			}
+
+		}
+
 			ch[0] = AsciiArray[Time_Hours/10];
 			ch[1] = AsciiArray[Time_Hours%10];
 			ch[2] = ':';
@@ -235,7 +252,8 @@ void DisplayDigital(void)
 				ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
 				ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
 			}
-			timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
+			//timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
+			//timeDisplay++;
 		}	
 }
 

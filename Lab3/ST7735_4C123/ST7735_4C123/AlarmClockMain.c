@@ -79,11 +79,11 @@ int main(void)
 	
 	//PORTF INIT (For Heart Beat)
   SYSCTL_RCGCGPIO_R |= 0x20;  // activate port F
-  GPIO_PORTF_DIR_R |= 0x04;   // make PF2 output (PF2 built-in LED)
-  GPIO_PORTF_AFSEL_R &= ~0x04;// disable alt funct on PF2
-  GPIO_PORTF_DEN_R |= 0x04;   // enable digital I/O on PF2
+  GPIO_PORTF_DIR_R |= 0x06;   // make PF2 and PF1 output (PF2 built-in LED)
+  GPIO_PORTF_AFSEL_R &= ~0x06;// disable alt funct on PF2 and PF1
+  GPIO_PORTF_DEN_R |= 0x06;   // enable digital I/O on PF2 and PF1
                               // configure PF2 as GPIO
-  GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
+  GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF00F)+0x00000000;
   GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF
 	
 	//USER FUNCTION INIT							// Self Described Init Functions									
@@ -92,7 +92,6 @@ int main(void)
 	Mode = 0xFFFF;
 	SysTick_Init(80000);        		// initialize SysTick timer
 	EnableInterrupts();							// Enable Interrupts
-	Mode = TimeDisplay_Mode;
 	//Main Loop
   while(1) 
   {	
@@ -100,18 +99,22 @@ int main(void)
 		if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes) && alarm_flag)
 		{
 			toggleSound =1;
+			PF1|=0x02;
 		}
 		else if(alarm_flag)
 		{
 			toggleSound =0;
+			PF1 &= 0xFD;
 		}
 		else if((alarm_hours==Time_Hours) && (alarm_minutes==Time_Minutes)&& (!alarm_flag))
 		{
 			toggleSound =0;
+			PF1 &=0xFD;
 		}	
 		else if(!alarm_flag)
 		{
 			toggleSound =0;
+			PF1 &=0xFD;
 		}
 		
 		if(Mode == SetTime_Mode)
@@ -144,8 +147,7 @@ int main(void)
 		{
 			Mode = 0xFFFF;
 			active_In10s = 1;
-			//display_mode ^= 0x1;
-			display_mode=0;
+			display_mode = display_mode^0x01;
 			DisAllowAlarmChangeMode();
 			ChooseMode();
 			DisAllowAlarmChangeMode();

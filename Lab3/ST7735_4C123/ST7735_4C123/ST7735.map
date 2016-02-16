@@ -238,6 +238,14 @@ Section Cross References
     systickints.o(i.SysTick_Wait10ms) refers to systickints.o(i.SysTick_Wait) for SysTick_Wait
     timer0a.o(i.Timer0A_Handler) refers to alarmclockmain.o(.data) for toggleSound
     timer0a.o(i.Timer0A_Init) refers to startup.o(.text) for StartCritical
+    stopwatch.o(i.DisplayStopwatch) refers to st7735.o(i.Output_Clear) for Output_Clear
+    stopwatch.o(i.DisplayStopwatch) refers to st7735.o(i.ST7735_DrawCharS) for ST7735_DrawCharS
+    stopwatch.o(i.DisplayStopwatch) refers to stopwatch.o(.data) for StopWatch_Hours
+    stopwatch.o(i.StopWatch_Init) refers to stopwatch.o(.data) for Stopwatch_Triggered
+    stopwatch.o(i.endStopWatch) refers to timer1.o(.data) for Time_Seconds
+    stopwatch.o(i.endStopWatch) refers to stopwatch.o(.data) for StopWatch_Seconds
+    stopwatch.o(i.triggerStopWatch) refers to timer1.o(.data) for Time_Seconds
+    stopwatch.o(i.triggerStopWatch) refers to stopwatch.o(.data) for StopWatch_Seconds
     cos.o(i.__softfp_cos) refers (Special) to iusefp.o(.text) for __I$use$fp
     cos.o(i.__softfp_cos) refers to cos.o(i.cos) for cos
     cos.o(i.cos) refers (Special) to iusefp.o(.text) for __I$use$fp
@@ -387,8 +395,13 @@ Removing Unused input sections from the image.
     Removing pwm.o(i.PWM0A_Duty), (12 bytes).
     Removing pwm.o(i.PWM0A_Init), (184 bytes).
     Removing systickints.o(i.SysTick_Wait10ms), (28 bytes).
+    Removing stopwatch.o(i.DisplayStopwatch), (368 bytes).
+    Removing stopwatch.o(i.StopWatch_Init), (12 bytes).
+    Removing stopwatch.o(i.endStopWatch), (68 bytes).
+    Removing stopwatch.o(i.triggerStopWatch), (52 bytes).
+    Removing stopwatch.o(.data), (8 bytes).
 
-36 unused section(s) (total 2736 bytes) removed from the image.
+41 unused section(s) (total 3244 bytes) removed from the image.
 
 ==============================================================================
 
@@ -400,28 +413,28 @@ Image Symbol Table
 
     RESET                                    0x00000000   Section      644  startup.o(RESET)
     ../clib/microlib/errno.c                 0x00000000   Number         0  errno.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
     ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixi.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixi.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
@@ -443,6 +456,7 @@ Image Symbol Table
     ST7735.c                                 0x00000000   Number         0  st7735.o ABSOLUTE
     SetAlarm.c                               0x00000000   Number         0  setalarm.o ABSOLUTE
     SetTime.c                                0x00000000   Number         0  settime.o ABSOLUTE
+    Stopwatch.c                              0x00000000   Number         0  stopwatch.o ABSOLUTE
     Switch.c                                 0x00000000   Number         0  switch.o ABSOLUTE
     SysTickInts.c                            0x00000000   Number         0  systickints.o ABSOLUTE
     TimeDisplay.c                            0x00000000   Number         0  timedisplay.o ABSOLUTE
@@ -487,91 +501,91 @@ Image Symbol Table
     i.DisAllowAlarmChangeMode                0x0000093c   Section        0  alarmclockmain.o(i.DisAllowAlarmChangeMode)
     i.DisplayAlarm                           0x00000948   Section        0  timedisplay.o(i.DisplayAlarm)
     i.DisplayAnalog                          0x00000a40   Section        0  timedisplay.o(i.DisplayAnalog)
-    i.DisplayDigital                         0x00000b0c   Section        0  timedisplay.o(i.DisplayDigital)
-    i.DisplayHour                            0x00000de4   Section        0  timedisplay.o(i.DisplayHour)
-    i.DisplayMinute                          0x00000ef4   Section        0  timedisplay.o(i.DisplayMinute)
-    i.DisplaySecond                          0x00001004   Section        0  timedisplay.o(i.DisplaySecond)
-    i.DisplaySetTime                         0x00001114   Section        0  timedisplay.o(i.DisplaySetTime)
-    i.EraseHour                              0x0000120c   Section        0  timedisplay.o(i.EraseHour)
-    i.EraseMinute                            0x00001240   Section        0  timedisplay.o(i.EraseMinute)
-    i.EraseSecond                            0x000012a0   Section        0  timedisplay.o(i.EraseSecond)
-    i.GPIOPortB_Handler                      0x00001324   Section        0  alarmclockmain.o(i.GPIOPortB_Handler)
-    i.MainMenu                               0x000013cc   Section        0  alarmclockmain.o(i.MainMenu)
-    i.Output_Clear                           0x00001468   Section        0  st7735.o(i.Output_Clear)
-    i.PLL_Init                               0x00001474   Section        0  pll.o(i.PLL_Init)
-    i.ST7735_Color565                        0x000014f0   Section        0  st7735.o(i.ST7735_Color565)
-    i.ST7735_DrawCharS                       0x00001508   Section        0  st7735.o(i.ST7735_DrawCharS)
-    i.ST7735_DrawCircle                      0x000015fc   Section        0  st7735.o(i.ST7735_DrawCircle)
-    i.ST7735_DrawPixel                       0x00001700   Section        0  st7735.o(i.ST7735_DrawPixel)
-    i.ST7735_DrawString                      0x00001748   Section        0  st7735.o(i.ST7735_DrawString)
-    i.ST7735_FillRect                        0x000017a0   Section        0  st7735.o(i.ST7735_FillRect)
-    i.ST7735_FillScreen                      0x0000184c   Section        0  st7735.o(i.ST7735_FillScreen)
-    i.ST7735_InitR                           0x00001870   Section        0  st7735.o(i.ST7735_InitR)
-    i.ST7735_Line                            0x000018ec   Section        0  st7735.o(i.ST7735_Line)
-    i.ST7735_OutChar                         0x000019d4   Section        0  st7735.o(i.ST7735_OutChar)
-    i.ST7735_OutString                       0x00001aa8   Section        0  st7735.o(i.ST7735_OutString)
-    i.ST7735_OutUDec                         0x00001ac0   Section        0  st7735.o(i.ST7735_OutUDec)
-    i.ST7735_SetCursor                       0x00001b4c   Section        0  st7735.o(i.ST7735_SetCursor)
-    i.Switch_Debounce                        0x00001b6c   Section        0  switch.o(i.Switch_Debounce)
-    i.Switch_Init                            0x00001b9c   Section        0  switch.o(i.Switch_Init)
-    i.Switch_Input                           0x00001c28   Section        0  switch.o(i.Switch_Input)
-    i.SysTick_Handler                        0x00001c34   Section        0  alarmclockmain.o(i.SysTick_Handler)
-    i.SysTick_Init                           0x00001c8c   Section        0  systickints.o(i.SysTick_Init)
-    i.SysTick_Wait                           0x00001ccc   Section        0  systickints.o(i.SysTick_Wait)
-    i.Timer0A_Handler                        0x00001cec   Section        0  timer0a.o(i.Timer0A_Handler)
-    i.Timer0A_Init                           0x00001d14   Section        0  timer0a.o(i.Timer0A_Init)
-    i.Timer1A_Handler                        0x00001d80   Section        0  timer1.o(i.Timer1A_Handler)
-    i.Timer1_Init                            0x00001df8   Section        0  timer1.o(i.Timer1_Init)
-    i.__ARM_fpclassify                       0x00001e58   Section        0  fpclassify.o(i.__ARM_fpclassify)
-    i.__ieee754_rem_pio2                     0x00001e80   Section        0  rred.o(i.__ieee754_rem_pio2)
-    i.__kernel_cos                           0x00002208   Section        0  cos_i.o(i.__kernel_cos)
-    i.__kernel_poly                          0x00002304   Section        0  poly.o(i.__kernel_poly)
-    i.__kernel_sin                           0x000023b0   Section        0  sin_i.o(i.__kernel_sin)
-    i.__mathlib_dbl_underflow                0x0000249c   Section        0  dunder.o(i.__mathlib_dbl_underflow)
-    i.__scatterload_copy                     0x000024ac   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x000024ba   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x000024bc   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.__set_errno                            0x000024cc   Section        0  errno.o(i.__set_errno)
-    i.changeTime                             0x000024d8   Section        0  settime.o(i.changeTime)
-    i.commandList                            0x00002588   Section        0  st7735.o(i.commandList)
-    commandList                              0x00002589   Thumb Code    86  st7735.o(i.commandList)
-    i.commonInit                             0x000025e0   Section        0  st7735.o(i.commonInit)
-    commonInit                               0x000025e1   Thumb Code   340  st7735.o(i.commonInit)
-    i.cos                                    0x00002764   Section        0  cos.o(i.cos)
-    i.decrementAlarmHour                     0x00002810   Section        0  setalarm.o(i.decrementAlarmHour)
-    i.decrementAlarmMin                      0x00002830   Section        0  setalarm.o(i.decrementAlarmMin)
-    i.decrementHour                          0x00002850   Section        0  settime.o(i.decrementHour)
-    i.decrementMin                           0x00002870   Section        0  settime.o(i.decrementMin)
-    i.fillmessage                            0x00002890   Section        0  st7735.o(i.fillmessage)
-    i.incrementAlarmHour                     0x000028d8   Section        0  setalarm.o(i.incrementAlarmHour)
-    i.incrementAlarmMin                      0x000028fc   Section        0  setalarm.o(i.incrementAlarmMin)
-    i.incrementHour                          0x00002920   Section        0  settime.o(i.incrementHour)
-    i.incrementMin                           0x00002944   Section        0  settime.o(i.incrementMin)
-    i.main                                   0x00002968   Section        0  alarmclockmain.o(i.main)
-    i.pushColor                              0x00002ba8   Section        0  st7735.o(i.pushColor)
-    pushColor                                0x00002ba9   Thumb Code    18  st7735.o(i.pushColor)
-    i.setAddrWindow                          0x00002bbc   Section        0  st7735.o(i.setAddrWindow)
-    setAddrWindow                            0x00002bbd   Thumb Code   106  st7735.o(i.setAddrWindow)
-    i.setAlarmTimeBase                       0x00002c30   Section        0  setalarm.o(i.setAlarmTimeBase)
-    i.sin                                    0x00002cd0   Section        0  sin.o(i.sin)
-    i.writecommand                           0x00002d80   Section        0  st7735.o(i.writecommand)
-    writecommand                             0x00002d81   Thumb Code    40  st7735.o(i.writecommand)
-    i.writedata                              0x00002db0   Section        0  st7735.o(i.writedata)
-    writedata                                0x00002db1   Thumb Code    24  st7735.o(i.writedata)
-    .constdata                               0x00002dd0   Section     2018  st7735.o(.constdata)
-    Font                                     0x00002dd0   Data        1275  st7735.o(.constdata)
-    Bcmd                                     0x000032cb   Data         103  st7735.o(.constdata)
-    Rcmd1                                    0x00003332   Data          59  st7735.o(.constdata)
-    Rcmd2green                               0x0000336d   Data          13  st7735.o(.constdata)
-    Rcmd2red                                 0x0000337a   Data          13  st7735.o(.constdata)
-    Rcmd3                                    0x00003387   Data          43  st7735.o(.constdata)
-    .constdata                               0x000035b8   Section       48  cos_i.o(.constdata)
-    C                                        0x000035b8   Data          48  cos_i.o(.constdata)
-    .constdata                               0x000035e8   Section      200  rred.o(.constdata)
-    pio2s                                    0x000035e8   Data          48  rred.o(.constdata)
-    twooverpi                                0x00003618   Data         152  rred.o(.constdata)
-    .constdata                               0x000036b0   Section       40  sin_i.o(.constdata)
-    S                                        0x000036b0   Data          40  sin_i.o(.constdata)
+    i.DisplayDigital                         0x00000b2c   Section        0  timedisplay.o(i.DisplayDigital)
+    i.DisplayHour                            0x00000e14   Section        0  timedisplay.o(i.DisplayHour)
+    i.DisplayMinute                          0x00000f24   Section        0  timedisplay.o(i.DisplayMinute)
+    i.DisplaySecond                          0x00001034   Section        0  timedisplay.o(i.DisplaySecond)
+    i.DisplaySetTime                         0x00001144   Section        0  timedisplay.o(i.DisplaySetTime)
+    i.EraseHour                              0x0000123c   Section        0  timedisplay.o(i.EraseHour)
+    i.EraseMinute                            0x00001270   Section        0  timedisplay.o(i.EraseMinute)
+    i.EraseSecond                            0x000012d0   Section        0  timedisplay.o(i.EraseSecond)
+    i.GPIOPortB_Handler                      0x00001354   Section        0  alarmclockmain.o(i.GPIOPortB_Handler)
+    i.MainMenu                               0x000013fc   Section        0  alarmclockmain.o(i.MainMenu)
+    i.Output_Clear                           0x00001498   Section        0  st7735.o(i.Output_Clear)
+    i.PLL_Init                               0x000014a4   Section        0  pll.o(i.PLL_Init)
+    i.ST7735_Color565                        0x00001520   Section        0  st7735.o(i.ST7735_Color565)
+    i.ST7735_DrawCharS                       0x00001538   Section        0  st7735.o(i.ST7735_DrawCharS)
+    i.ST7735_DrawCircle                      0x0000162c   Section        0  st7735.o(i.ST7735_DrawCircle)
+    i.ST7735_DrawPixel                       0x00001730   Section        0  st7735.o(i.ST7735_DrawPixel)
+    i.ST7735_DrawString                      0x00001778   Section        0  st7735.o(i.ST7735_DrawString)
+    i.ST7735_FillRect                        0x000017d0   Section        0  st7735.o(i.ST7735_FillRect)
+    i.ST7735_FillScreen                      0x0000187c   Section        0  st7735.o(i.ST7735_FillScreen)
+    i.ST7735_InitR                           0x000018a0   Section        0  st7735.o(i.ST7735_InitR)
+    i.ST7735_Line                            0x0000191c   Section        0  st7735.o(i.ST7735_Line)
+    i.ST7735_OutChar                         0x00001a04   Section        0  st7735.o(i.ST7735_OutChar)
+    i.ST7735_OutString                       0x00001ad8   Section        0  st7735.o(i.ST7735_OutString)
+    i.ST7735_OutUDec                         0x00001af0   Section        0  st7735.o(i.ST7735_OutUDec)
+    i.ST7735_SetCursor                       0x00001b7c   Section        0  st7735.o(i.ST7735_SetCursor)
+    i.Switch_Debounce                        0x00001b9c   Section        0  switch.o(i.Switch_Debounce)
+    i.Switch_Init                            0x00001bcc   Section        0  switch.o(i.Switch_Init)
+    i.Switch_Input                           0x00001c58   Section        0  switch.o(i.Switch_Input)
+    i.SysTick_Handler                        0x00001c64   Section        0  alarmclockmain.o(i.SysTick_Handler)
+    i.SysTick_Init                           0x00001cbc   Section        0  systickints.o(i.SysTick_Init)
+    i.SysTick_Wait                           0x00001cfc   Section        0  systickints.o(i.SysTick_Wait)
+    i.Timer0A_Handler                        0x00001d1c   Section        0  timer0a.o(i.Timer0A_Handler)
+    i.Timer0A_Init                           0x00001d44   Section        0  timer0a.o(i.Timer0A_Init)
+    i.Timer1A_Handler                        0x00001db0   Section        0  timer1.o(i.Timer1A_Handler)
+    i.Timer1_Init                            0x00001e28   Section        0  timer1.o(i.Timer1_Init)
+    i.__ARM_fpclassify                       0x00001e88   Section        0  fpclassify.o(i.__ARM_fpclassify)
+    i.__ieee754_rem_pio2                     0x00001eb0   Section        0  rred.o(i.__ieee754_rem_pio2)
+    i.__kernel_cos                           0x00002238   Section        0  cos_i.o(i.__kernel_cos)
+    i.__kernel_poly                          0x00002334   Section        0  poly.o(i.__kernel_poly)
+    i.__kernel_sin                           0x000023e0   Section        0  sin_i.o(i.__kernel_sin)
+    i.__mathlib_dbl_underflow                0x000024cc   Section        0  dunder.o(i.__mathlib_dbl_underflow)
+    i.__scatterload_copy                     0x000024dc   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x000024ea   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x000024ec   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.__set_errno                            0x000024fc   Section        0  errno.o(i.__set_errno)
+    i.changeTime                             0x00002508   Section        0  settime.o(i.changeTime)
+    i.commandList                            0x000025b8   Section        0  st7735.o(i.commandList)
+    commandList                              0x000025b9   Thumb Code    86  st7735.o(i.commandList)
+    i.commonInit                             0x00002610   Section        0  st7735.o(i.commonInit)
+    commonInit                               0x00002611   Thumb Code   340  st7735.o(i.commonInit)
+    i.cos                                    0x00002794   Section        0  cos.o(i.cos)
+    i.decrementAlarmHour                     0x00002840   Section        0  setalarm.o(i.decrementAlarmHour)
+    i.decrementAlarmMin                      0x00002860   Section        0  setalarm.o(i.decrementAlarmMin)
+    i.decrementHour                          0x00002880   Section        0  settime.o(i.decrementHour)
+    i.decrementMin                           0x000028a0   Section        0  settime.o(i.decrementMin)
+    i.fillmessage                            0x000028c0   Section        0  st7735.o(i.fillmessage)
+    i.incrementAlarmHour                     0x00002908   Section        0  setalarm.o(i.incrementAlarmHour)
+    i.incrementAlarmMin                      0x0000292c   Section        0  setalarm.o(i.incrementAlarmMin)
+    i.incrementHour                          0x00002950   Section        0  settime.o(i.incrementHour)
+    i.incrementMin                           0x00002974   Section        0  settime.o(i.incrementMin)
+    i.main                                   0x00002998   Section        0  alarmclockmain.o(i.main)
+    i.pushColor                              0x00002c0c   Section        0  st7735.o(i.pushColor)
+    pushColor                                0x00002c0d   Thumb Code    18  st7735.o(i.pushColor)
+    i.setAddrWindow                          0x00002c20   Section        0  st7735.o(i.setAddrWindow)
+    setAddrWindow                            0x00002c21   Thumb Code   106  st7735.o(i.setAddrWindow)
+    i.setAlarmTimeBase                       0x00002c94   Section        0  setalarm.o(i.setAlarmTimeBase)
+    i.sin                                    0x00002d34   Section        0  sin.o(i.sin)
+    i.writecommand                           0x00002de4   Section        0  st7735.o(i.writecommand)
+    writecommand                             0x00002de5   Thumb Code    40  st7735.o(i.writecommand)
+    i.writedata                              0x00002e14   Section        0  st7735.o(i.writedata)
+    writedata                                0x00002e15   Thumb Code    24  st7735.o(i.writedata)
+    .constdata                               0x00002e34   Section     2018  st7735.o(.constdata)
+    Font                                     0x00002e34   Data        1275  st7735.o(.constdata)
+    Bcmd                                     0x0000332f   Data         103  st7735.o(.constdata)
+    Rcmd1                                    0x00003396   Data          59  st7735.o(.constdata)
+    Rcmd2green                               0x000033d1   Data          13  st7735.o(.constdata)
+    Rcmd2red                                 0x000033de   Data          13  st7735.o(.constdata)
+    Rcmd3                                    0x000033eb   Data          43  st7735.o(.constdata)
+    .constdata                               0x00003618   Section       48  cos_i.o(.constdata)
+    C                                        0x00003618   Data          48  cos_i.o(.constdata)
+    .constdata                               0x00003648   Section      200  rred.o(.constdata)
+    pio2s                                    0x00003648   Data          48  rred.o(.constdata)
+    twooverpi                                0x00003678   Data         152  rred.o(.constdata)
+    .constdata                               0x00003710   Section       40  sin_i.o(.constdata)
+    S                                        0x00003710   Data          40  sin_i.o(.constdata)
     .data                                    0x20000000   Section       44  st7735.o(.data)
     _width                                   0x2000000a   Data           2  st7735.o(.data)
     _height                                  0x2000000c   Data           2  st7735.o(.data)
@@ -772,75 +786,75 @@ Image Symbol Table
     __aeabi_ui2d                             0x000007b5   Thumb Code    26  dfltui.o(.text)
     __aeabi_d2iz                             0x000007cf   Thumb Code    62  dfixi.o(.text)
     AllowAlarmChangeMode                     0x0000080d   Thumb Code     8  alarmclockmain.o(i.AllowAlarmChangeMode)
-    ChooseMode                               0x00000819   Thumb Code    26  timedisplay.o(i.ChooseMode)
+    ChooseMode                               0x00000819   Thumb Code    28  timedisplay.o(i.ChooseMode)
     ClockFace_Init                           0x00000839   Thumb Code   196  timedisplay.o(i.ClockFace_Init)
     Delay1ms                                 0x000008fd   Thumb Code    32  st7735.o(i.Delay1ms)
     DelayWait10ms                            0x0000091d   Thumb Code    32  timedisplay.o(i.DelayWait10ms)
     DisAllowAlarmChangeMode                  0x0000093d   Thumb Code     8  alarmclockmain.o(i.DisAllowAlarmChangeMode)
     DisplayAlarm                             0x00000949   Thumb Code   226  timedisplay.o(i.DisplayAlarm)
-    DisplayAnalog                            0x00000a41   Thumb Code   172  timedisplay.o(i.DisplayAnalog)
-    DisplayDigital                           0x00000b0d   Thumb Code   676  timedisplay.o(i.DisplayDigital)
-    DisplayHour                              0x00000de5   Thumb Code   224  timedisplay.o(i.DisplayHour)
-    DisplayMinute                            0x00000ef5   Thumb Code   224  timedisplay.o(i.DisplayMinute)
-    DisplaySecond                            0x00001005   Thumb Code   224  timedisplay.o(i.DisplaySecond)
-    DisplaySetTime                           0x00001115   Thumb Code   226  timedisplay.o(i.DisplaySetTime)
-    EraseHour                                0x0000120d   Thumb Code    44  timedisplay.o(i.EraseHour)
-    EraseMinute                              0x00001241   Thumb Code    80  timedisplay.o(i.EraseMinute)
-    EraseSecond                              0x000012a1   Thumb Code   116  timedisplay.o(i.EraseSecond)
-    GPIOPortB_Handler                        0x00001325   Thumb Code   146  alarmclockmain.o(i.GPIOPortB_Handler)
-    MainMenu                                 0x000013cd   Thumb Code    86  alarmclockmain.o(i.MainMenu)
-    Output_Clear                             0x00001469   Thumb Code    10  st7735.o(i.Output_Clear)
-    PLL_Init                                 0x00001475   Thumb Code   118  pll.o(i.PLL_Init)
-    ST7735_Color565                          0x000014f1   Thumb Code    24  st7735.o(i.ST7735_Color565)
-    ST7735_DrawCharS                         0x00001509   Thumb Code   232  st7735.o(i.ST7735_DrawCharS)
-    ST7735_DrawCircle                        0x000015fd   Thumb Code   260  st7735.o(i.ST7735_DrawCircle)
-    ST7735_DrawPixel                         0x00001701   Thumb Code    64  st7735.o(i.ST7735_DrawPixel)
-    ST7735_DrawString                        0x00001749   Thumb Code    86  st7735.o(i.ST7735_DrawString)
-    ST7735_FillRect                          0x000017a1   Thumb Code   164  st7735.o(i.ST7735_FillRect)
-    ST7735_FillScreen                        0x0000184d   Thumb Code    28  st7735.o(i.ST7735_FillScreen)
-    ST7735_InitR                             0x00001871   Thumb Code    90  st7735.o(i.ST7735_InitR)
-    ST7735_Line                              0x000018ed   Thumb Code   232  st7735.o(i.ST7735_Line)
-    ST7735_OutChar                           0x000019d5   Thumb Code   176  st7735.o(i.ST7735_OutChar)
-    ST7735_OutString                         0x00001aa9   Thumb Code    24  st7735.o(i.ST7735_OutString)
-    ST7735_OutUDec                           0x00001ac1   Thumb Code   118  st7735.o(i.ST7735_OutUDec)
-    ST7735_SetCursor                         0x00001b4d   Thumb Code    22  st7735.o(i.ST7735_SetCursor)
-    Switch_Debounce                          0x00001b6d   Thumb Code    48  switch.o(i.Switch_Debounce)
-    Switch_Init                              0x00001b9d   Thumb Code   124  switch.o(i.Switch_Init)
-    Switch_Input                             0x00001c29   Thumb Code     6  switch.o(i.Switch_Input)
-    SysTick_Handler                          0x00001c35   Thumb Code    70  alarmclockmain.o(i.SysTick_Handler)
-    SysTick_Init                             0x00001c8d   Thumb Code    58  systickints.o(i.SysTick_Init)
-    SysTick_Wait                             0x00001ccd   Thumb Code    32  systickints.o(i.SysTick_Wait)
-    Timer0A_Handler                          0x00001ced   Thumb Code    28  timer0a.o(i.Timer0A_Handler)
-    Timer0A_Init                             0x00001d15   Thumb Code    90  timer0a.o(i.Timer0A_Init)
-    Timer1A_Handler                          0x00001d81   Thumb Code    98  timer1.o(i.Timer1A_Handler)
-    Timer1_Init                              0x00001df9   Thumb Code    76  timer1.o(i.Timer1_Init)
-    __ARM_fpclassify                         0x00001e59   Thumb Code    40  fpclassify.o(i.__ARM_fpclassify)
-    __ieee754_rem_pio2                       0x00001e81   Thumb Code   832  rred.o(i.__ieee754_rem_pio2)
-    __kernel_cos                             0x00002209   Thumb Code   230  cos_i.o(i.__kernel_cos)
-    __kernel_poly                            0x00002305   Thumb Code   170  poly.o(i.__kernel_poly)
-    __kernel_sin                             0x000023b1   Thumb Code   224  sin_i.o(i.__kernel_sin)
-    __mathlib_dbl_underflow                  0x0000249d   Thumb Code    10  dunder.o(i.__mathlib_dbl_underflow)
-    __scatterload_copy                       0x000024ad   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x000024bb   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x000024bd   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    __set_errno                              0x000024cd   Thumb Code     6  errno.o(i.__set_errno)
-    changeTime                               0x000024d9   Thumb Code   162  settime.o(i.changeTime)
-    cos                                      0x00002765   Thumb Code   164  cos.o(i.cos)
-    decrementAlarmHour                       0x00002811   Thumb Code    28  setalarm.o(i.decrementAlarmHour)
-    decrementAlarmMin                        0x00002831   Thumb Code    28  setalarm.o(i.decrementAlarmMin)
-    decrementHour                            0x00002851   Thumb Code    28  settime.o(i.decrementHour)
-    decrementMin                             0x00002871   Thumb Code    28  settime.o(i.decrementMin)
-    fillmessage                              0x00002891   Thumb Code    64  st7735.o(i.fillmessage)
-    incrementAlarmHour                       0x000028d9   Thumb Code    30  setalarm.o(i.incrementAlarmHour)
-    incrementAlarmMin                        0x000028fd   Thumb Code    30  setalarm.o(i.incrementAlarmMin)
-    incrementHour                            0x00002921   Thumb Code    30  settime.o(i.incrementHour)
-    incrementMin                             0x00002945   Thumb Code    30  settime.o(i.incrementMin)
-    main                                     0x00002969   Thumb Code   504  alarmclockmain.o(i.main)
-    setAlarmTimeBase                         0x00002c31   Thumb Code   150  setalarm.o(i.setAlarmTimeBase)
-    sin                                      0x00002cd1   Thumb Code   166  sin.o(i.sin)
-    dBfs                                     0x000033b2   Data         512  st7735.o(.constdata)
-    Region$$Table$$Base                      0x000036d8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000036f8   Number         0  anon$$obj.o(Region$$Table)
+    DisplayAnalog                            0x00000a41   Thumb Code   202  timedisplay.o(i.DisplayAnalog)
+    DisplayDigital                           0x00000b2d   Thumb Code   688  timedisplay.o(i.DisplayDigital)
+    DisplayHour                              0x00000e15   Thumb Code   224  timedisplay.o(i.DisplayHour)
+    DisplayMinute                            0x00000f25   Thumb Code   224  timedisplay.o(i.DisplayMinute)
+    DisplaySecond                            0x00001035   Thumb Code   224  timedisplay.o(i.DisplaySecond)
+    DisplaySetTime                           0x00001145   Thumb Code   226  timedisplay.o(i.DisplaySetTime)
+    EraseHour                                0x0000123d   Thumb Code    44  timedisplay.o(i.EraseHour)
+    EraseMinute                              0x00001271   Thumb Code    80  timedisplay.o(i.EraseMinute)
+    EraseSecond                              0x000012d1   Thumb Code   116  timedisplay.o(i.EraseSecond)
+    GPIOPortB_Handler                        0x00001355   Thumb Code   146  alarmclockmain.o(i.GPIOPortB_Handler)
+    MainMenu                                 0x000013fd   Thumb Code    86  alarmclockmain.o(i.MainMenu)
+    Output_Clear                             0x00001499   Thumb Code    10  st7735.o(i.Output_Clear)
+    PLL_Init                                 0x000014a5   Thumb Code   118  pll.o(i.PLL_Init)
+    ST7735_Color565                          0x00001521   Thumb Code    24  st7735.o(i.ST7735_Color565)
+    ST7735_DrawCharS                         0x00001539   Thumb Code   232  st7735.o(i.ST7735_DrawCharS)
+    ST7735_DrawCircle                        0x0000162d   Thumb Code   260  st7735.o(i.ST7735_DrawCircle)
+    ST7735_DrawPixel                         0x00001731   Thumb Code    64  st7735.o(i.ST7735_DrawPixel)
+    ST7735_DrawString                        0x00001779   Thumb Code    86  st7735.o(i.ST7735_DrawString)
+    ST7735_FillRect                          0x000017d1   Thumb Code   164  st7735.o(i.ST7735_FillRect)
+    ST7735_FillScreen                        0x0000187d   Thumb Code    28  st7735.o(i.ST7735_FillScreen)
+    ST7735_InitR                             0x000018a1   Thumb Code    90  st7735.o(i.ST7735_InitR)
+    ST7735_Line                              0x0000191d   Thumb Code   232  st7735.o(i.ST7735_Line)
+    ST7735_OutChar                           0x00001a05   Thumb Code   176  st7735.o(i.ST7735_OutChar)
+    ST7735_OutString                         0x00001ad9   Thumb Code    24  st7735.o(i.ST7735_OutString)
+    ST7735_OutUDec                           0x00001af1   Thumb Code   118  st7735.o(i.ST7735_OutUDec)
+    ST7735_SetCursor                         0x00001b7d   Thumb Code    22  st7735.o(i.ST7735_SetCursor)
+    Switch_Debounce                          0x00001b9d   Thumb Code    48  switch.o(i.Switch_Debounce)
+    Switch_Init                              0x00001bcd   Thumb Code   124  switch.o(i.Switch_Init)
+    Switch_Input                             0x00001c59   Thumb Code     6  switch.o(i.Switch_Input)
+    SysTick_Handler                          0x00001c65   Thumb Code    70  alarmclockmain.o(i.SysTick_Handler)
+    SysTick_Init                             0x00001cbd   Thumb Code    58  systickints.o(i.SysTick_Init)
+    SysTick_Wait                             0x00001cfd   Thumb Code    32  systickints.o(i.SysTick_Wait)
+    Timer0A_Handler                          0x00001d1d   Thumb Code    28  timer0a.o(i.Timer0A_Handler)
+    Timer0A_Init                             0x00001d45   Thumb Code    90  timer0a.o(i.Timer0A_Init)
+    Timer1A_Handler                          0x00001db1   Thumb Code    98  timer1.o(i.Timer1A_Handler)
+    Timer1_Init                              0x00001e29   Thumb Code    76  timer1.o(i.Timer1_Init)
+    __ARM_fpclassify                         0x00001e89   Thumb Code    40  fpclassify.o(i.__ARM_fpclassify)
+    __ieee754_rem_pio2                       0x00001eb1   Thumb Code   832  rred.o(i.__ieee754_rem_pio2)
+    __kernel_cos                             0x00002239   Thumb Code   230  cos_i.o(i.__kernel_cos)
+    __kernel_poly                            0x00002335   Thumb Code   170  poly.o(i.__kernel_poly)
+    __kernel_sin                             0x000023e1   Thumb Code   224  sin_i.o(i.__kernel_sin)
+    __mathlib_dbl_underflow                  0x000024cd   Thumb Code    10  dunder.o(i.__mathlib_dbl_underflow)
+    __scatterload_copy                       0x000024dd   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x000024eb   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x000024ed   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    __set_errno                              0x000024fd   Thumb Code     6  errno.o(i.__set_errno)
+    changeTime                               0x00002509   Thumb Code   162  settime.o(i.changeTime)
+    cos                                      0x00002795   Thumb Code   164  cos.o(i.cos)
+    decrementAlarmHour                       0x00002841   Thumb Code    28  setalarm.o(i.decrementAlarmHour)
+    decrementAlarmMin                        0x00002861   Thumb Code    28  setalarm.o(i.decrementAlarmMin)
+    decrementHour                            0x00002881   Thumb Code    28  settime.o(i.decrementHour)
+    decrementMin                             0x000028a1   Thumb Code    28  settime.o(i.decrementMin)
+    fillmessage                              0x000028c1   Thumb Code    64  st7735.o(i.fillmessage)
+    incrementAlarmHour                       0x00002909   Thumb Code    30  setalarm.o(i.incrementAlarmHour)
+    incrementAlarmMin                        0x0000292d   Thumb Code    30  setalarm.o(i.incrementAlarmMin)
+    incrementHour                            0x00002951   Thumb Code    30  settime.o(i.incrementHour)
+    incrementMin                             0x00002975   Thumb Code    30  settime.o(i.incrementMin)
+    main                                     0x00002999   Thumb Code   552  alarmclockmain.o(i.main)
+    setAlarmTimeBase                         0x00002c95   Thumb Code   150  setalarm.o(i.setAlarmTimeBase)
+    sin                                      0x00002d35   Thumb Code   166  sin.o(i.sin)
+    dBfs                                     0x00003416   Data         512  st7735.o(.constdata)
+    Region$$Table$$Base                      0x00003738   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00003758   Number         0  anon$$obj.o(Region$$Table)
     StX                                      0x20000000   Data           4  st7735.o(.data)
     StY                                      0x20000004   Data           4  st7735.o(.data)
     StTextColor                              0x20000008   Data           2  st7735.o(.data)
@@ -876,124 +890,124 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x000037b8, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00003818, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Base: 0x00000000, Size: 0x000036f8, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x00000000, Size: 0x00003758, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000000   Code   RO          750  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000284   0x00000004   Code   RO          777    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x00000288   0x00000004   Code   RO          780    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x0000028c   0x00000000   Code   RO          782    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x0000028c   0x00000000   Code   RO          784    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x0000028c   0x00000008   Code   RO          785    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x00000294   0x00000000   Code   RO          787    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x00000294   0x00000000   Code   RO          789    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x00000294   0x00000004   Code   RO          778    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x00000284   0x00000000   Code   RO          785  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000284   0x00000004   Code   RO          812    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000288   0x00000004   Code   RO          815    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000028c   0x00000000   Code   RO          817    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000028c   0x00000000   Code   RO          819    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000028c   0x00000008   Code   RO          820    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000294   0x00000000   Code   RO          822    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000294   0x00000000   Code   RO          824    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000294   0x00000004   Code   RO          813    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x00000298   0x0000001c   Code   RO            4    .text               startup.o
-    0x000002b4   0x0000014e   Code   RO          753    .text               mf_w.l(dadd.o)
-    0x00000402   0x000000e4   Code   RO          755    .text               mf_w.l(dmul.o)
-    0x000004e6   0x00000022   Code   RO          757    .text               mf_w.l(dflti.o)
-    0x00000508   0x00000032   Code   RO          759    .text               mf_w.l(dfixui.o)
+    0x000002b4   0x0000014e   Code   RO          788    .text               mf_w.l(dadd.o)
+    0x00000402   0x000000e4   Code   RO          790    .text               mf_w.l(dmul.o)
+    0x000004e6   0x00000022   Code   RO          792    .text               mf_w.l(dflti.o)
+    0x00000508   0x00000032   Code   RO          794    .text               mf_w.l(dfixui.o)
     0x0000053a   0x00000002   PAD
-    0x0000053c   0x00000028   Code   RO          761    .text               mf_w.l(cdcmple.o)
-    0x00000564   0x0000001e   Code   RO          791    .text               mc_w.l(llshl.o)
-    0x00000582   0x00000020   Code   RO          793    .text               mc_w.l(llushr.o)
-    0x000005a2   0x00000024   Code   RO          795    .text               mc_w.l(llsshr.o)
-    0x000005c6   0x00000000   Code   RO          804    .text               mc_w.l(iusefp.o)
-    0x000005c6   0x000000be   Code   RO          805    .text               mf_w.l(depilogue.o)
-    0x00000684   0x000000de   Code   RO          807    .text               mf_w.l(ddiv.o)
-    0x00000762   0x0000002e   Code   RO          809    .text               mf_w.l(dscalb.o)
-    0x00000790   0x00000024   Code   RO          817    .text               mc_w.l(init.o)
-    0x000007b4   0x0000001a   Code   RO          819    .text               mf_w.l(dfltui.o)
-    0x000007ce   0x0000003e   Code   RO          821    .text               mf_w.l(dfixi.o)
-    0x0000080c   0x0000000c   Code   RO          633    i.AllowAlarmChangeMode  alarmclockmain.o
+    0x0000053c   0x00000028   Code   RO          796    .text               mf_w.l(cdcmple.o)
+    0x00000564   0x0000001e   Code   RO          826    .text               mc_w.l(llshl.o)
+    0x00000582   0x00000020   Code   RO          828    .text               mc_w.l(llushr.o)
+    0x000005a2   0x00000024   Code   RO          830    .text               mc_w.l(llsshr.o)
+    0x000005c6   0x00000000   Code   RO          839    .text               mc_w.l(iusefp.o)
+    0x000005c6   0x000000be   Code   RO          840    .text               mf_w.l(depilogue.o)
+    0x00000684   0x000000de   Code   RO          842    .text               mf_w.l(ddiv.o)
+    0x00000762   0x0000002e   Code   RO          844    .text               mf_w.l(dscalb.o)
+    0x00000790   0x00000024   Code   RO          852    .text               mc_w.l(init.o)
+    0x000007b4   0x0000001a   Code   RO          854    .text               mf_w.l(dfltui.o)
+    0x000007ce   0x0000003e   Code   RO          856    .text               mf_w.l(dfixi.o)
+    0x0000080c   0x0000000c   Code   RO          634    i.AllowAlarmChangeMode  alarmclockmain.o
     0x00000818   0x00000020   Code   RO          543    i.ChooseMode        timedisplay.o
     0x00000838   0x000000c4   Code   RO          544    i.ClockFace_Init    timedisplay.o
     0x000008fc   0x00000020   Code   RO           34    i.Delay1ms          st7735.o
     0x0000091c   0x00000020   Code   RO          545    i.DelayWait10ms     timedisplay.o
-    0x0000093c   0x0000000c   Code   RO          634    i.DisAllowAlarmChangeMode  alarmclockmain.o
+    0x0000093c   0x0000000c   Code   RO          635    i.DisAllowAlarmChangeMode  alarmclockmain.o
     0x00000948   0x000000f8   Code   RO          546    i.DisplayAlarm      timedisplay.o
-    0x00000a40   0x000000cc   Code   RO          547    i.DisplayAnalog     timedisplay.o
-    0x00000b0c   0x000002d8   Code   RO          548    i.DisplayDigital    timedisplay.o
-    0x00000de4   0x00000110   Code   RO          549    i.DisplayHour       timedisplay.o
-    0x00000ef4   0x00000110   Code   RO          550    i.DisplayMinute     timedisplay.o
-    0x00001004   0x00000110   Code   RO          551    i.DisplaySecond     timedisplay.o
-    0x00001114   0x000000f8   Code   RO          552    i.DisplaySetTime    timedisplay.o
-    0x0000120c   0x00000034   Code   RO          553    i.EraseHour         timedisplay.o
-    0x00001240   0x00000060   Code   RO          554    i.EraseMinute       timedisplay.o
-    0x000012a0   0x00000084   Code   RO          555    i.EraseSecond       timedisplay.o
-    0x00001324   0x000000a8   Code   RO          635    i.GPIOPortB_Handler  alarmclockmain.o
-    0x000013cc   0x0000009c   Code   RO          636    i.MainMenu          alarmclockmain.o
-    0x00001468   0x0000000a   Code   RO           35    i.Output_Clear      st7735.o
-    0x00001472   0x00000002   PAD
-    0x00001474   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
-    0x000014f0   0x00000018   Code   RO           40    i.ST7735_Color565   st7735.o
-    0x00001508   0x000000f4   Code   RO           43    i.ST7735_DrawCharS  st7735.o
-    0x000015fc   0x00000104   Code   RO           44    i.ST7735_DrawCircle  st7735.o
-    0x00001700   0x00000048   Code   RO           47    i.ST7735_DrawPixel  st7735.o
-    0x00001748   0x00000056   Code   RO           48    i.ST7735_DrawString  st7735.o
-    0x0000179e   0x00000002   PAD
-    0x000017a0   0x000000ac   Code   RO           49    i.ST7735_FillRect   st7735.o
-    0x0000184c   0x00000024   Code   RO           50    i.ST7735_FillScreen  st7735.o
-    0x00001870   0x0000007c   Code   RO           52    i.ST7735_InitR      st7735.o
-    0x000018ec   0x000000e8   Code   RO           54    i.ST7735_Line       st7735.o
-    0x000019d4   0x000000d4   Code   RO           55    i.ST7735_OutChar    st7735.o
-    0x00001aa8   0x00000018   Code   RO           56    i.ST7735_OutString  st7735.o
-    0x00001ac0   0x0000008c   Code   RO           57    i.ST7735_OutUDec    st7735.o
-    0x00001b4c   0x00000020   Code   RO           66    i.ST7735_SetCursor  st7735.o
-    0x00001b6c   0x00000030   Code   RO          331    i.Switch_Debounce   switch.o
-    0x00001b9c   0x0000008c   Code   RO          332    i.Switch_Init       switch.o
-    0x00001c28   0x0000000c   Code   RO          334    i.Switch_Input      switch.o
-    0x00001c34   0x00000058   Code   RO          637    i.SysTick_Handler   alarmclockmain.o
-    0x00001c8c   0x00000040   Code   RO          691    i.SysTick_Init      systickints.o
-    0x00001ccc   0x00000020   Code   RO          692    i.SysTick_Wait      systickints.o
-    0x00001cec   0x00000028   Code   RO          715    i.Timer0A_Handler   timer0a.o
-    0x00001d14   0x0000006c   Code   RO          716    i.Timer0A_Init      timer0a.o
-    0x00001d80   0x00000078   Code   RO          400    i.Timer1A_Handler   timer1.o
-    0x00001df8   0x00000060   Code   RO          401    i.Timer1_Init       timer1.o
-    0x00001e58   0x00000028   Code   RO          813    i.__ARM_fpclassify  m_ws.l(fpclassify.o)
-    0x00001e80   0x00000388   Code   RO          766    i.__ieee754_rem_pio2  m_ws.l(rred.o)
-    0x00002208   0x000000fc   Code   RO          763    i.__kernel_cos      m_ws.l(cos_i.o)
-    0x00002304   0x000000aa   Code   RO          815    i.__kernel_poly     m_ws.l(poly.o)
-    0x000023ae   0x00000002   PAD
-    0x000023b0   0x000000ec   Code   RO          771    i.__kernel_sin      m_ws.l(sin_i.o)
-    0x0000249c   0x00000010   Code   RO          811    i.__mathlib_dbl_underflow  m_ws.l(dunder.o)
-    0x000024ac   0x0000000e   Code   RO          825    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x000024ba   0x00000002   Code   RO          826    i.__scatterload_null  mc_w.l(handlers.o)
-    0x000024bc   0x0000000e   Code   RO          827    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x000024ca   0x00000002   PAD
-    0x000024cc   0x0000000c   Code   RO          799    i.__set_errno       mc_w.l(errno.o)
-    0x000024d8   0x000000b0   Code   RO          424    i.changeTime        settime.o
-    0x00002588   0x00000056   Code   RO           70    i.commandList       st7735.o
-    0x000025de   0x00000002   PAD
-    0x000025e0   0x00000184   Code   RO           71    i.commonInit        st7735.o
-    0x00002764   0x000000ac   Code   RO          735    i.cos               m_ws.l(cos.o)
-    0x00002810   0x00000020   Code   RO          470    i.decrementAlarmHour  setalarm.o
-    0x00002830   0x00000020   Code   RO          471    i.decrementAlarmMin  setalarm.o
-    0x00002850   0x00000020   Code   RO          425    i.decrementHour     settime.o
-    0x00002870   0x00000020   Code   RO          426    i.decrementMin      settime.o
-    0x00002890   0x00000048   Code   RO           74    i.fillmessage       st7735.o
-    0x000028d8   0x00000024   Code   RO          472    i.incrementAlarmHour  setalarm.o
-    0x000028fc   0x00000024   Code   RO          473    i.incrementAlarmMin  setalarm.o
-    0x00002920   0x00000024   Code   RO          427    i.incrementHour     settime.o
-    0x00002944   0x00000024   Code   RO          428    i.incrementMin      settime.o
-    0x00002968   0x00000240   Code   RO          638    i.main              alarmclockmain.o
-    0x00002ba8   0x00000012   Code   RO           76    i.pushColor         st7735.o
-    0x00002bba   0x00000002   PAD
-    0x00002bbc   0x00000074   Code   RO           77    i.setAddrWindow     st7735.o
-    0x00002c30   0x000000a0   Code   RO          474    i.setAlarmTimeBase  setalarm.o
-    0x00002cd0   0x000000b0   Code   RO          743    i.sin               m_ws.l(sin.o)
-    0x00002d80   0x00000030   Code   RO           78    i.writecommand      st7735.o
-    0x00002db0   0x00000020   Code   RO           79    i.writedata         st7735.o
-    0x00002dd0   0x000007e2   Data   RO           81    .constdata          st7735.o
-    0x000035b2   0x00000006   PAD
-    0x000035b8   0x00000030   Data   RO          764    .constdata          m_ws.l(cos_i.o)
-    0x000035e8   0x000000c8   Data   RO          768    .constdata          m_ws.l(rred.o)
-    0x000036b0   0x00000028   Data   RO          772    .constdata          m_ws.l(sin_i.o)
-    0x000036d8   0x00000020   Data   RO          823    Region$$Table       anon$$obj.o
+    0x00000a40   0x000000ec   Code   RO          547    i.DisplayAnalog     timedisplay.o
+    0x00000b2c   0x000002e8   Code   RO          548    i.DisplayDigital    timedisplay.o
+    0x00000e14   0x00000110   Code   RO          549    i.DisplayHour       timedisplay.o
+    0x00000f24   0x00000110   Code   RO          550    i.DisplayMinute     timedisplay.o
+    0x00001034   0x00000110   Code   RO          551    i.DisplaySecond     timedisplay.o
+    0x00001144   0x000000f8   Code   RO          552    i.DisplaySetTime    timedisplay.o
+    0x0000123c   0x00000034   Code   RO          553    i.EraseHour         timedisplay.o
+    0x00001270   0x00000060   Code   RO          554    i.EraseMinute       timedisplay.o
+    0x000012d0   0x00000084   Code   RO          555    i.EraseSecond       timedisplay.o
+    0x00001354   0x000000a8   Code   RO          636    i.GPIOPortB_Handler  alarmclockmain.o
+    0x000013fc   0x0000009c   Code   RO          637    i.MainMenu          alarmclockmain.o
+    0x00001498   0x0000000a   Code   RO           35    i.Output_Clear      st7735.o
+    0x000014a2   0x00000002   PAD
+    0x000014a4   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
+    0x00001520   0x00000018   Code   RO           40    i.ST7735_Color565   st7735.o
+    0x00001538   0x000000f4   Code   RO           43    i.ST7735_DrawCharS  st7735.o
+    0x0000162c   0x00000104   Code   RO           44    i.ST7735_DrawCircle  st7735.o
+    0x00001730   0x00000048   Code   RO           47    i.ST7735_DrawPixel  st7735.o
+    0x00001778   0x00000056   Code   RO           48    i.ST7735_DrawString  st7735.o
+    0x000017ce   0x00000002   PAD
+    0x000017d0   0x000000ac   Code   RO           49    i.ST7735_FillRect   st7735.o
+    0x0000187c   0x00000024   Code   RO           50    i.ST7735_FillScreen  st7735.o
+    0x000018a0   0x0000007c   Code   RO           52    i.ST7735_InitR      st7735.o
+    0x0000191c   0x000000e8   Code   RO           54    i.ST7735_Line       st7735.o
+    0x00001a04   0x000000d4   Code   RO           55    i.ST7735_OutChar    st7735.o
+    0x00001ad8   0x00000018   Code   RO           56    i.ST7735_OutString  st7735.o
+    0x00001af0   0x0000008c   Code   RO           57    i.ST7735_OutUDec    st7735.o
+    0x00001b7c   0x00000020   Code   RO           66    i.ST7735_SetCursor  st7735.o
+    0x00001b9c   0x00000030   Code   RO          331    i.Switch_Debounce   switch.o
+    0x00001bcc   0x0000008c   Code   RO          332    i.Switch_Init       switch.o
+    0x00001c58   0x0000000c   Code   RO          334    i.Switch_Input      switch.o
+    0x00001c64   0x00000058   Code   RO          638    i.SysTick_Handler   alarmclockmain.o
+    0x00001cbc   0x00000040   Code   RO          692    i.SysTick_Init      systickints.o
+    0x00001cfc   0x00000020   Code   RO          693    i.SysTick_Wait      systickints.o
+    0x00001d1c   0x00000028   Code   RO          716    i.Timer0A_Handler   timer0a.o
+    0x00001d44   0x0000006c   Code   RO          717    i.Timer0A_Init      timer0a.o
+    0x00001db0   0x00000078   Code   RO          400    i.Timer1A_Handler   timer1.o
+    0x00001e28   0x00000060   Code   RO          401    i.Timer1_Init       timer1.o
+    0x00001e88   0x00000028   Code   RO          848    i.__ARM_fpclassify  m_ws.l(fpclassify.o)
+    0x00001eb0   0x00000388   Code   RO          801    i.__ieee754_rem_pio2  m_ws.l(rred.o)
+    0x00002238   0x000000fc   Code   RO          798    i.__kernel_cos      m_ws.l(cos_i.o)
+    0x00002334   0x000000aa   Code   RO          850    i.__kernel_poly     m_ws.l(poly.o)
+    0x000023de   0x00000002   PAD
+    0x000023e0   0x000000ec   Code   RO          806    i.__kernel_sin      m_ws.l(sin_i.o)
+    0x000024cc   0x00000010   Code   RO          846    i.__mathlib_dbl_underflow  m_ws.l(dunder.o)
+    0x000024dc   0x0000000e   Code   RO          860    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x000024ea   0x00000002   Code   RO          861    i.__scatterload_null  mc_w.l(handlers.o)
+    0x000024ec   0x0000000e   Code   RO          862    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x000024fa   0x00000002   PAD
+    0x000024fc   0x0000000c   Code   RO          834    i.__set_errno       mc_w.l(errno.o)
+    0x00002508   0x000000b0   Code   RO          424    i.changeTime        settime.o
+    0x000025b8   0x00000056   Code   RO           70    i.commandList       st7735.o
+    0x0000260e   0x00000002   PAD
+    0x00002610   0x00000184   Code   RO           71    i.commonInit        st7735.o
+    0x00002794   0x000000ac   Code   RO          770    i.cos               m_ws.l(cos.o)
+    0x00002840   0x00000020   Code   RO          470    i.decrementAlarmHour  setalarm.o
+    0x00002860   0x00000020   Code   RO          471    i.decrementAlarmMin  setalarm.o
+    0x00002880   0x00000020   Code   RO          425    i.decrementHour     settime.o
+    0x000028a0   0x00000020   Code   RO          426    i.decrementMin      settime.o
+    0x000028c0   0x00000048   Code   RO           74    i.fillmessage       st7735.o
+    0x00002908   0x00000024   Code   RO          472    i.incrementAlarmHour  setalarm.o
+    0x0000292c   0x00000024   Code   RO          473    i.incrementAlarmMin  setalarm.o
+    0x00002950   0x00000024   Code   RO          427    i.incrementHour     settime.o
+    0x00002974   0x00000024   Code   RO          428    i.incrementMin      settime.o
+    0x00002998   0x00000274   Code   RO          639    i.main              alarmclockmain.o
+    0x00002c0c   0x00000012   Code   RO           76    i.pushColor         st7735.o
+    0x00002c1e   0x00000002   PAD
+    0x00002c20   0x00000074   Code   RO           77    i.setAddrWindow     st7735.o
+    0x00002c94   0x000000a0   Code   RO          474    i.setAlarmTimeBase  setalarm.o
+    0x00002d34   0x000000b0   Code   RO          778    i.sin               m_ws.l(sin.o)
+    0x00002de4   0x00000030   Code   RO           78    i.writecommand      st7735.o
+    0x00002e14   0x00000020   Code   RO           79    i.writedata         st7735.o
+    0x00002e34   0x000007e2   Data   RO           81    .constdata          st7735.o
+    0x00003616   0x00000002   PAD
+    0x00003618   0x00000030   Data   RO          799    .constdata          m_ws.l(cos_i.o)
+    0x00003648   0x000000c8   Data   RO          803    .constdata          m_ws.l(rred.o)
+    0x00003710   0x00000028   Data   RO          807    .constdata          m_ws.l(sin_i.o)
+    0x00003738   0x00000020   Data   RO          858    Region$$Table       anon$$obj.o
 
 
     Execution Region ER_RW (Base: 0x20000000, Size: 0x000000c0, Max: 0xffffffff, ABSOLUTE)
@@ -1005,8 +1019,8 @@ Memory Map of the image
     0x20000039   0x00000001   PAD
     0x2000003a   0x00000006   Data   RW          475    .data               setalarm.o
     0x20000040   0x00000068   Data   RW          556    .data               timedisplay.o
-    0x200000a8   0x00000014   Data   RW          639    .data               alarmclockmain.o
-    0x200000bc   0x00000004   Data   RW          800    .data               mc_w.l(errno.o)
+    0x200000a8   0x00000014   Data   RW          640    .data               alarmclockmain.o
+    0x200000bc   0x00000004   Data   RW          835    .data               mc_w.l(errno.o)
 
 
     Execution Region ER_ZI (Base: 0x200000c0, Size: 0x00000410, Max: 0xffffffff, ABSOLUTE)
@@ -1025,22 +1039,22 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1012        190          0         20          0       4037   alarmclockmain.o
-       124          6          0          0          0       4679   pll.o
-       296         30          0          6          0       2776   setalarm.o
+      1064        194          0         20          0       4037   alarmclockmain.o
+       124          6          0          0          0       4643   pll.o
+       296         30          0          6          0       2760   setalarm.o
        312         34          0          0          0       2031   settime.o
-      2460        220       2018         44         12      16220   st7735.o
+      2460        220       2018         44         12      16204   st7735.o
        672        622          0          0       1024        924   startup.o
        200         22          0          0          0       1291   switch.o
-        96          6          0          0          0       1306   systickints.o
-      2784        318          0        104          0       7216   timedisplay.o
+        96          6          0          0          0       1290   systickints.o
+      2832        322          0        104          0       7398   timedisplay.o
        148         30          0          0          0        921   timer0a.o
-       216         42          0         13          0       1668   timer1.o
+       216         42          0         13          0       1652   timer1.o
 
     ----------------------------------------------------------------------
-      8328       1520       2056        188       1040      43069   Object Totals
+      8428       1528       2052        188       1040      43151   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         8          0          6          1          4          0   (incl. Padding)
+         8          0          2          1          4          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1102,15 +1116,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     11728       1674       2344        192       1040      41181   Grand Totals
-     11728       1674       2344        192       1040      41181   ELF Image Totals
-     11728       1674       2344        192          0          0   ROM Totals
+     11828       1682       2340        192       1040      41263   Grand Totals
+     11828       1682       2340        192       1040      41263   ELF Image Totals
+     11828       1682       2340        192          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                14072 (  13.74kB)
+    Total RO  Size (Code + RO Data)                14168 (  13.84kB)
     Total RW  Size (RW Data + ZI Data)              1232 (   1.20kB)
-    Total ROM Size (Code + RO Data + RW Data)      14264 (  13.93kB)
+    Total ROM Size (Code + RO Data + RW Data)      14360 (  14.02kB)
 
 ==============================================================================
 
