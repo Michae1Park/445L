@@ -11,6 +11,7 @@
 #include "Timer1.h"
 #include "SetAlarm.h"
 #include "Common.h"
+#include "Systick.h"
 
 #define CENTER_X 64
 #define CENTER_Y 80
@@ -176,7 +177,8 @@ void DisplayAnalog(void)
 }
 
 void DisplayDigital(void)
-{
+{int32_t timeDisplay;
+	timeDisplay=NVIC_ST_CURRENT_R;
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
 	char ch[5];
 	
@@ -198,9 +200,11 @@ void DisplayDigital(void)
 	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+	timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
 	
 	while(active_In10s)
 	{
+		timeDisplay=NVIC_ST_CURRENT_R;
 		if(Mode == 3)
 		{
 			break;
@@ -231,6 +235,7 @@ void DisplayDigital(void)
 				ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
 				ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
 			}
+			timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
 		}	
 }
 

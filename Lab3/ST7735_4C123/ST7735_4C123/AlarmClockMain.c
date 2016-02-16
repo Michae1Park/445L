@@ -92,7 +92,7 @@ int main(void)
 	Mode = 0xFFFF;
 	SysTick_Init(80000);        		// initialize SysTick timer
 	EnableInterrupts();							// Enable Interrupts
-
+	Mode = TimeDisplay_Mode;
 	//Main Loop
   while(1) 
   {	
@@ -144,7 +144,8 @@ int main(void)
 		{
 			Mode = 0xFFFF;
 			active_In10s = 1;
-			display_mode ^= 0x1;
+			//display_mode ^= 0x1;
+			display_mode=0;
 			DisAllowAlarmChangeMode();
 			ChooseMode();
 			DisAllowAlarmChangeMode();
