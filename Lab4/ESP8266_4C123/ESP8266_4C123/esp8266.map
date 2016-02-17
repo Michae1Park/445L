@@ -1,0 +1,614 @@
+ARM Linker, 5.03 [Build 76] [MDK-ARM Lite]
+
+==============================================================================
+
+Section Cross References
+
+    startup.o(RESET) refers to startup.o(STACK) for StackMem
+    startup.o(RESET) refers to uart.o(i.UART0_Handler) for UART0_Handler
+    startup.o(RESET) refers to esp8266.o(i.UART1_Handler) for UART1_Handler
+    startup.o(RESET) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    main.o(i.main) refers to startup.o(.text) for DisableInterrupts
+    main.o(i.main) refers to pll.o(i.PLL_Init) for PLL_Init
+    main.o(i.main) refers to led.o(i.LED_Init) for LED_Init
+    main.o(i.main) refers to uart.o(i.Output_Init) for Output_Init
+    main.o(i.main) refers to printf3.o(i.__0printf$3) for __2printf
+    main.o(i.main) refers to esp8266.o(i.ESP8266_Init) for ESP8266_Init
+    main.o(i.main) refers to esp8266.o(i.ESP8266_GetVersionNumber) for ESP8266_GetVersionNumber
+    main.o(i.main) refers to esp8266.o(i.ESP8266_GetStatus) for ESP8266_GetStatus
+    main.o(i.main) refers to esp8266.o(i.ESP8266_MakeTCPConnection) for ESP8266_MakeTCPConnection
+    main.o(i.main) refers to led.o(i.LED_GreenOn) for LED_GreenOn
+    main.o(i.main) refers to esp8266.o(i.ESP8266_SendTCP) for ESP8266_SendTCP
+    main.o(i.main) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    main.o(i.main) refers to esp8266.o(i.ESP8266_CloseTCPConnection) for ESP8266_CloseTCPConnection
+    main.o(i.main) refers to led.o(i.Board_Input) for Board_Input
+    main.o(i.main) refers to led.o(i.LED_GreenOff) for LED_GreenOff
+    main.o(i.main) refers to led.o(i.LED_RedToggle) for LED_RedToggle
+    main.o(i.main) refers to main.o(i.obtainADC) for obtainADC
+    main.o(i.main) refers to main.o(.data) for Fetch
+    main.o(i.main2) refers to startup.o(.text) for DisableInterrupts
+    main.o(i.main2) refers to pll.o(i.PLL_Init) for PLL_Init
+    main.o(i.main2) refers to led.o(i.LED_Init) for LED_Init
+    main.o(i.main2) refers to uart.o(i.Output_Init) for Output_Init
+    main.o(i.main2) refers to printf3.o(i.__0printf$3) for __2printf
+    main.o(i.main2) refers to esp8266.o(i.ESP8266_InitUART) for ESP8266_InitUART
+    main.o(i.main2) refers to esp8266.o(i.ESP8266_EnableRXInterrupt) for ESP8266_EnableRXInterrupt
+    main.o(i.main2) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    main.o(i.main2) refers to uart.o(i.UART_InChar) for UART_InChar
+    main.o(i.main2) refers to uart.o(i.UART_InCharNonBlock) for UART_InCharNonBlock
+    main.o(i.main2) refers to esp8266.o(i.ESP8266_PrintChar) for ESP8266_PrintChar
+    main.o(i.obtainADC) refers to main.o(.data) for ADCvalue
+    esp8266.o(i.DelayMsSearching) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266FIFOtoBuffer) refers to uart.o(i.UART_OutCharNonBlock) for UART_OutCharNonBlock
+    esp8266.o(i.ESP8266FIFOtoBuffer) refers to esp8266.o(i.SearchCheck) for SearchCheck
+    esp8266.o(i.ESP8266FIFOtoBuffer) refers to esp8266.o(i.ServerResponseSearchCheck) for ServerResponseSearchCheck
+    esp8266.o(i.ESP8266FIFOtoBuffer) refers to esp8266.o(.data) for ESP8266_EchoResponse
+    esp8266.o(i.ESP8266FIFOtoBuffer) refers to esp8266.o(.bss) for RXBuffer
+    esp8266.o(i.ESP8266ProcessInput) refers to strstr.o(.text) for strstr
+    esp8266.o(i.ESP8266ProcessInput) refers to printf3.o(i.__0printf$3) for __2printf
+    esp8266.o(i.ESP8266ProcessInput) refers to esp8266.o(.data) for ESP8266_PageRequested
+    esp8266.o(i.ESP8266SendCommand) refers to esp8266.o(i.ESP8266_PrintChar) for ESP8266_PrintChar
+    esp8266.o(i.ESP8266_CloseTCPConnection) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_CloseTCPConnection) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_CloseTCPConnection) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_CloseTCPConnection) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_ConfigureAccessPoint) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_ConfigureAccessPoint) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_ConfigureAccessPoint) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_ConfigureAccessPoint) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_ConfigureAccessPoint) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_ConfigureAccessPoint) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_DisableServer) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_DisableServer) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_DisableServer) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_DisableServer) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_DisableServer) refers to esp8266.o(.data) for ESP8266_ServerPort
+    esp8266.o(i.ESP8266_DisableServer) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_EnableServer) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_EnableServer) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_EnableServer) refers to esp8266.o(.data) for ESP8266_ServerPort
+    esp8266.o(i.ESP8266_EnableServer) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_GetIPAddress) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_GetIPAddress) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_GetIPAddress) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_GetIPAddress) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_GetStatus) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_GetStatus) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_GetStatus) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_GetStatus) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_GetVersionNumber) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_GetVersionNumber) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_GetVersionNumber) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_GetVersionNumber) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_InitUART) for ESP8266_InitUART
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_EnableRXInterrupt) for ESP8266_EnableRXInterrupt
+    esp8266.o(i.ESP8266_Init) refers to startup.o(.text) for EnableInterrupts
+    esp8266.o(i.ESP8266_Init) refers to printf3.o(i.__0printf$3) for __2printf
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_Reset) for ESP8266_Reset
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_SetWifiMode) for ESP8266_SetWifiMode
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_JoinAccessPoint) for ESP8266_JoinAccessPoint
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_GetIPAddress) for ESP8266_GetIPAddress
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_ListAccessPoints) for ESP8266_ListAccessPoints
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_SetDataTransmissionMode) for ESP8266_SetDataTransmissionMode
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(.data) for SearchLooking
+    esp8266.o(i.ESP8266_InitUART) refers to esp8266.o(.data) for ESP8266_EchoResponse
+    esp8266.o(i.ESP8266_JoinAccessPoint) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_JoinAccessPoint) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_JoinAccessPoint) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_JoinAccessPoint) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_JoinAccessPoint) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_JoinAccessPoint) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_ListAccessPoints) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_ListAccessPoints) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_ListAccessPoints) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_ListAccessPoints) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_MakeTCPConnection) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_MakeTCPConnection) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_MakeTCPConnection) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_MakeTCPConnection) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_MakeTCPConnection) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_MakeTCPConnection) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_QuitAccessPoint) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_QuitAccessPoint) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_QuitAccessPoint) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_QuitAccessPoint) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_Reset) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_Reset) refers to esp8266.o(i.DelayMs) for DelayMs
+    esp8266.o(i.ESP8266_Reset) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_Reset) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_Reset) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_SendTCP) refers to strlen.o(.text) for strlen
+    esp8266.o(i.ESP8266_SendTCP) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_SendTCP) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_SendTCP) refers to esp8266.o(i.DelayMs) for DelayMs
+    esp8266.o(i.ESP8266_SendTCP) refers to esp8266.o(i.ServerResponseSearchStart) for ServerResponseSearchStart
+    esp8266.o(i.ESP8266_SendTCP) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_SendTCP) refers to esp8266.o(.data) for ServerResponseSearchFinished
+    esp8266.o(i.ESP8266_SetConnectionMux) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_SetConnectionMux) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_SetConnectionMux) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_SetConnectionMux) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_SetConnectionMux) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_SetConnectionMux) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_SetDataTransmissionMode) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_SetDataTransmissionMode) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_SetDataTransmissionMode) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_SetDataTransmissionMode) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_SetDataTransmissionMode) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_SetDataTransmissionMode) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.ESP8266_SetServerTimeout) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_SetServerTimeout) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_SetServerTimeout) refers to esp8266.o(.data) for ESP8266_ServerTimeout
+    esp8266.o(i.ESP8266_SetServerTimeout) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_SetWifiMode) refers to esp8266.o(i.SearchStart) for SearchStart
+    esp8266.o(i.ESP8266_SetWifiMode) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.ESP8266_SetWifiMode) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.ESP8266_SetWifiMode) refers to esp8266.o(i.DelayMsSearching) for DelayMsSearching
+    esp8266.o(i.ESP8266_SetWifiMode) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.ESP8266_SetWifiMode) refers to esp8266.o(.data) for SearchFound
+    esp8266.o(i.HTTP_ServePage) refers to memcpya.o(.text) for __aeabi_memcpy4
+    esp8266.o(i.HTTP_ServePage) refers to strlen.o(.text) for strlen
+    esp8266.o(i.HTTP_ServePage) refers to printf3.o(i.__0sprintf$3) for __2sprintf
+    esp8266.o(i.HTTP_ServePage) refers to esp8266.o(i.ESP8266SendCommand) for ESP8266SendCommand
+    esp8266.o(i.HTTP_ServePage) refers to esp8266.o(i.DelayMs) for DelayMs
+    esp8266.o(i.HTTP_ServePage) refers to esp8266.o(.constdata) for .constdata
+    esp8266.o(i.HTTP_ServePage) refers to esp8266.o(.bss) for TXBuffer
+    esp8266.o(i.SearchCheck) refers to esp8266.o(i.lc) for lc
+    esp8266.o(i.SearchCheck) refers to esp8266.o(.data) for SearchLooking
+    esp8266.o(i.SearchCheck) refers to esp8266.o(.bss) for SearchString
+    esp8266.o(i.SearchStart) refers to strcpy.o(.text) for strcpy
+    esp8266.o(i.SearchStart) refers to esp8266.o(.bss) for SearchString
+    esp8266.o(i.SearchStart) refers to esp8266.o(.data) for SearchIndex
+    esp8266.o(i.ServerResponseSearchCheck) refers to esp8266.o(i.lc) for lc
+    esp8266.o(i.ServerResponseSearchCheck) refers to strcpy.o(.text) for strcpy
+    esp8266.o(i.ServerResponseSearchCheck) refers to esp8266.o(.data) for ServerResponseSearchLooking
+    esp8266.o(i.ServerResponseSearchCheck) refers to esp8266.o(.bss) for ServerResponseBuffer
+    esp8266.o(i.ServerResponseSearchStart) refers to strcpy.o(.text) for strcpy
+    esp8266.o(i.ServerResponseSearchStart) refers to esp8266.o(.data) for ServerResponseSearchString
+    esp8266.o(i.UART1_Handler) refers to esp8266.o(i.ESP8266FIFOtoBuffer) for ESP8266FIFOtoBuffer
+    uart.o(i.Output_Init) refers to uart.o(i.UART_Init) for UART_Init
+    uart.o(i.RxFifo_Get) refers to uart.o(.data) for RxPutI
+    uart.o(i.RxFifo_Get) refers to uart.o(.bss) for RxFifo
+    uart.o(i.RxFifo_Init) refers to startup.o(.text) for StartCritical
+    uart.o(i.RxFifo_Init) refers to uart.o(.data) for RxGetI
+    uart.o(i.RxFifo_Put) refers to uart.o(.data) for RxPutI
+    uart.o(i.RxFifo_Put) refers to uart.o(.bss) for RxFifo
+    uart.o(i.RxFifo_Size) refers to uart.o(.data) for RxPutI
+    uart.o(i.TxFifo_Get) refers to uart.o(.data) for TxPutI
+    uart.o(i.TxFifo_Get) refers to uart.o(.bss) for TxFifo
+    uart.o(i.TxFifo_Init) refers to startup.o(.text) for StartCritical
+    uart.o(i.TxFifo_Init) refers to uart.o(.data) for TxGetI
+    uart.o(i.TxFifo_Put) refers to uart.o(.data) for TxPutI
+    uart.o(i.TxFifo_Put) refers to uart.o(.bss) for TxFifo
+    uart.o(i.TxFifo_Size) refers to uart.o(.data) for TxPutI
+    uart.o(i.UART0_Handler) refers to uart.o(i.copySoftwareToHardware) for copySoftwareToHardware
+    uart.o(i.UART0_Handler) refers to uart.o(i.TxFifo_Size) for TxFifo_Size
+    uart.o(i.UART0_Handler) refers to uart.o(i.copyHardwareToSoftware) for copyHardwareToSoftware
+    uart.o(i.UART_InChar) refers to uart.o(i.RxFifo_Get) for RxFifo_Get
+    uart.o(i.UART_InCharNonBlock) refers to uart.o(i.RxFifo_Get) for RxFifo_Get
+    uart.o(i.UART_InString) refers to uart.o(i.UART_InChar) for UART_InChar
+    uart.o(i.UART_InString) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    uart.o(i.UART_InUDec) refers to uart.o(i.UART_InChar) for UART_InChar
+    uart.o(i.UART_InUDec) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    uart.o(i.UART_InUHex) refers to uart.o(i.UART_InChar) for UART_InChar
+    uart.o(i.UART_InUHex) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    uart.o(i.UART_Init) refers to uart.o(i.RxFifo_Init) for RxFifo_Init
+    uart.o(i.UART_Init) refers to uart.o(i.TxFifo_Init) for TxFifo_Init
+    uart.o(i.UART_OutChar) refers to uart.o(i.TxFifo_Put) for TxFifo_Put
+    uart.o(i.UART_OutChar) refers to uart.o(i.copySoftwareToHardware) for copySoftwareToHardware
+    uart.o(i.UART_OutCharNonBlock) refers to uart.o(i.TxFifo_Put) for TxFifo_Put
+    uart.o(i.UART_OutCharNonBlock) refers to uart.o(i.copySoftwareToHardware) for copySoftwareToHardware
+    uart.o(i.UART_OutString) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    uart.o(i.UART_OutUDec) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    uart.o(i.UART_OutUHex) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    uart.o(i.copyHardwareToSoftware) refers to uart.o(i.RxFifo_Put) for RxFifo_Put
+    uart.o(i.copyHardwareToSoftware) refers to uart.o(i.RxFifo_Size) for RxFifo_Size
+    uart.o(i.copySoftwareToHardware) refers to uart.o(i.TxFifo_Get) for TxFifo_Get
+    uart.o(i.copySoftwareToHardware) refers to uart.o(i.TxFifo_Size) for TxFifo_Size
+    uart.o(i.fputc) refers to uart.o(i.UART_OutChar) for UART_OutChar
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry8b.o(.ARM.Collect$$$$0000000A) for _main_cpp_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry5.o(.ARM.Collect$$$$00000004) for _main_scatterload
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry2.o(.ARM.Collect$$$$00000001) for _main_stk
+    printfb.o(i.__0fprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0fprintf$bare) refers to uart.o(i.fputc) for fputc
+    printfb.o(i.__0printf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0printf$bare) refers to uart.o(i.fputc) for fputc
+    printfb.o(i.__0printf$bare) refers to stdout.o(.data) for __stdout
+    printfb.o(i.__0snprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0snprintf$bare) refers to printfb.o(i._snputc) for _snputc
+    printfb.o(i.__0sprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0sprintf$bare) refers to printfb.o(i._sputc) for _sputc
+    printfb.o(i.__0vfprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vfprintf$bare) refers to uart.o(i.fputc) for fputc
+    printfb.o(i.__0vprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vprintf$bare) refers to uart.o(i.fputc) for fputc
+    printfb.o(i.__0vprintf$bare) refers to stdout.o(.data) for __stdout
+    printfb.o(i.__0vsnprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vsnprintf$bare) refers to printfb.o(i._snputc) for _snputc
+    printfb.o(i.__0vsprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vsprintf$bare) refers to printfb.o(i._sputc) for _sputc
+    printf0.o(i.__0fprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0fprintf$0) refers to uart.o(i.fputc) for fputc
+    printf0.o(i.__0printf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0printf$0) refers to uart.o(i.fputc) for fputc
+    printf0.o(i.__0printf$0) refers to stdout.o(.data) for __stdout
+    printf0.o(i.__0snprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0snprintf$0) refers to printf0.o(i._snputc) for _snputc
+    printf0.o(i.__0sprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0sprintf$0) refers to printf0.o(i._sputc) for _sputc
+    printf0.o(i.__0vfprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vfprintf$0) refers to uart.o(i.fputc) for fputc
+    printf0.o(i.__0vprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vprintf$0) refers to uart.o(i.fputc) for fputc
+    printf0.o(i.__0vprintf$0) refers to stdout.o(.data) for __stdout
+    printf0.o(i.__0vsnprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vsnprintf$0) refers to printf0.o(i._snputc) for _snputc
+    printf0.o(i.__0vsprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vsprintf$0) refers to printf0.o(i._sputc) for _sputc
+    printf1.o(i.__0fprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0fprintf$1) refers to uart.o(i.fputc) for fputc
+    printf1.o(i.__0printf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0printf$1) refers to uart.o(i.fputc) for fputc
+    printf1.o(i.__0printf$1) refers to stdout.o(.data) for __stdout
+    printf1.o(i.__0snprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0snprintf$1) refers to printf1.o(i._snputc) for _snputc
+    printf1.o(i.__0sprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0sprintf$1) refers to printf1.o(i._sputc) for _sputc
+    printf1.o(i.__0vfprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vfprintf$1) refers to uart.o(i.fputc) for fputc
+    printf1.o(i.__0vprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vprintf$1) refers to uart.o(i.fputc) for fputc
+    printf1.o(i.__0vprintf$1) refers to stdout.o(.data) for __stdout
+    printf1.o(i.__0vsnprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vsnprintf$1) refers to printf1.o(i._snputc) for _snputc
+    printf1.o(i.__0vsprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vsprintf$1) refers to printf1.o(i._sputc) for _sputc
+    printf1.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
+    printf2.o(i.__0fprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0fprintf$2) refers to uart.o(i.fputc) for fputc
+    printf2.o(i.__0printf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0printf$2) refers to uart.o(i.fputc) for fputc
+    printf2.o(i.__0printf$2) refers to stdout.o(.data) for __stdout
+    printf2.o(i.__0snprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0snprintf$2) refers to printf2.o(i._snputc) for _snputc
+    printf2.o(i.__0sprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0sprintf$2) refers to printf2.o(i._sputc) for _sputc
+    printf2.o(i.__0vfprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vfprintf$2) refers to uart.o(i.fputc) for fputc
+    printf2.o(i.__0vprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vprintf$2) refers to uart.o(i.fputc) for fputc
+    printf2.o(i.__0vprintf$2) refers to stdout.o(.data) for __stdout
+    printf2.o(i.__0vsnprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vsnprintf$2) refers to printf2.o(i._snputc) for _snputc
+    printf2.o(i.__0vsprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vsprintf$2) refers to printf2.o(i._sputc) for _sputc
+    printf3.o(i.__0fprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0fprintf$3) refers to uart.o(i.fputc) for fputc
+    printf3.o(i.__0printf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0printf$3) refers to uart.o(i.fputc) for fputc
+    printf3.o(i.__0printf$3) refers to stdout.o(.data) for __stdout
+    printf3.o(i.__0snprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0snprintf$3) refers to printf3.o(i._snputc) for _snputc
+    printf3.o(i.__0sprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0sprintf$3) refers to printf3.o(i._sputc) for _sputc
+    printf3.o(i.__0vfprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vfprintf$3) refers to uart.o(i.fputc) for fputc
+    printf3.o(i.__0vprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vprintf$3) refers to uart.o(i.fputc) for fputc
+    printf3.o(i.__0vprintf$3) refers to stdout.o(.data) for __stdout
+    printf3.o(i.__0vsnprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vsnprintf$3) refers to printf3.o(i._snputc) for _snputc
+    printf3.o(i.__0vsprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vsprintf$3) refers to printf3.o(i._sputc) for _sputc
+    printf3.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
+    printf4.o(i.__0fprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0fprintf$4) refers to uart.o(i.fputc) for fputc
+    printf4.o(i.__0printf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0printf$4) refers to uart.o(i.fputc) for fputc
+    printf4.o(i.__0printf$4) refers to stdout.o(.data) for __stdout
+    printf4.o(i.__0snprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0snprintf$4) refers to printf4.o(i._snputc) for _snputc
+    printf4.o(i.__0sprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0sprintf$4) refers to printf4.o(i._sputc) for _sputc
+    printf4.o(i.__0vfprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vfprintf$4) refers to uart.o(i.fputc) for fputc
+    printf4.o(i.__0vprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vprintf$4) refers to uart.o(i.fputc) for fputc
+    printf4.o(i.__0vprintf$4) refers to stdout.o(.data) for __stdout
+    printf4.o(i.__0vsnprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vsnprintf$4) refers to printf4.o(i._snputc) for _snputc
+    printf4.o(i.__0vsprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vsprintf$4) refers to printf4.o(i._sputc) for _sputc
+    printf4.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf5.o(i.__0fprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0fprintf$5) refers to uart.o(i.fputc) for fputc
+    printf5.o(i.__0printf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0printf$5) refers to uart.o(i.fputc) for fputc
+    printf5.o(i.__0printf$5) refers to stdout.o(.data) for __stdout
+    printf5.o(i.__0snprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0snprintf$5) refers to printf5.o(i._snputc) for _snputc
+    printf5.o(i.__0sprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0sprintf$5) refers to printf5.o(i._sputc) for _sputc
+    printf5.o(i.__0vfprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vfprintf$5) refers to uart.o(i.fputc) for fputc
+    printf5.o(i.__0vprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vprintf$5) refers to uart.o(i.fputc) for fputc
+    printf5.o(i.__0vprintf$5) refers to stdout.o(.data) for __stdout
+    printf5.o(i.__0vsnprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vsnprintf$5) refers to printf5.o(i._snputc) for _snputc
+    printf5.o(i.__0vsprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vsprintf$5) refers to printf5.o(i._sputc) for _sputc
+    printf5.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf6.o(i.__0fprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0fprintf$6) refers to uart.o(i.fputc) for fputc
+    printf6.o(i.__0printf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0printf$6) refers to uart.o(i.fputc) for fputc
+    printf6.o(i.__0printf$6) refers to stdout.o(.data) for __stdout
+    printf6.o(i.__0snprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0snprintf$6) refers to printf6.o(i._snputc) for _snputc
+    printf6.o(i.__0sprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0sprintf$6) refers to printf6.o(i._sputc) for _sputc
+    printf6.o(i.__0vfprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vfprintf$6) refers to uart.o(i.fputc) for fputc
+    printf6.o(i.__0vprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vprintf$6) refers to uart.o(i.fputc) for fputc
+    printf6.o(i.__0vprintf$6) refers to stdout.o(.data) for __stdout
+    printf6.o(i.__0vsnprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vsnprintf$6) refers to printf6.o(i._snputc) for _snputc
+    printf6.o(i.__0vsprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vsprintf$6) refers to printf6.o(i._sputc) for _sputc
+    printf6.o(i._printf_core) refers to printf6.o(i._printf_pre_padding) for _printf_pre_padding
+    printf6.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
+    printf6.o(i._printf_core) refers to printf6.o(i._printf_post_padding) for _printf_post_padding
+    printf7.o(i.__0fprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0fprintf$7) refers to uart.o(i.fputc) for fputc
+    printf7.o(i.__0printf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0printf$7) refers to uart.o(i.fputc) for fputc
+    printf7.o(i.__0printf$7) refers to stdout.o(.data) for __stdout
+    printf7.o(i.__0snprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0snprintf$7) refers to printf7.o(i._snputc) for _snputc
+    printf7.o(i.__0sprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0sprintf$7) refers to printf7.o(i._sputc) for _sputc
+    printf7.o(i.__0vfprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vfprintf$7) refers to uart.o(i.fputc) for fputc
+    printf7.o(i.__0vprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vprintf$7) refers to uart.o(i.fputc) for fputc
+    printf7.o(i.__0vprintf$7) refers to stdout.o(.data) for __stdout
+    printf7.o(i.__0vsnprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vsnprintf$7) refers to printf7.o(i._snputc) for _snputc
+    printf7.o(i.__0vsprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vsprintf$7) refers to printf7.o(i._sputc) for _sputc
+    printf7.o(i._printf_core) refers to printf7.o(i._printf_pre_padding) for _printf_pre_padding
+    printf7.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf7.o(i._printf_core) refers to printf7.o(i._printf_post_padding) for _printf_post_padding
+    printf8.o(i.__0fprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0fprintf$8) refers to uart.o(i.fputc) for fputc
+    printf8.o(i.__0printf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0printf$8) refers to uart.o(i.fputc) for fputc
+    printf8.o(i.__0printf$8) refers to stdout.o(.data) for __stdout
+    printf8.o(i.__0snprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0snprintf$8) refers to printf8.o(i._snputc) for _snputc
+    printf8.o(i.__0sprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0sprintf$8) refers to printf8.o(i._sputc) for _sputc
+    printf8.o(i.__0vfprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vfprintf$8) refers to uart.o(i.fputc) for fputc
+    printf8.o(i.__0vprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vprintf$8) refers to uart.o(i.fputc) for fputc
+    printf8.o(i.__0vprintf$8) refers to stdout.o(.data) for __stdout
+    printf8.o(i.__0vsnprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vsnprintf$8) refers to printf8.o(i._snputc) for _snputc
+    printf8.o(i.__0vsprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vsprintf$8) refers to printf8.o(i._sputc) for _sputc
+    printf8.o(i._printf_core) refers to printf8.o(i._printf_pre_padding) for _printf_pre_padding
+    printf8.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf8.o(i._printf_core) refers to printf8.o(i._printf_post_padding) for _printf_post_padding
+    printfa.o(i.__0fprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0fprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0fprintf) refers to uart.o(i.fputc) for fputc
+    printfa.o(i.__0printf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0printf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0printf) refers to uart.o(i.fputc) for fputc
+    printfa.o(i.__0printf) refers to stdout.o(.data) for __stdout
+    printfa.o(i.__0snprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0snprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0snprintf) refers to printfa.o(i._snputc) for _snputc
+    printfa.o(i.__0sprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0sprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0sprintf) refers to printfa.o(i._sputc) for _sputc
+    printfa.o(i.__0vfprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vfprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vfprintf) refers to uart.o(i.fputc) for fputc
+    printfa.o(i.__0vprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vprintf) refers to uart.o(i.fputc) for fputc
+    printfa.o(i.__0vprintf) refers to stdout.o(.data) for __stdout
+    printfa.o(i.__0vsnprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vsnprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vsnprintf) refers to printfa.o(i._snputc) for _snputc
+    printfa.o(i.__0vsprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vsprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vsprintf) refers to printfa.o(i._sputc) for _sputc
+    printfa.o(i._fp_digits) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._fp_digits) refers to dmul.o(.text) for __aeabi_dmul
+    printfa.o(i._fp_digits) refers to ddiv.o(.text) for __aeabi_ddiv
+    printfa.o(i._fp_digits) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
+    printfa.o(i._fp_digits) refers to dadd.o(.text) for __aeabi_dadd
+    printfa.o(i._fp_digits) refers to dfixul.o(.text) for __aeabi_d2ulz
+    printfa.o(i._fp_digits) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i._printf_core) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._printf_core) refers to printfa.o(i._printf_pre_padding) for _printf_pre_padding
+    printfa.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i._printf_core) refers to printfa.o(i._printf_post_padding) for _printf_post_padding
+    printfa.o(i._printf_core) refers to printfa.o(i._fp_digits) for _fp_digits
+    printfa.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
+    printfa.o(i._printf_post_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._printf_pre_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._snputc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._sputc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
+    entry2.o(.ARM.Collect$$$$00002712) refers to startup.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to startup.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    entry5.o(.ARM.Collect$$$$00000004) refers to init.o(.text) for __scatterload
+    entry9a.o(.ARM.Collect$$$$0000000B) refers to main.o(i.main) for main
+    entry9b.o(.ARM.Collect$$$$0000000C) refers to main.o(i.main) for main
+    uldiv.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    uldiv.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    dadd.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    dadd.o(.text) refers to llsshr.o(.text) for __aeabi_lasr
+    dadd.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
+    dfixul.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    dfixul.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
+    depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+
+
+==============================================================================
+
+Removing Unused input sections from the image.
+
+    Removing startup.o(HEAP), (0 bytes).
+    Removing main.o(i.main2), (136 bytes).
+    Removing main.o(.bss), (4000 bytes).
+    Removing esp8266.o(i.ESP8266ProcessInput), (148 bytes).
+    Removing esp8266.o(i.ESP8266_ConfigureAccessPoint), (120 bytes).
+    Removing esp8266.o(i.ESP8266_DisableRXInterrupt), (12 bytes).
+    Removing esp8266.o(i.ESP8266_DisableServer), (96 bytes).
+    Removing esp8266.o(i.ESP8266_EnableServer), (56 bytes).
+    Removing esp8266.o(i.ESP8266_QuitAccessPoint), (68 bytes).
+    Removing esp8266.o(i.ESP8266_SetConnectionMux), (88 bytes).
+    Removing esp8266.o(i.ESP8266_SetServerTimeout), (52 bytes).
+    Removing esp8266.o(i.HTTP_ServePage), (140 bytes).
+    Removing esp8266.o(.constdata), (318 bytes).
+    Removing uart.o(i.RxFifo_Get), (60 bytes).
+    Removing uart.o(i.UART_InChar), (20 bytes).
+    Removing uart.o(i.UART_InCharNonBlock), (20 bytes).
+    Removing uart.o(i.UART_InString), (70 bytes).
+    Removing uart.o(i.UART_InUDec), (76 bytes).
+    Removing uart.o(i.UART_InUHex), (108 bytes).
+    Removing uart.o(i.UART_OutString), (22 bytes).
+    Removing uart.o(i.UART_OutUDec), (42 bytes).
+    Removing uart.o(i.UART_OutUHex), (52 bytes).
+    Removing led.o(i.LED_BlueToggle), (20 bytes).
+    Removing led.o(i.LED_GreenToggle), (20 bytes).
+    Removing led.o(i.LED_RedOff), (12 bytes).
+    Removing led.o(i.LED_RedOn), (12 bytes).
+    Removing dadd.o(.text), (334 bytes).
+    Removing dmul.o(.text), (228 bytes).
+    Removing ddiv.o(.text), (222 bytes).
+    Removing dfixul.o(.text), (48 bytes).
+    Removing cdrcmple.o(.text), (40 bytes).
+    Removing depilogue.o(.text), (190 bytes).
+
+32 unused section(s) (total 6830 bytes) removed from the image.
+
+==============================================================================
+
+Memory Map of the image
+
+  Image Entry point : 0x00000000
+
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00001518, Max: 0xffffffff, ABSOLUTE)
+
+    Execution Region ER_RO (Base: 0x00000000, Size: 0x00001448, Max: 0xffffffff, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
+    0x00000284   0x00000000   Code   RO          517  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000284   0x00000004   Code   RO          791    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000288   0x00000004   Code   RO          794    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000028c   0x00000000   Code   RO          796    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000028c   0x00000000   Code   RO          798    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000028c   0x00000008   Code   RO          799    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000294   0x00000000   Code   RO          801    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000294   0x00000000   Code   RO          803    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000294   0x00000004   Code   RO          792    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x00000298   0x0000001c   Code   RO            4    .text               startup.o
+    0x000002b4   0x0000000e   Code   RO          524    .text               mc_w.l(strlen.o)
+    0x000002c2   0x00000012   Code   RO          526    .text               mc_w.l(strcpy.o)
+    0x000002d4   0x0000002c   Code   RO          806    .text               mc_w.l(uidiv.o)
+    0x00000300   0x00000024   Code   RO          821    .text               mc_w.l(init.o)
+    0x00000324   0x00000018   Code   RO          457    i.Board_Input       led.o
+    0x0000033c   0x00000020   Code   RO           87    i.DelayMs           esp8266.o
+    0x0000035c   0x00000030   Code   RO           88    i.DelayMsSearching  esp8266.o
+    0x0000038c   0x0000007c   Code   RO           89    i.ESP8266FIFOtoBuffer  esp8266.o
+    0x00000408   0x0000001a   Code   RO           91    i.ESP8266SendCommand  esp8266.o
+    0x00000422   0x00000002   PAD
+    0x00000424   0x00000048   Code   RO           92    i.ESP8266_CloseTCPConnection  esp8266.o
+    0x0000046c   0x0000000c   Code   RO           96    i.ESP8266_EnableRXInterrupt  esp8266.o
+    0x00000478   0x00000044   Code   RO           98    i.ESP8266_GetIPAddress  esp8266.o
+    0x000004bc   0x00000048   Code   RO           99    i.ESP8266_GetStatus  esp8266.o
+    0x00000504   0x00000044   Code   RO          100    i.ESP8266_GetVersionNumber  esp8266.o
+    0x00000548   0x000001fc   Code   RO          101    i.ESP8266_Init      esp8266.o
+    0x00000744   0x00000110   Code   RO          102    i.ESP8266_InitUART  esp8266.o
+    0x00000854   0x00000064   Code   RO          103    i.ESP8266_JoinAccessPoint  esp8266.o
+    0x000008b8   0x00000044   Code   RO          104    i.ESP8266_ListAccessPoints  esp8266.o
+    0x000008fc   0x00000064   Code   RO          105    i.ESP8266_MakeTCPConnection  esp8266.o
+    0x00000960   0x00000018   Code   RO          106    i.ESP8266_PrintChar  esp8266.o
+    0x00000978   0x00000074   Code   RO          108    i.ESP8266_Reset     esp8266.o
+    0x000009ec   0x00000080   Code   RO          109    i.ESP8266_SendTCP   esp8266.o
+    0x00000a6c   0x00000058   Code   RO          111    i.ESP8266_SetDataTransmissionMode  esp8266.o
+    0x00000ac4   0x00000068   Code   RO          113    i.ESP8266_SetWifiMode  esp8266.o
+    0x00000b2c   0x0000000c   Code   RO          459    i.LED_GreenOff      led.o
+    0x00000b38   0x0000000c   Code   RO          460    i.LED_GreenOn       led.o
+    0x00000b44   0x0000006c   Code   RO          462    i.LED_Init          led.o
+    0x00000bb0   0x00000014   Code   RO          465    i.LED_RedToggle     led.o
+    0x00000bc4   0x00000008   Code   RO          302    i.Output_Init       uart.o
+    0x00000bcc   0x0000007c   Code   RO           75    i.PLL_Init          pll.o
+    0x00000c48   0x00000024   Code   RO          304    i.RxFifo_Init       uart.o
+    0x00000c6c   0x0000003c   Code   RO          305    i.RxFifo_Put        uart.o
+    0x00000ca8   0x00000018   Code   RO          306    i.RxFifo_Size       uart.o
+    0x00000cc0   0x00000054   Code   RO          115    i.SearchCheck       esp8266.o
+    0x00000d14   0x00000030   Code   RO          116    i.SearchStart       esp8266.o
+    0x00000d44   0x000000d4   Code   RO          117    i.ServerResponseSearchCheck  esp8266.o
+    0x00000e18   0x00000040   Code   RO          118    i.ServerResponseSearchStart  esp8266.o
+    0x00000e58   0x0000003c   Code   RO          307    i.TxFifo_Get        uart.o
+    0x00000e94   0x00000024   Code   RO          308    i.TxFifo_Init       uart.o
+    0x00000eb8   0x0000003c   Code   RO          309    i.TxFifo_Put        uart.o
+    0x00000ef4   0x00000018   Code   RO          310    i.TxFifo_Size       uart.o
+    0x00000f0c   0x00000058   Code   RO          311    i.UART0_Handler     uart.o
+    0x00000f64   0x00000030   Code   RO          119    i.UART1_Handler     esp8266.o
+    0x00000f94   0x000000c8   Code   RO          317    i.UART_Init         uart.o
+    0x0000105c   0x00000034   Code   RO          318    i.UART_OutChar      uart.o
+    0x00001090   0x00000034   Code   RO          319    i.UART_OutCharNonBlock  uart.o
+    0x000010c4   0x00000020   Code   RO          619    i.__0printf$3       mc_w.l(printf3.o)
+    0x000010e4   0x00000028   Code   RO          621    i.__0sprintf$3      mc_w.l(printf3.o)
+    0x0000110c   0x000001b8   Code   RO          626    i._printf_core      mc_w.l(printf3.o)
+    0x000012c4   0x0000000a   Code   RO          628    i._sputc            mc_w.l(printf3.o)
+    0x000012ce   0x00000002   PAD
+    0x000012d0   0x0000002c   Code   RO          323    i.copyHardwareToSoftware  uart.o
+    0x000012fc   0x0000002c   Code   RO          324    i.copySoftwareToHardware  uart.o
+    0x00001328   0x00000010   Code   RO          325    i.fputc             uart.o
+    0x00001338   0x0000000e   Code   RO          120    i.lc                esp8266.o
+    0x00001346   0x00000002   PAD
+    0x00001348   0x000000f0   Code   RO           12    i.main              main.o
+    0x00001438   0x00000010   Code   RO           14    i.obtainADC         main.o
+    0x00001448   0x00000000   Data   RO          831    Region$$Table       anon$$obj.o
+
+
+    Execution Region ER_RW (Base: 0x20000000, Size: 0x000000d0, Max: 0xffffffff, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000   0x0000007c   Data   RW           16    .data               main.o
+    0x2000007c   0x00000040   Data   RW          123    .data               esp8266.o
+    0x200000bc   0x00000010   Data   RW          327    .data               uart.o
+    0x200000cc   0x00000004   Data   RW          805    .data               mc_w.l(stdout.o)
+
+
+    Execution Region ER_ZI (Base: 0x200000d0, Size: 0x00001820, Max: 0xffffffff, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x200000d0   0x00000c20   Zero   RW          121    .bss                esp8266.o
+    0x20000cf0   0x00000800   Zero   RW          326    .bss                uart.o
+    0x200014f0   0x00000400   Zero   RW            1    STACK               startup.o
+
