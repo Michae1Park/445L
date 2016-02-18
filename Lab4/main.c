@@ -95,6 +95,10 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include "Nokia5110.h"
 #include <string.h>
 #include "ST7735.h"
+#include "ADCSWTrigger.h"
+#include "Timer0A.h"
+#include "../Shared/tm4c123gh6pm.h"
+#include <stdio.h>
 #define SSID_NAME  "PHONE"        /* Access point name to connect to. */
 #define SEC_TYPE   SL_SEC_TYPE_WPA
 #define PASSKEY    "j1002k_B"        /* Password in case of secure AP */
@@ -167,6 +171,14 @@ char SendBuff[MAX_SEND_BUFF_SIZE];
 char HostName[MAX_HOSTNAME_SIZE];
 unsigned long DestinationIP;
 int SockID;
+volatile uint32_t ADCvalue;
+
+//void DisableInterrupts(void); // Disable interrupts
+//void EnableInterrupts(void);  // Enable interrupts
+//long StartCritical (void);    // previous I bit, disable interrupts
+//void EndCritical(long sr);    // restore I bit to previous value
+//void WaitForInterrupt(void);  // low power mode
+void obtainADC(void);
 
 
 typedef enum{
@@ -207,17 +219,17 @@ void Crash(uint32_t time){
 // 2) you can change metric to imperial if you want temperature in F
 //#define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&units=metric HTTP/1.1\r\nUser-Agent: Keil\r\nHost:api.openweathermap.org\r\nAccept: */*\r\n\r\n"
 #define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&APPID=358461513dd1b88b40a929ed100a6eea HTTP/1.1\r\nHost:api.openweathermap.org\r\n\r\n"
-int main(void){int32_t retVal;  SlSecParams_t secParams;
-		char temp[8];
-		char check[4];
-		check[0]='t';
-		check[1]='e';
-		check[2]='m';
-		check[3]='p';
+int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[13];
   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
+	//DisableInterrupts();
   initClk();        // PLL 50 MHz
   UART_Init();      // Send data to PC, 115200 bps
   LED_Init();       // initialize LaunchPad I/O 
+	ST7735_InitR(INITR_REDTAB); 
+	ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
+	Timer0A_Init(&obtainADC, 12);
+	ADC0_SAC_R &= 0xFFFFFFF8; 						//64x hardware oversample
+	//EnableInterrupts();
   UARTprintf("Weather App\n");
   retVal = configureSimpleLinkToDefaultState(pConfig); // set policies
   if(retVal < 0)Crash(4000000);
@@ -252,14 +264,12 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
         LED_GreenOn();
         UARTprintf("\r\n\r\n");
         UARTprintf(Recvbuff);  UARTprintf("\r\n");
-				
-
-
+				//parse and print json string
 					for(int i =0; i<MAX_RECV_BUFF_SIZE; i++){
-						if(Recvbuff[i] ==check[0]){
-							if(Recvbuff[i+1] ==check[1]){
-								if(Recvbuff[i+2] ==check[2]){
-									if(Recvbuff[i+3] ==check[2]){
+						if(Recvbuff[i] =='t'){
+							if(Recvbuff[i+1] =='e'){
+								if(Recvbuff[i+2] =='m'){
+									if(Recvbuff[i+3] =='p'){
 										i+=6;
 										for(int j=0;j<6;j++){
 											temp[j]=Recvbuff[j+i];
@@ -274,6 +284,14 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
 					ST7735_OutString("Temperature=");
 					ST7735_SetCursor(0,20);
 					ST7735_OutString(temp);
+					
+				//ADC voltage meter
+				sprintf(ch,"Voltage=%.5d", ADCvalue);
+				ST7735_SetCursor(10,0);
+				ST7735_OutString("Voltage=");
+				ST7735_SetCursor(20,20);
+				ST7735_OutString(ch);
+					
 
       }
     }
@@ -567,6 +585,10 @@ void SimpleLinkSockEventHandler(SlSockEvent_t *pSock){
     break;
   }
 }
+void obtainADC(void){
+	ADCvalue=ADC0_InSeq3();
+}
+
 /*
  * * ASYNCHRONOUS EVENT HANDLERS -- End
  */
