@@ -8,16 +8,28 @@ CG_TOOL_ROOT := C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
 
 ORDERED_OBJS += \
 "./LED.obj" \
-"./UART.obj" \
-"./esp8266.obj" \
-"./http.obj" \
+"./Nokia5110.obj" \
+"./board.obj" \
+"./device.obj" \
+"./driver.obj" \
+"./flowcont.obj" \
+"./fs.obj" \
 "./main.obj" \
-"./pll.obj" \
-"./systick.obj" \
-"./tm4c123gh6pm_startup_ccs.obj" \
+"./netapp.obj" \
+"./netcfg.obj" \
+"./nonos.obj" \
+"./socket.obj" \
+"./spawn.obj" \
+"./spi.obj" \
+"./startup_ccs.obj" \
+"./uart.obj" \
+"./uartstdio.obj" \
+"./ustdlib.obj" \
+"./wlan.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"libc.a" \
+-l"D:/Dropbox/ArmBook/LaunchPad/ValvanoWareTM4C123\driverlib\ccs\Debug\driverlib.lib" \
 
 -include ../makefile.init
 
@@ -121,40 +133,40 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-ESP8266_4C123.out \
+CC3100GetWeather_4C123.out \
 
 EXE_OUTPUTS__QUOTED += \
-"ESP8266_4C123.out" \
+"CC3100GetWeather_4C123.out" \
 
 BIN_OUTPUTS += \
-ESP8266_4C123.hex \
+CC3100GetWeather_4C123.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"ESP8266_4C123.hex" \
+"CC3100GetWeather_4C123.hex" \
 
 
 # All Target
-all: ESP8266_4C123.out
+all: CC3100GetWeather_4C123.out
 
 # Tool invocations
-ESP8266_4C123.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+CC3100GetWeather_4C123.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --c99 --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off --c_src_interlist --asm_listing -z -m"ESP8266_4C123.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ESP8266_4C123_linkInfo.xml" --rom_model -o "ESP8266_4C123.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --c99 --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"CC3100GetWeather_4C123.map" --heap_size=0 --stack_size=1024 -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="CC3100GetWeather_4C123_linkInfo.xml" --rom_model -o "CC3100GetWeather_4C123.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-ESP8266_4C123.hex: $(EXE_OUTPUTS)
+CC3100GetWeather_4C123.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "ESP8266_4C123.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "CC3100GetWeather_4C123.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "LED.pp" "UART.pp" "esp8266.pp" "http.pp" "main.pp" "pll.pp" "systick.pp" "tm4c123gh6pm_startup_ccs.pp" 
-	-$(RM) "LED.obj" "UART.obj" "esp8266.obj" "http.obj" "main.obj" "pll.obj" "systick.obj" "tm4c123gh6pm_startup_ccs.obj" 
+	-$(RM) "LED.pp" "Nokia5110.pp" "board.pp" "device.pp" "driver.pp" "flowcont.pp" "fs.pp" "main.pp" "netapp.pp" "netcfg.pp" "nonos.pp" "socket.pp" "spawn.pp" "spi.pp" "startup_ccs.pp" "uart.pp" "uartstdio.pp" "ustdlib.pp" "wlan.pp" 
+	-$(RM) "LED.obj" "Nokia5110.obj" "board.obj" "device.obj" "driver.obj" "flowcont.obj" "fs.obj" "main.obj" "netapp.obj" "netcfg.obj" "nonos.obj" "socket.obj" "spawn.obj" "spi.obj" "startup_ccs.obj" "uart.obj" "uartstdio.obj" "ustdlib.obj" "wlan.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
