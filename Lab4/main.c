@@ -108,7 +108,6 @@ void UART_Init(void){
   UARTStdioConfig(0,BAUD_RATE,50000000);
 }
 
-void printWeather(void);
 
 #define MAX_RECV_BUFF_SIZE  1024
 #define MAX_SEND_BUFF_SIZE  512
@@ -209,6 +208,12 @@ void Crash(uint32_t time){
 //#define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&units=metric HTTP/1.1\r\nUser-Agent: Keil\r\nHost:api.openweathermap.org\r\nAccept: */*\r\n\r\n"
 #define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&APPID=358461513dd1b88b40a929ed100a6eea HTTP/1.1\r\nHost:api.openweathermap.org\r\n\r\n"
 int main(void){int32_t retVal;  SlSecParams_t secParams;
+		char temp[8];
+		char check[4];
+		check[0]='t';
+		check[1]='e';
+		check[2]='m';
+		check[3]='p';
   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
   initClk();        // PLL 50 MHz
   UART_Init();      // Send data to PC, 115200 bps
@@ -247,24 +252,36 @@ int main(void){int32_t retVal;  SlSecParams_t secParams;
         LED_GreenOn();
         UARTprintf("\r\n\r\n");
         UARTprintf(Recvbuff);  UARTprintf("\r\n");
+				
+
+
+					for(int i =0; i<MAX_RECV_BUFF_SIZE; i++){
+						if(Recvbuff[i] ==check[0]){
+							if(Recvbuff[i+1] ==check[1]){
+								if(Recvbuff[i+2] ==check[2]){
+									if(Recvbuff[i+3] ==check[2]){
+										i+=6;
+										for(int j=0;j<6;j++){
+											temp[j]=Recvbuff[j+i];
+										}
+										break;
+									}
+								}
+							}
+						}
+					}
+					ST7735_SetCursor(0,0);
+					ST7735_OutString("Temperature=");
+					ST7735_SetCursor(0,20);
+					ST7735_OutString(temp);
+
       }
     }
-		printWeather();
     while(Board_Input()==0){}; // wait for touch
     LED_GreenOff();
   }
 }
 
-void printWeather(void)
-{	char ch[8];
-	char first;
-	for(int i =0; i<MAX_RECV_BUFF_SIZE; i++){
-		first = Recvbuff[i];
-		if(first =='T'){
-			
-		}
-	}
-}
 /*!
     \brief This function puts the device in its default state. It:
            - Set the mode to STATION
