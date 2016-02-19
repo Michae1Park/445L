@@ -1,6 +1,10 @@
-// TimeDisplay.c
-// TM4C123
-
+// ATimeDisplay.c
+// Michael Park, Jack Zhao
+// Date Created: 2/12/2016
+// Includes analog and digital time display functions
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 2/15/2016
 
 #include <stdint.h>
 #include <stdio.h>

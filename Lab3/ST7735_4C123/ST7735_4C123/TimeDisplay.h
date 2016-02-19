@@ -1,10 +1,12 @@
-// TimeDisplay.c
-// TM4C123
+// ATimeDisplay.c
+// Michael Park, Jack Zhao
+// Date Created: 2/12/2016
+// Includes prototypes of analog and digital time display functions
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 2/15/2016
 
-//------------Switch_Init------------
-// Initialize GPIO Port A bit 5 for input
-// Input: none
-// Output: none
+
 #include <stdint.h>
 
 extern volatile uint16_t display_mode;

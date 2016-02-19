@@ -1,7 +1,7 @@
 // SetTime.c
 // Michael Park, Jack Zhao
 // Date Created: 02/10/2016
-// class for functions to set time
+// class for functions to set alarm
 // Lab Number: 16340
 // TA: Mahesh Srinivasan
 // Last Revised: 02/15/16
