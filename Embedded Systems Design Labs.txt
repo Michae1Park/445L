@@ -1,4 +1,0 @@
-Git Control:
-
-Create new branch for each lab.
-Merge back into the master once it is finished.
