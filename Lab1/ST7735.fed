@@ -1,0 +1,39 @@
+;#<FEEDBACK># ARM Linker, 5.03 [Build 76]: Last Updated: Sun Jan 31 22:24:05 2016
+;VERSION 0.2
+;FILE fixed.o
+Test1EC <= USED 0
+Test2EC <= USED 0
+;FILE lab1.o
+main4 <= USED 0
+main5 <= USED 0
+;FILE pll.o
+;FILE st7735.o
+Output_Color <= USED 0
+Output_Init <= USED 0
+Output_Off <= USED 0
+Output_On <= USED 0
+ST7735_DrawBitmap <= USED 0
+ST7735_DrawChar <= USED 0
+ST7735_DrawFastHLine <= USED 0
+ST7735_DrawFastVLine <= USED 0
+ST7735_InitB <= USED 0
+ST7735_InvertDisplay <= USED 0
+ST7735_OutUDec <= USED 0
+ST7735_PlotBar <= USED 0
+ST7735_PlotClear <= USED 0
+ST7735_PlotLine <= USED 0
+ST7735_PlotNext <= USED 0
+ST7735_PlotNextErase <= USED 0
+ST7735_PlotPoint <= USED 0
+ST7735_PlotPoints <= USED 0
+ST7735_PlotdBfs <= USED 0
+ST7735_SetRotation <= USED 0
+ST7735_SetTextColor <= USED 0
+ST7735_SwapColor <= USED 0
+ferror <= USED 0
+fgetc <= USED 0
+fillmessage <= USED 0
+;FILE startup.o
+;FILE systick.o
+SysTick_Wait <= USED 0
+SysTick_Wait10ms <= USED 0
