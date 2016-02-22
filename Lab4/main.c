@@ -116,6 +116,7 @@ void UART_Init(void){
 #define MAX_RECV_BUFF_SIZE  1024
 #define MAX_SEND_BUFF_SIZE  512
 #define MAX_HOSTNAME_SIZE   40
+#define MAX_SERVERNAME_SIZE 40
 #define MAX_PASSKEY_SIZE    32
 #define MAX_SSID_SIZE       32
 
@@ -169,15 +170,16 @@ typedef struct{
 char Recvbuff[MAX_RECV_BUFF_SIZE];
 char SendBuff[MAX_SEND_BUFF_SIZE];
 char HostName[MAX_HOSTNAME_SIZE];
+char ServerName[MAX_SERVERNAME_SIZE];
 unsigned long DestinationIP;
 int SockID;
 volatile uint32_t ADCvalue;
 
-//void DisableInterrupts(void); // Disable interrupts
-//void EnableInterrupts(void);  // Enable interrupts
-//long StartCritical (void);    // previous I bit, disable interrupts
-//void EndCritical(long sr);    // restore I bit to previous value
-//void WaitForInterrupt(void);  // low power mode
+void DisableInterrupts(void); // Disable interrupts
+void EnableInterrupts(void);  // Enable interrupts
+long StartCritical (void);    // previous I bit, disable interrupts
+void EndCritical(long sr);    // restore I bit to previous value
+void WaitForInterrupt(void);  // low power mode
 void obtainADC(void);
 
 
@@ -219,6 +221,8 @@ void Crash(uint32_t time){
 // 2) you can change metric to imperial if you want temperature in F
 //#define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&units=metric HTTP/1.1\r\nUser-Agent: Keil\r\nHost:api.openweathermap.org\r\nAccept: */*\r\n\r\n"
 #define REQUEST "GET /data/2.5/weather?q=Austin%20Texas&APPID=358461513dd1b88b40a929ed100a6eea HTTP/1.1\r\nHost:api.openweathermap.org\r\n\r\n"
+#define PAYLOAD "GET /query?city=Austin%20Texas&id=Jack%20Zhao%20%20Michael%20Park&greet="
+#define PAYLOAD_END "&edxcode=8086HTTP/1.1\r\nUser-Agent: Keil\r\nHost: embedded-systems-server.appspot.com\r\n\r\n"
 int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[13];
   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
 	//DisableInterrupts();
@@ -226,10 +230,8 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
   UART_Init();      // Send data to PC, 115200 bps
   LED_Init();       // initialize LaunchPad I/O 
 	ST7735_InitR(INITR_REDTAB); 
-	ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating
-	Timer0A_Init(&obtainADC, 12);
+	ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating           ****
 	ADC0_SAC_R &= 0xFFFFFFF8; 						//64x hardware oversample
-	//EnableInterrupts();
   UARTprintf("Weather App\n");
   retVal = configureSimpleLinkToDefaultState(pConfig); // set policies
   if(retVal < 0)Crash(4000000);
@@ -244,6 +246,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
   }
   UARTprintf("Connected\n");
   while(1){
+		
     strcpy(HostName,"openweathermap.org");
     retVal = sl_NetAppDnsGetHostByName(HostName,
              strlen(HostName),&DestinationIP, SL_AF_INET);
@@ -264,6 +267,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
         LED_GreenOn();
         UARTprintf("\r\n\r\n");
         UARTprintf(Recvbuff);  UARTprintf("\r\n");
+				
 				//parse and print json string
 					for(int i =0; i<MAX_RECV_BUFF_SIZE; i++){
 						if(Recvbuff[i] =='t'){
@@ -280,21 +284,50 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
 							}
 						}
 					}
-					ST7735_SetCursor(0,0);
-					ST7735_OutString("Temperature=");
-					ST7735_SetCursor(0,20);
-					ST7735_OutString(temp);
-					
-				//ADC voltage meter
-				sprintf(ch,"Voltage=%.5d", ADCvalue);
-				ST7735_SetCursor(10,0);
-				ST7735_OutString("Voltage=");
-				ST7735_SetCursor(20,20);
-				ST7735_OutString(ch);
-					
-
+				// Print Temp to LCD screen
+				ST7735_SetCursor(0,0);
+				ST7735_OutString("Temp = ");
+				ST7735_SetCursor(0,20);
+				ST7735_OutString(temp);
+				ST7735_OutString("C");
       }
     }
+							
+			//ADC voltage meter
+			obtainADC();
+			sprintf(ch,"Voltage=%.4d", ADCvalue);
+			ST7735_SetCursor(0,10);
+			ST7735_OutString(ch);
+				
+		
+			//SEND TCP PAYLOAD
+		  strcpy(ServerName,"embedded-systems-server.appspot.com");
+			retVal = sl_NetAppDnsGetHostByName(ServerName,
+             strlen(ServerName),&DestinationIP, SL_AF_INET);
+    if(retVal == 0){
+      Addr.sin_family = SL_AF_INET;
+      Addr.sin_port = sl_Htons(80);
+      Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
+      ASize = sizeof(SlSockAddrIn_t);
+      SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
+      if( SockID >= 0 ){
+        retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
+      }
+      if((SockID >= 0)&&(retVal >= 0)){
+        strcpy(SendBuff,PAYLOAD); 
+				strcat(SendBuff,ch);
+				strcat(SendBuff, PAYLOAD_END);
+        sl_Send(SockID, SendBuff, strlen(SendBuff), 0);// Send the HTTP GET 
+        sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
+        sl_Close(SockID);
+        LED_GreenOn();
+        UARTprintf("\r\n\r\n");
+        UARTprintf(Recvbuff);  UARTprintf("\r\n");
+				
+      }
+    }
+			//store info on webserver
+
     while(Board_Input()==0){}; // wait for touch
     LED_GreenOff();
   }
