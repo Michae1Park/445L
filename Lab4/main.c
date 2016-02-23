@@ -99,6 +99,7 @@ Port A, SSI0 (PA2, PA3, PA5, PA6, PA7) sends data to Nokia5110 LCD
 #include "Timer0A.h"
 #include "../Shared/tm4c123gh6pm.h"
 #include <stdio.h>
+#include "SysTick.h"
 #define SSID_NAME  "Mike"        /* Access point name to connect to. */
 #define SEC_TYPE   SL_SEC_TYPE_WPA
 #define PASSKEY    "mpmp1234"        /* Password in case of secure AP */
@@ -226,15 +227,17 @@ void Crash(uint32_t time){
 #define PAYLOAD_END "&edxcode=8086 HTTP/1.1\r\nUser-Agent: Keil\r\nHost: embsysmooc.appspot.com\r\n\r\n"
 //#define PAYLOAD "GET /query?city=Austin%20Texas&id=Mike%20Park&greet=Int%20Temp%3D21C&edxcode=8086 HTTP/1.1\r\nUser-Agent: Keil\r\nHost: embsysmooc.appspot.com\r\n\r\n"
 
-int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[13];
+int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[13];uint32_t time[10]; uint32_t current_time; uint32_t counter; uint32_t maxVal; uint32_t minVal; uint32_t avgVal;
   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
 	char poststring[512];
 	char adcfixed[12];
 	
 	//DisableInterrupts();
+	counter=0;
   initClk();        // PLL 50 MHz
   UART_Init();      // Send data to PC, 115200 bps
   LED_Init();       // initialize LaunchPad I/O 
+	SysTick_Init();
 	ST7735_InitR(INITR_REDTAB); 
 	ADC0_InitSWTriggerSeq3_Ch9();         // allow time to finish activating           ****
 	ADC0_SAC_R &= 0xFFFFFFF8; 						//64x hardware oversample
@@ -252,7 +255,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
   }
   UARTprintf("Connected\n");
   while(1){
-		
+		current_time=NVIC_ST_CURRENT_R;
     strcpy(HostName,"openweathermap.org");
     retVal = sl_NetAppDnsGetHostByName(HostName,
              strlen(HostName),&DestinationIP, SL_AF_INET);
@@ -273,7 +276,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
         LED_GreenOn();
         UARTprintf("\r\n\r\n");
         UARTprintf(Recvbuff);  UARTprintf("\r\n");
-				
+				current_time=current_time-NVIC_ST_CURRENT_R;
 				//parse and print json string
 					for(int i =0; i<MAX_RECV_BUFF_SIZE; i++){
 						if(Recvbuff[i] =='t'){
@@ -298,6 +301,25 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
 				ST7735_OutString("C");
       }
     }
+		//timer method
+			if(counter<10){
+				time[counter]=current_time;
+				counter++;
+			}
+			if(counter==10){
+				maxVal=0;
+				minVal=0;
+				avgVal=0;
+				for(int i =0;i<counter;i++){
+					if(time[i]>maxVal)
+						maxVal=time[i];
+					if(time[i]<minVal)
+						minVal=time[i];
+					avgVal+=time[i];
+				}
+				avgVal/=10;
+				
+			}
 		
 		for(int j=0; j<10; j++)
 		{

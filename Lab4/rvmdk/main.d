@@ -44,3 +44,4 @@
 .\rvmdk\main.o: Timer0A.h
 .\rvmdk\main.o: ../Shared/tm4c123gh6pm.h
 .\rvmdk\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\rvmdk\main.o: SysTick.h
