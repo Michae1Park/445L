@@ -347,7 +347,7 @@ int main(void)
 			//ADC voltage meter
 			obtainADC();
 			sprintf(adcfixed,"Voltage=%d", ADCvalue);
-			char a[2];
+/*			char a[2];
 			a[0] = adcfixed[11];
 		  a[1] = adcfixed[10];
 		  for(int i=0; i<13; i++)
@@ -358,11 +358,15 @@ int main(void)
 			}
 			adcfixed[10] = a[0];
 			adcfixed[11] = a[1];
-		  
-			ST7735_SetCursor(0,10);
+*/		  
+			ST7735_SetCursor(0,10);	
 			ST7735_OutString(adcfixed);
 			
 		
+		for(int x=0;x<512;x++){
+			poststring[x]=0;
+		}
+			
 		  //copy over string
 			strcpy(poststring,PAYLOAD); 
 			strcat(poststring,adcfixed);
@@ -406,6 +410,7 @@ int main(void)
 			tracktime();
     
 		while(Board_Input()==0){}; // wait for touch
+		//for(int i=0; i<10000; i++);
     LED_GreenOff();
   }
 }
