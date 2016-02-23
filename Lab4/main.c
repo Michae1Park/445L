@@ -176,13 +176,25 @@ unsigned long DestinationIP;
 int SockID;
 volatile uint32_t ADCvalue;
 
+//globals for partf
+volatile uint32_t counter;
+uint32_t timeg[10];
+uint32_t timep[10];
+//index 0 for getting data
+//index 1 for posting data
+uint32_t current_time[2];  
+uint32_t maxVal[2]; 
+uint32_t minVal[2]; 
+uint32_t avgVal[2]; 
+uint32_t Lost_Packet[2];
+
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void obtainADC(void);
-
+void tracktime(void);
 
 typedef enum{
     CONNECTED = 0x01,
@@ -227,11 +239,18 @@ void Crash(uint32_t time){
 #define PAYLOAD_END "&edxcode=8086 HTTP/1.1\r\nUser-Agent: Keil\r\nHost: embsysmooc.appspot.com\r\n\r\n"
 //#define PAYLOAD "GET /query?city=Austin%20Texas&id=Mike%20Park&greet=Int%20Temp%3D21C&edxcode=8086 HTTP/1.1\r\nUser-Agent: Keil\r\nHost: embsysmooc.appspot.com\r\n\r\n"
 
-int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[13];uint32_t time[10]; uint32_t current_time; uint32_t counter; uint32_t maxVal; uint32_t minVal; uint32_t avgVal;
+int main(void)
+{
+	//define variables
+	int32_t retVal;  
+	SlSecParams_t secParams; 
+	char temp[8];	
+	char ch[13];
   char *pConfig = NULL; INT32 ASize = 0; SlSockAddrIn_t  Addr;
 	char poststring[512];
 	char adcfixed[12];
 	
+	//initilize and connect serial
 	//DisableInterrupts();
 	counter=0;
   initClk();        // PLL 50 MHz
@@ -254,21 +273,40 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
     _SlNonOsMainLoopTask();
   }
   UARTprintf("Connected\n");
-  while(1){
-		current_time=NVIC_ST_CURRENT_R;
+
+	
+	//Main while loop
+	while(1)
+	{
     strcpy(HostName,"openweathermap.org");
-    retVal = sl_NetAppDnsGetHostByName(HostName,
-             strlen(HostName),&DestinationIP, SL_AF_INET);
-    if(retVal == 0){
+		
+		
+		//timer start//
+		current_time[0]=NVIC_ST_CURRENT_R;
+		//timer start//   
+		
+		retVal = sl_NetAppDnsGetHostByName(HostName,strlen(HostName),&DestinationIP, SL_AF_INET);
+		
+		//???????????
+		if(retVal != 0 )
+			Lost_Packet[0]++;
+    //???????????
+		
+		if(retVal == 0)
+		{
       Addr.sin_family = SL_AF_INET;
       Addr.sin_port = sl_Htons(80);
       Addr.sin_addr.s_addr = sl_Htonl(DestinationIP);// IP to big endian 
       ASize = sizeof(SlSockAddrIn_t);
       SockID = sl_Socket(SL_AF_INET,SL_SOCK_STREAM, 0);
-      if( SockID >= 0 ){
+    
+			if( SockID >= 0 )
+			{
         retVal = sl_Connect(SockID, ( SlSockAddr_t *)&Addr, ASize);
       }
-      if((SockID >= 0)&&(retVal >= 0)){
+      
+			if((SockID >= 0)&&(retVal >= 0))
+			{
         strcpy(SendBuff,REQUEST); 
         sl_Send(SockID, SendBuff, strlen(SendBuff), 0);// Send the HTTP GET 
         sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
@@ -276,23 +314,27 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
         LED_GreenOn();
         UARTprintf("\r\n\r\n");
         UARTprintf(Recvbuff);  UARTprintf("\r\n");
-				current_time=current_time-NVIC_ST_CURRENT_R;
+				//timer end//
+				current_time[0] = current_time[0]-NVIC_ST_CURRENT_R;
+				//timer end//
+				
 				//parse and print json string
-					for(int i =0; i<MAX_RECV_BUFF_SIZE; i++){
-						if(Recvbuff[i] =='t'){
-							if(Recvbuff[i+1] =='e'){
-								if(Recvbuff[i+2] =='m'){
-									if(Recvbuff[i+3] =='p'){
-										i+=6;
-										for(int j=0;j<6;j++){
-											temp[j]=Recvbuff[j+i];
-										}
-										break;
+				for(int i =0; i<MAX_RECV_BUFF_SIZE; i++)
+				{
+					if(Recvbuff[i] =='t'){
+						if(Recvbuff[i+1] =='e'){
+							if(Recvbuff[i+2] =='m'){
+								if(Recvbuff[i+3] =='p'){
+									i+=6;
+									for(int j=0;j<6;j++){
+										temp[j]=Recvbuff[j+i];
 									}
+									break;
 								}
 							}
 						}
 					}
+				}
 				// Print Temp to LCD screen
 				ST7735_SetCursor(0,0);
 				ST7735_OutString("Temp = ");
@@ -301,28 +343,7 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
 				ST7735_OutString("C");
       }
     }
-		//timer method
-			if(counter<10){
-				time[counter]=current_time;
-				counter++;
-			}
-			if(counter==10){
-				maxVal=0;
-				minVal=0;
-				avgVal=0;
-				for(int i =0;i<counter;i++){
-					if(time[i]>maxVal)
-						maxVal=time[i];
-					if(time[i]<minVal)
-						minVal=time[i];
-					avgVal+=time[i];
-				}
-				avgVal/=10;
-				
-			}
-		
-		for(int j=0; j<10; j++)
-		{
+	
 			//ADC voltage meter
 			obtainADC();
 			sprintf(adcfixed,"Voltage=%d", ADCvalue);
@@ -349,8 +370,11 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
 		
 			//SEND TCP PAYLOAD
 		  strcpy(ServerName,"embsysmooc.appspot.com");
+			
+			//timer start//
+			current_time[1] = NVIC_ST_CURRENT_R;
+			//timer start//   
 			retVal = sl_NetAppDnsGetHostByName(ServerName,strlen(ServerName),&DestinationIP, SL_AF_INET);
-    
 			if(retVal == 0)
 			{
 				Addr.sin_family = SL_AF_INET;
@@ -367,16 +391,57 @@ int main(void){int32_t retVal;  SlSecParams_t secParams; char temp[8];	char ch[1
 					sl_Send(SockID, SendBuff, strlen(SendBuff), 0);// Send the HTTP GET 
 					sl_Recv(SockID, Recvbuff, MAX_RECV_BUFF_SIZE, 0);// Receive response 
 					sl_Close(SockID);
+
+					//timer end//
+					current_time[1] = current_time[1] - NVIC_ST_CURRENT_R;
+					//timer end//
+
 					LED_GreenOn();
 					UARTprintf("\r\n\r\n");
 					UARTprintf(Recvbuff);  UARTprintf("\r\n");
 				}
-			}
-		}	//store info on webserver
+			}	//store info on webserver
 
-    while(Board_Input()==0){}; // wait for touch
+		if(counter<10)		
+			tracktime();
+    
+		while(Board_Input()==0){}; // wait for touch
     LED_GreenOff();
   }
+}
+
+void tracktime(void)
+{
+		//timer method
+		if(counter<10)
+		{
+			timeg[counter]=current_time[0];
+			timep[counter]=current_time[1];
+			counter++;
+		}
+		if(counter==10)
+		{
+			maxVal[0]=0;
+			minVal[0]=0;
+			avgVal[0]=0;
+			maxVal[1]=0;
+			minVal[1]=0;
+			avgVal[1]=0;
+			for(int i =0;i<counter;i++)
+			{
+				if(timeg[i] > maxVal[0]){maxVal[0]=timeg[i];}
+				if(timeg[i] < minVal[0]){minVal[0]=timeg[i];}
+				avgVal[0]+=timeg[i];
+			}
+			for(int i =0;i<counter;i++)
+			{
+				if(timep[i] > maxVal[1]){maxVal[1]=timep[i];}
+				if(timep[i] < minVal[1]){minVal[1]=timep[i];}
+				avgVal[1]+=timep[i];
+			}
+			avgVal[0]/=10;
+			avgVal[1]/=10;
+		}
 }
 
 /*!
