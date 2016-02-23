@@ -6,8 +6,7 @@ ARM Macro Assembler    Page 1
 
     1 00000000         ;*****************EXTRA CREDIT************************
     2 00000000         ;version 4, assembly fixed point
-    3 00000000         ;49183cycles(one instruction = one clock cycle)*12.5ns =
-                        614.7875us
+    3 00000000         ;49183cycles*12.5ns = 614.7875us
     4 00000000                 AREA             DATA, ALIGN=2
     5 00000000 00 00 00 
               00       T       SPACE            4
