@@ -1,3 +1,5 @@
 1. Why does the current going into the Ref of DAC be so small?
 
 2. how does shunt diode regulate the current/voltage. Where did the equation come from?
+
+3. Zener Diode (Shunt Diode) Reverse Bias, Forward Bias?
