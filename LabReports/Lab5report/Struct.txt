@@ -1,0 +1,5 @@
+struct DAC {
+  int note;
+  uint16_t stop;
+  uint16_t togglesound;
+} DAC;  
