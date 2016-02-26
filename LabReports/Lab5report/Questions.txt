@@ -3,3 +3,7 @@
 2. how does shunt diode regulate the current/voltage. Where did the equation come from?
 
 3. Zener Diode (Shunt Diode) Reverse Bias, Forward Bias?
+
+4. Audio AMP: Why gain <= 1?
+
+5. Look at timing diagram for TLV for software.
