@@ -30,6 +30,8 @@
  http://users.ece.utexas.edu/~valvano/
  */
 
+#include <stdint.h>
+
 // Initialize SysTick with busy wait running at bus clock.
 void SysTick_Init(void);
 

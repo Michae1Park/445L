@@ -45,7 +45,7 @@
 // debugger out of the processor and make it permanently unable to be
 // debugged or re-programmed.
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 #include "SysTick.h"
 
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
@@ -67,22 +67,23 @@ extern volatile uint32_t isFast;
 
 
 //------------Switch_Init------------
-// Initialize GPIO Port A bit 5 for input
+// Initialize GPIO Port B bit 0-2 for input
 // Input: none
 // Output: none
 void Switch_Init(void){ 
   SYSCTL_RCGCGPIO_R |= 0x02;        // 1) activate clock for Port B
- // while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
-  GPIO_PORTB_DIR_R &= ~0x0F;        // PB0-3 is an input
+  //while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
+	
+	GPIO_PORTB_DIR_R &= ~0x07;        // PB0-2 is an input
   //GPIO_PORTB_AFSEL_R &= ~0x0F;      // regular port function
-  GPIO_PORTB_AMSEL_R &= ~0x0F;      // disable analog on PB0-3
+  GPIO_PORTB_AMSEL_R &= ~0x07;      // disable analog on PB0-2
   //GPIO_PORTB_PCTL_R &= ~0x0000FFFF; // PCTL GPIO on PB1 
-  GPIO_PORTB_DEN_R |= 0x0F;         // PB3-0 enabled as a digital port
-	GPIO_PORTB_IS_R &= ~0x0F;						// PB 0-3 is edge-sensitive
-	GPIO_PORTB_IBE_R &= ~0x0F;					// PB 0-3 is not both edges
-	GPIO_PORTB_IEV_R &= ~0x0F;					// PB 0-3 falling edge event
-	GPIO_PORTB_ICR_R = 0x0F;						// clear flag 0-3
-	GPIO_PORTB_IM_R |= 0x0F;						// arm interrupt on PB 0-3
+  GPIO_PORTB_DEN_R |= 0x07;         // PB2-0 enabled as a digital port
+	GPIO_PORTB_IS_R &= ~0x07;						// PB 0-2 is edge-sensitive
+	GPIO_PORTB_IBE_R &= ~0x07;					// PB 0-2 is not both edges
+	GPIO_PORTB_IEV_R &= ~0x07;					// PB 0-2 falling edge event
+	GPIO_PORTB_ICR_R = 0x07;						// clear flag 0-2
+	GPIO_PORTB_IM_R |= 0x07;						// arm interrupt on PB 0-2
 	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
 	NVIC_EN0_R = 0x00000002; 						//enable interrupt 1(PB) in NVIC
 }
