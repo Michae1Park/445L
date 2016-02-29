@@ -80,11 +80,15 @@ void DAC_Init(uint16_t data)
   SSI0_CR1_R |= 0x00000002;       // enable SSI
 }
 
-//********DAC_Out*****************
-// Send data to Max539 dual 16-bit DAC
-// inputs:  two voltage outputs (0 to 4096)
-// outputs: none
-void DAC_Out(uint16_t out){
-  while((SSI0_SR_R&SSI_SR_TNF)==0){};// wait until room in FIFO
-  SSI0_DR_R = out;
+/*
+****** DAC_Out ******
+*	Input: uint16_t value corresponding to the next value to be output from the DAC
+*	Output: none
+*	Sets the next value for the DAC to output
+*
+*/
+void DAC_Out(uint16_t output)
+{
+	while((SSI0_SR_R&0x00000002)==0){ };// SSI Transmit FIFO Not Full
+  SSI0_DR_R = output;	// data out, no reply
 }
