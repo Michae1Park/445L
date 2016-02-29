@@ -29,11 +29,14 @@
 // Max549 pin 7 REF (cheap solution connects this to +3.3V)
 // Max549 pin 8 +3.3V
 #include <stdint.h>
+#include <stdio.h>
 #include "DAC.h"
-#include "SysTick.h"
+#include "SysTickInts.h"
 #include "PLL.h"
-#include "Notes.h"
+#include "Music.h"
 #include "Switch.h"
+#include "../Shared/tm4c123gh6pm.h"
+#include "Timer0A.h"
 
 volatile uint32_t isPlaying;
 volatile uint32_t isFast;
@@ -44,30 +47,104 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
+enum ModeSetting
+{  
+	PLAY,
+	STOP,
+	REWIND
+};  
+volatile uint16_t Mode;
+	
+const uint16_t Wave[32] = {1024,1122,1215,1302,1378,1440,1486,1514,1524,1514,1486,1440,1378,1302,1215,1122,1024,926,833,746,670,608,562,534,524,534,562,608,670,746,833,926};
+
+unsigned char soundIndex = 0; //varies from 0 to 32
+
+const uint32_t Song[128] = {A4, A4, A4, A4, A4, A4, B4, B4, C5, C5, E5, E5, E5, E5, C5, C5, B4, B4, G4, G4, G4, G4, F4, E4, F4, F4, F4, F4, F4, 0, 
+	A4, C5, D5, D5, D5, D5, D5, D5, E5, E5, F5, F5, A4, A4, A4, A4, F5, F5, G5, G5, C5, C5, C5, C5, E5, F5, G5, G5, G5, G5, G5, G5, 0, 0,
+	F5, F5, F5, F5, F5, F5, E5, E5, D5, D5, A5, A5, A5, A5, F5, F5, E5, E5, C5, C5, C5, C5, B_Flat4, A4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, 0, 
+	D5, F5, G5, G5, G5, G5, G5, G5, A5, A5, B_Flat5, B_Flat5, D5, D5, D5, D5, B_Flat5, B_Flat5, C6, C6, F5, F5, F5, F5, A5, B_Flat5, C6, C6, C6, C6, C6, C6, 0, 0};
+static uint16_t stopped = 0;
+static uint16_t altSound = 0;
+int note = 0;
+
+void PlaySong(void)
+{
+	DAC_Out(Wave[soundIndex]);
+}
+
 int main(void)
 {
 	PLL_Init(Bus50MHz);              // bus clock at 50 MHz
 	Switch_Init();
-	
-	/*
-	SYSCTL_RCGCGPIO_R |= 0x20;       // activate port F
-	while((SYSCTL_PRGPIO_R&0x0020) == 0){ };// ready?
-	GPIO_PORTF_DIR_R |= 0x0E;        // make PF3-1 output (PF3-1 built-in LEDs)
-	GPIO_PORTF_AFSEL_R &= ~0x0E;     // disable alt funct on PF3-1
-	GPIO_PORTF_DEN_R |= 0x0E;        // enable digital I/O on PF3-1
-																	 // configure PF3-1 as GPIO
-	GPIO_PORTF_PCTL_R = (GPIO_PORTF_PCTL_R&0xFFFFF0FF)+0x00000000;
-	GPIO_PORTF_AMSEL_R = 0;          // disable analog functionality on PF
-	LEDS = 0;                        // turn all LEDs off
-	SysTick_Init(160000000);					//Tempo set to 60 bpm (interrupt every second)
-	Timer0A_Init(&UserTask, (Song[note] / 32));  // initialize timer0A to 440 Hz * 32 (to account for the size of the waveform table)
-	*/
-	
-	DAC_Init(2056);
+	SysTick_Init(50000000);					//Tempo set to 1 bit/sec	
+	Timer0A_Init(&PlaySong, (Song[note] / 32));  // initialize timer0A to 440 Hz * 32 (to account for the size of the waveform table)
+	DAC_Init(2095);
 	EnableInterrupts();
-
-  while(1)
+	while(1)
 	{
- 
+		WaitForInterrupt();
+	}
+}
+
+void SysTick_Handler(void)
+{
+	if(!stopped)
+	{
+		note += 1;
+		if(note > 127)
+		{
+			note = 0;
+		}
+		TIMER0_TAILR_R = (Song[note] / 32) - 1;
+	}
+}
+
+/*  while(1)
+	{
+	  if(Mode == PLAY)
+		{	
+			Mode = 0xFFFF;	//Acknowledge mode
+		}
+		
+		if(Mode == STOP)
+		{
+			Mode = 0xFFFF;
+		}
+		if(Mode == REWIND)
+		{
+			Mode = 0xFFFF;
+
+		}	
   }
+}*/
+
+/*
+GIPOPortB_Handler
+ISR for Switch interface: PB0-2
+Input: None
+Output: None
+*/
+void GPIOPortB_Handler(void)
+{
+	//Debouncer
+	Switch_Debounce();
+	
+	if (GPIO_PORTB_RIS_R & 0X01) //poll PB0
+	{
+		GPIO_PORTB_ICR_R = 0x01; //acknowledge flag1 and clear
+		Mode = PLAY;
+		//timeout = 0;
+	}
+	if (GPIO_PORTB_RIS_R & 0X02) //poll PB1
+	{
+		GPIO_PORTB_ICR_R = 0x02; //acknowledge flag1 and clear	
+		Mode = STOP;
+		//timeout = 0;
+	}
+	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
+	{
+		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
+		Mode = REWIND; 
+		//timeout = 0;
+	}
 }

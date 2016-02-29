@@ -24,10 +24,25 @@
 #define B5 					(50000000/990)
 #define C6 					(50000000/1043)
 
+#define SONG_LENGTH 32
+
+/*
 typedef struct {
 	uint32_t periodCycles;
 	uint8_t duration12thnotes;
 	uint8_t dynamicPercent;
 	uint16_t waveForm[SONG_LENGTH];
 }Note;
+
+const uint16_t Wave[32];
+
+unsigned char soundIndex; //varies from 0 to 32
+
+const uint32_t Song[128];
+
+static uint16_t stopped;
+static uint16_t altSound;
+int note;
+*/
+void PlaySong(void);
 #endif

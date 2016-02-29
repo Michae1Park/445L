@@ -411,21 +411,6 @@
               <FilePath>.\startup.s</FilePath>
             </File>
             <File>
-              <FileName>SysTick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\SysTick.c</FilePath>
-            </File>
-            <File>
-              <FileName>MAX549TestMain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MAX549TestMain.c</FilePath>
-            </File>
-            <File>
-              <FileName>max549.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\max549.c</FilePath>
-            </File>
-            <File>
               <FileName>Switch.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Switch.c</FilePath>
@@ -439,6 +424,26 @@
               <FileName>Timer1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Timer1.c</FilePath>
+            </File>
+            <File>
+              <FileName>DAC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\DAC.c</FilePath>
+            </File>
+            <File>
+              <FileName>Main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Main.c</FilePath>
+            </File>
+            <File>
+              <FileName>Music.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Music.c</FilePath>
+            </File>
+            <File>
+              <FileName>PLL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PLL.c</FilePath>
             </File>
           </Files>
         </Group>

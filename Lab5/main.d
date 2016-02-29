@@ -1,7 +1,10 @@
 .\main.o: Main.c
 .\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\main.o: DAC.h
-.\main.o: SysTick.h
+.\main.o: SysTickInts.h
 .\main.o: PLL.h
-.\main.o: Notes.h
+.\main.o: Music.h
 .\main.o: Switch.h
+.\main.o: ../Shared/tm4c123gh6pm.h
+.\main.o: Timer0A.h
