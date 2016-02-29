@@ -43,6 +43,11 @@
 #define PF2       (*((volatile uint32_t *)0x40025010))
 #define PF3       (*((volatile uint32_t *)0x40025020))
 #define LEDS      (*((volatile uint32_t *)0x40025038))
+#define RED       0x02
+#define BLUE      0x04
+#define GREEN     0x08
+#define WHEELSIZE 8           // must be an integer multiple of 2
+
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -50,6 +55,9 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void PORTF_Init(void);
+
+
+const long COLORWHEEL[WHEELSIZE] = {RED, RED+GREEN, GREEN, GREEN+BLUE, BLUE, BLUE+RED, RED+GREEN+BLUE, 0};
 
 const uint16_t Wave[32] = {1024,1122,1215,1302,1378,1440,1486,1514,1524,1514,1486,1440,1378,1302,1215,1122,1024,926,833,746,670,608,562,534,524,534,562,608,670,746,833,926};
 
@@ -65,6 +73,11 @@ int note = 0;
 void PlaySong(void)
 {
 	PF1 ^= 0x02;
+	soundIndex += 1;
+  if(soundIndex > 31)
+  {
+    soundIndex = 0;
+  }
 	DAC_Out(Wave[soundIndex]);
 	PF1 ^= 0x02;
 }
@@ -73,7 +86,7 @@ int main(void)
 {
 	PLL_Init(Bus50MHz);              // bus clock at 50 MHz
 	PORTF_Init();
-	Switch_Init();
+//	Switch_Init();
 	SysTick_Init(50000000);					//Tempo set to 1 bit/sec	
 	Timer0A_Init(&PlaySong, (Song[note] / 32));  // initialize timer0A to 440 Hz * 32 (to account for the size of the waveform table)
 	DAC_Init(2095);
