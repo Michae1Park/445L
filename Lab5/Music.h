@@ -46,4 +46,5 @@ typedef struct {
 void Music_Init(void);
 void PlaySong(void);
 void PlaySong2(void);
+void addWaves(void);
 #endif

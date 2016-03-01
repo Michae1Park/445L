@@ -13,22 +13,25 @@ compiling Switch.c...
 compiling Timer0A.c...
 compiling DAC.c...
 compiling Main.c...
-Music.h(49): warning:  #1-D: last line of file ends without a newline
+Music.h(50): warning:  #1-D: last line of file ends without a newline
   #endif
 Main.c: 1 warning, 0 errors
 compiling Music.c...
-Music.h(49): warning:  #1-D: last line of file ends without a newline
+Music.h(50): warning:  #1-D: last line of file ends without a newline
   #endif
-Music.c: 1 warning, 0 errors
+Music.c(136): warning:  #1-D: last line of file ends without a newline
+  }
+Music.c: 2 warnings, 0 errors
 compiling PLL.c...
 compiling SysTickInts.c...
-Music.h(49): warning:  #1-D: last line of file ends without a newline
+Music.h(50): warning:  #1-D: last line of file ends without a newline
   #endif
 SysTickInts.c: 1 warning, 0 errors
 compiling Timer1.c...
+compiling Timer2.c...
 linking...
-Program Size: Code=2276 RO-data=1184 RW-data=20 ZI-data=1540  
-".\MAX549.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=2524 RO-data=1696 RW-data=32 ZI-data=1544  
+".\MAX549.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\Jack\\Documents\\GitHub\\EmbSysLab\\Lab5\\MAX549.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
@@ -39,12 +42,26 @@ Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-2 warnings, 2 errors
-compiling PLL.c...
-compiling SysTickInts.c...
-Music.h(47): warning:  #1-D: last line of file ends without a newline
-  #endif
-SysTickInts.c: 1 warning, 0 errors
-".\MAX549.axf" - 2 Error(s), 4 Warning(s).
+ undefined
+    TIMER3_TAMR_R = 0x00000002;   // 3) configure for periodic mode, default down-count settings
+Timer3.c(39): error:  #20: identifier "uint32_t" is undefined
+    TIMER3_TAILR_R = period-1;    // 4) reload value
+Timer3.c(40): error:  #20: identifier "uint32_t" is undefined
+    TIMER3_TAPR_R = 0;            // 5) bus clock resolution
+Timer3.c(41): error:  #20: identifier "uint32_t" is undefined
+    TIMER3_ICR_R = 0x00000001;    // 6) clear TIMER3A timeout flag
+Timer3.c(42): error:  #20: identifier "uint32_t" is undefined
+    TIMER3_IMR_R = 0x00000001;    // 7) arm timeout interrupt
+Timer3.c(43): error:  #20: identifier "uint32_t" is undefined
+    NVIC_PRI8_R = (NVIC_PRI8_R&0x00FFFFFF)|0x80000000; // 8) priority 4
+Timer3.c(43): error:  #20: identifier "uint32_t" is undefined
+    NVIC_PRI8_R = (NVIC_PRI8_R&0x00FFFFFF)|0x80000000; // 8) priority 4
+Timer3.c(46): error:  #20: identifier "uint32_t" is undefined
+    NVIC_EN1_R = 1<<(35-32);      // 9) enable IRQ 35 in NVIC
+Timer3.c(47): error:  #20: identifier "uint32_t" is undefined
+    TIMER3_CTL_R = 0x00000001;    // 10) enable TIMER3A
+Timer3.c(51): error:  #20: identifier "uint32_t" is undefined
+    TIMER3_ICR_R = TIMER_ICR_TATOCINT;// acknowledge TIMER3A timeout
+Timer3.c: 0 warnings, 13 errors
+".\MAX549.axf" - 13 Error(s), 4 Warning(s).
 Target not created
- created

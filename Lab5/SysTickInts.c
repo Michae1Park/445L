@@ -38,6 +38,7 @@ extern volatile uint16_t changeSound;
 extern volatile uint32_t note;
 extern unsigned char soundIndex;
 extern Music current_song;
+extern uint32_t addedWaves;
 
 extern const uint32_t Song2[128];
 
@@ -97,7 +98,7 @@ void SysTick_Handler(void)
 			note = 0;
 		}
 		TIMER0_TAILR_R = (current_song.Song[note] / 32)  - 1;
-		TIMER0_TAILR_R = (Song2[note]/32)  - 1;
+		TIMER1_TAILR_R = (Song2[note]/32)  - 1;
 	}
 	
   PF2 ^= 0x04;                // Debugging Profile

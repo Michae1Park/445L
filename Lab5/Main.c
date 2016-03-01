@@ -38,6 +38,7 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "Timer0A.h"
 #include "Timer1.h"
+#include "Timer2.h"
 
 
 #define PF1       (*((volatile uint32_t *)0x40025008))
@@ -50,6 +51,8 @@
 #define WHEELSIZE 8           // must be an integer multiple of 2
 
 extern const uint32_t Song2[128];
+extern const uint32_t Song[128];
+extern const uint32_t Song3[128];
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -62,7 +65,6 @@ volatile uint16_t stop = 0;
 volatile uint16_t changeSound = 0;
 extern volatile uint32_t note;
 
-extern const uint32_t Song[128];
 
 
 const long COLORWHEEL[WHEELSIZE] = {RED, RED+GREEN, GREEN, GREEN+BLUE, BLUE, BLUE+RED, RED+GREEN+BLUE, 0};
@@ -73,8 +75,9 @@ int main(void)
 	PORTF_Init();
 	Switch_Init();
 	SysTick_Init(50000000);					//Tempo set to 1 bit/sec	
-	Timer0A_Init(&PlaySong, (Song[note] / 32));  // initialize timer0A to 440 Hz * 32 (to account for the size of the waveform table)
-	Timer1_Init(&PlaySong2, (Song2[note] / 32) );
+	Timer0A_Init(&PlaySong, (Song3[note] / 32));  // initialize timer0A to 440 Hz * 32 (to account for the size of the waveform table)
+	Timer1_Init(&PlaySong2, (Song2[note] / 32));
+	Timer2_Init(&addWaves, 500);
 	
 	DAC_Init(2095);
 	Music_Init();
