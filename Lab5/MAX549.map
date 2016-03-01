@@ -38,7 +38,7 @@ Section Cross References
     music.o(i.Music_Init) refers to music.o(.constdata) for Song3
     music.o(i.PlaySong) refers to dac.o(i.DAC_Out) for DAC_Out
     music.o(i.PlaySong) refers to main.o(.data) for stop
-    music.o(i.PlaySong) refers to music.o(.data) for soundIndex
+    music.o(i.PlaySong) refers to music.o(.data) for refresh
     music.o(i.PlaySong) refers to music.o(.constdata) for Horn
     music.o(i.PlaySong2) refers to dac.o(i.DAC_Out) for DAC_Out
     music.o(i.PlaySong2) refers to main.o(.data) for stop
@@ -50,7 +50,7 @@ Section Cross References
     music.o(i.addWaves) refers to music.o(.data) for soundIndex
     music.o(i.addWaves) refers to main.o(.data) for changeSound
     systickints.o(i.SysTick_Handler) refers to main.o(.data) for stop
-    systickints.o(i.SysTick_Handler) refers to music.o(.data) for note
+    systickints.o(i.SysTick_Handler) refers to music.o(.data) for refresh
     systickints.o(i.SysTick_Handler) refers to music.o(.bss) for current_song
     systickints.o(i.SysTick_Handler) refers to music.o(.constdata) for Song2
     systickints.o(i.SysTick_Init) refers to startup.o(.text) for StartCritical
@@ -86,8 +86,9 @@ Removing Unused input sections from the image.
     Removing main.o(.constdata), (32 bytes).
     Removing systickints.o(i.SysTick_Wait), (32 bytes).
     Removing systickints.o(i.SysTick_Wait10ms), (28 bytes).
+    Removing systickints.o(.data), (4 bytes).
 
-6 unused section(s) (total 152 bytes) removed from the image.
+7 unused section(s) (total 156 bytes) removed from the image.
 
 ==============================================================================
 
@@ -143,28 +144,28 @@ Image Symbol Table
     i.PLL_Init                               0x00000458   Section        0  pll.o(i.PLL_Init)
     i.PORTF_Init                             0x000004d4   Section        0  main.o(i.PORTF_Init)
     i.PlaySong                               0x00000544   Section        0  music.o(i.PlaySong)
-    i.PlaySong2                              0x000005ac   Section        0  music.o(i.PlaySong2)
-    i.Switch_Init                            0x00000614   Section        0  switch.o(i.Switch_Init)
-    i.SysTick_Handler                        0x000006a0   Section        0  systickints.o(i.SysTick_Handler)
-    i.SysTick_Init                           0x00000724   Section        0  systickints.o(i.SysTick_Init)
-    i.Timer0A_Handler                        0x0000074c   Section        0  timer0a.o(i.Timer0A_Handler)
-    i.Timer0A_Init                           0x00000764   Section        0  timer0a.o(i.Timer0A_Init)
-    i.Timer1A_Handler                        0x000007c0   Section        0  timer1.o(i.Timer1A_Handler)
-    i.Timer1_Init                            0x000007d8   Section        0  timer1.o(i.Timer1_Init)
-    i.Timer2A_Handler                        0x00000838   Section        0  timer2.o(i.Timer2A_Handler)
-    i.Timer2_Init                            0x00000850   Section        0  timer2.o(i.Timer2_Init)
-    i.__scatterload_copy                     0x000008b0   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x000008be   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x000008c0   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.addWaves                               0x000008d0   Section        0  music.o(i.addWaves)
-    i.main                                   0x00000964   Section        0  main.o(i.main)
-    .constdata                               0x000009dc   Section     1664  music.o(.constdata)
+    i.PlaySong2                              0x000005bc   Section        0  music.o(i.PlaySong2)
+    i.Switch_Init                            0x00000624   Section        0  switch.o(i.Switch_Init)
+    i.SysTick_Handler                        0x000006b0   Section        0  systickints.o(i.SysTick_Handler)
+    i.SysTick_Init                           0x00000740   Section        0  systickints.o(i.SysTick_Init)
+    i.Timer0A_Handler                        0x00000768   Section        0  timer0a.o(i.Timer0A_Handler)
+    i.Timer0A_Init                           0x00000780   Section        0  timer0a.o(i.Timer0A_Init)
+    i.Timer1A_Handler                        0x000007dc   Section        0  timer1.o(i.Timer1A_Handler)
+    i.Timer1_Init                            0x000007f4   Section        0  timer1.o(i.Timer1_Init)
+    i.Timer2A_Handler                        0x00000854   Section        0  timer2.o(i.Timer2A_Handler)
+    i.Timer2_Init                            0x0000086c   Section        0  timer2.o(i.Timer2_Init)
+    i.__scatterload_copy                     0x000008cc   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x000008da   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x000008dc   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.addWaves                               0x000008ec   Section        0  music.o(i.addWaves)
+    i.main                                   0x00000980   Section        0  main.o(i.main)
+    .constdata                               0x000009f8   Section     1664  music.o(.constdata)
     .data                                    0x20000000   Section        4  timer0a.o(.data)
     .data                                    0x20000004   Section        4  main.o(.data)
-    .data                                    0x20000008   Section       16  music.o(.data)
-    .data                                    0x20000018   Section        4  timer1.o(.data)
-    .data                                    0x2000001c   Section        4  timer2.o(.data)
-    .bss                                     0x20000020   Section      516  music.o(.bss)
+    .data                                    0x20000008   Section       20  music.o(.data)
+    .data                                    0x2000001c   Section        4  timer1.o(.data)
+    .data                                    0x20000020   Section        4  timer2.o(.data)
+    .bss                                     0x20000024   Section      516  music.o(.bss)
     STACK                                    0x20000228   Section     1024  startup.o(STACK)
     StackMem                                 0x20000228   Data           0  startup.o(STACK)
 
@@ -321,40 +322,41 @@ Image Symbol Table
     Music_Init                               0x0000042d   Thumb Code    36  music.o(i.Music_Init)
     PLL_Init                                 0x00000459   Thumb Code   118  pll.o(i.PLL_Init)
     PORTF_Init                               0x000004d5   Thumb Code    92  main.o(i.PORTF_Init)
-    PlaySong                                 0x00000545   Thumb Code    84  music.o(i.PlaySong)
-    PlaySong2                                0x000005ad   Thumb Code    84  music.o(i.PlaySong2)
-    Switch_Init                              0x00000615   Thumb Code   124  switch.o(i.Switch_Init)
-    SysTick_Handler                          0x000006a1   Thumb Code   104  systickints.o(i.SysTick_Handler)
-    SysTick_Init                             0x00000725   Thumb Code    38  systickints.o(i.SysTick_Init)
-    Timer0A_Handler                          0x0000074d   Thumb Code    16  timer0a.o(i.Timer0A_Handler)
-    Timer0A_Init                             0x00000765   Thumb Code    76  timer0a.o(i.Timer0A_Init)
-    Timer1A_Handler                          0x000007c1   Thumb Code    16  timer1.o(i.Timer1A_Handler)
-    Timer1_Init                              0x000007d9   Thumb Code    76  timer1.o(i.Timer1_Init)
-    Timer2A_Handler                          0x00000839   Thumb Code    16  timer2.o(i.Timer2A_Handler)
-    Timer2_Init                              0x00000851   Thumb Code    76  timer2.o(i.Timer2_Init)
-    __scatterload_copy                       0x000008b1   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x000008bf   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x000008c1   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    addWaves                                 0x000008d1   Thumb Code   120  music.o(i.addWaves)
-    main                                     0x00000965   Thumb Code    90  main.o(i.main)
-    Wave                                     0x000009dc   Data          64  music.o(.constdata)
-    Horn                                     0x00000a1c   Data          64  music.o(.constdata)
-    Song3                                    0x00000a5c   Data         512  music.o(.constdata)
-    Song                                     0x00000c5c   Data         512  music.o(.constdata)
-    Song2                                    0x00000e5c   Data         512  music.o(.constdata)
-    Region$$Table$$Base                      0x0000105c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0000107c   Number         0  anon$$obj.o(Region$$Table)
+    PlaySong                                 0x00000545   Thumb Code    94  music.o(i.PlaySong)
+    PlaySong2                                0x000005bd   Thumb Code    84  music.o(i.PlaySong2)
+    Switch_Init                              0x00000625   Thumb Code   124  switch.o(i.Switch_Init)
+    SysTick_Handler                          0x000006b1   Thumb Code   110  systickints.o(i.SysTick_Handler)
+    SysTick_Init                             0x00000741   Thumb Code    38  systickints.o(i.SysTick_Init)
+    Timer0A_Handler                          0x00000769   Thumb Code    16  timer0a.o(i.Timer0A_Handler)
+    Timer0A_Init                             0x00000781   Thumb Code    76  timer0a.o(i.Timer0A_Init)
+    Timer1A_Handler                          0x000007dd   Thumb Code    16  timer1.o(i.Timer1A_Handler)
+    Timer1_Init                              0x000007f5   Thumb Code    76  timer1.o(i.Timer1_Init)
+    Timer2A_Handler                          0x00000855   Thumb Code    16  timer2.o(i.Timer2A_Handler)
+    Timer2_Init                              0x0000086d   Thumb Code    76  timer2.o(i.Timer2_Init)
+    __scatterload_copy                       0x000008cd   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x000008db   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x000008dd   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    addWaves                                 0x000008ed   Thumb Code   120  music.o(i.addWaves)
+    main                                     0x00000981   Thumb Code    90  main.o(i.main)
+    Wave                                     0x000009f8   Data          64  music.o(.constdata)
+    Horn                                     0x00000a38   Data          64  music.o(.constdata)
+    Song3                                    0x00000a78   Data         512  music.o(.constdata)
+    Song                                     0x00000c78   Data         512  music.o(.constdata)
+    Song2                                    0x00000e78   Data         512  music.o(.constdata)
+    Region$$Table$$Base                      0x00001078   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00001098   Number         0  anon$$obj.o(Region$$Table)
     PeriodicTask                             0x20000000   Data           4  timer0a.o(.data)
     stop                                     0x20000004   Data           2  main.o(.data)
     changeSound                              0x20000006   Data           2  main.o(.data)
     note                                     0x20000008   Data           4  music.o(.data)
     soundIndex                               0x2000000c   Data           1  music.o(.data)
     soundIndex2                              0x2000000d   Data           1  music.o(.data)
-    addedWaves                               0x20000010   Data           4  music.o(.data)
-    addedWaves2                              0x20000014   Data           4  music.o(.data)
-    PeriodicTask2                            0x20000018   Data           4  timer1.o(.data)
-    PeriodicTask3                            0x2000001c   Data           4  timer2.o(.data)
-    current_song                             0x20000020   Data         516  music.o(.bss)
+    refresh                                  0x20000010   Data           4  music.o(.data)
+    addedWaves                               0x20000014   Data           4  music.o(.data)
+    addedWaves2                              0x20000018   Data           4  music.o(.data)
+    PeriodicTask2                            0x2000001c   Data           4  timer1.o(.data)
+    PeriodicTask3                            0x20000020   Data           4  timer2.o(.data)
+    current_song                             0x20000024   Data         516  music.o(.bss)
     __initial_sp                             0x20000628   Data           0  startup.o(STACK)
 
 
@@ -365,69 +367,68 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x0000109c, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x000010bc, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Base: 0x00000000, Size: 0x0000107c, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x00000000, Size: 0x00001098, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000000   Code   RO          264  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000284   0x00000004   Code   RO          267    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x00000288   0x00000004   Code   RO          270    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x0000028c   0x00000000   Code   RO          272    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x0000028c   0x00000000   Code   RO          274    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x0000028c   0x00000008   Code   RO          275    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x00000294   0x00000000   Code   RO          277    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x00000294   0x00000000   Code   RO          279    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x00000294   0x00000004   Code   RO          268    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x00000284   0x00000000   Code   RO          267  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000284   0x00000004   Code   RO          270    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000288   0x00000004   Code   RO          273    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000028c   0x00000000   Code   RO          275    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000028c   0x00000000   Code   RO          277    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000028c   0x00000008   Code   RO          278    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000294   0x00000000   Code   RO          280    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000294   0x00000000   Code   RO          282    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000294   0x00000004   Code   RO          271    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x00000298   0x0000001c   Code   RO            4    .text               startup.o
-    0x000002b4   0x00000024   Code   RO          281    .text               mc_w.l(init.o)
+    0x000002b4   0x00000024   Code   RO          284    .text               mc_w.l(init.o)
     0x000002d8   0x000000a4   Code   RO           74    i.DAC_Init          dac.o
     0x0000037c   0x0000001c   Code   RO           75    i.DAC_Out           dac.o
     0x00000398   0x00000094   Code   RO           12    i.GPIOPortB_Handler  switch.o
     0x0000042c   0x0000002c   Code   RO          143    i.Music_Init        music.o
     0x00000458   0x0000007c   Code   RO          179    i.PLL_Init          pll.o
     0x000004d4   0x00000070   Code   RO           92    i.PORTF_Init        main.o
-    0x00000544   0x00000068   Code   RO          144    i.PlaySong          music.o
-    0x000005ac   0x00000068   Code   RO          145    i.PlaySong2         music.o
-    0x00000614   0x0000008c   Code   RO           14    i.Switch_Init       switch.o
-    0x000006a0   0x00000084   Code   RO          191    i.SysTick_Handler   systickints.o
-    0x00000724   0x00000026   Code   RO          192    i.SysTick_Init      systickints.o
-    0x0000074a   0x00000002   PAD
-    0x0000074c   0x00000018   Code   RO           53    i.Timer0A_Handler   timer0a.o
-    0x00000764   0x0000005c   Code   RO           54    i.Timer0A_Init      timer0a.o
-    0x000007c0   0x00000018   Code   RO          222    i.Timer1A_Handler   timer1.o
-    0x000007d8   0x00000060   Code   RO          223    i.Timer1_Init       timer1.o
-    0x00000838   0x00000018   Code   RO          243    i.Timer2A_Handler   timer2.o
-    0x00000850   0x00000060   Code   RO          244    i.Timer2_Init       timer2.o
-    0x000008b0   0x0000000e   Code   RO          285    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x000008be   0x00000002   Code   RO          286    i.__scatterload_null  mc_w.l(handlers.o)
-    0x000008c0   0x0000000e   Code   RO          287    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x000008ce   0x00000002   PAD
-    0x000008d0   0x00000094   Code   RO          146    i.addWaves          music.o
-    0x00000964   0x00000078   Code   RO           93    i.main              main.o
-    0x000009dc   0x00000680   Data   RO          148    .constdata          music.o
-    0x0000105c   0x00000020   Data   RO          283    Region$$Table       anon$$obj.o
+    0x00000544   0x00000078   Code   RO          144    i.PlaySong          music.o
+    0x000005bc   0x00000068   Code   RO          145    i.PlaySong2         music.o
+    0x00000624   0x0000008c   Code   RO           14    i.Switch_Init       switch.o
+    0x000006b0   0x00000090   Code   RO          191    i.SysTick_Handler   systickints.o
+    0x00000740   0x00000026   Code   RO          192    i.SysTick_Init      systickints.o
+    0x00000766   0x00000002   PAD
+    0x00000768   0x00000018   Code   RO           53    i.Timer0A_Handler   timer0a.o
+    0x00000780   0x0000005c   Code   RO           54    i.Timer0A_Init      timer0a.o
+    0x000007dc   0x00000018   Code   RO          225    i.Timer1A_Handler   timer1.o
+    0x000007f4   0x00000060   Code   RO          226    i.Timer1_Init       timer1.o
+    0x00000854   0x00000018   Code   RO          246    i.Timer2A_Handler   timer2.o
+    0x0000086c   0x00000060   Code   RO          247    i.Timer2_Init       timer2.o
+    0x000008cc   0x0000000e   Code   RO          288    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x000008da   0x00000002   Code   RO          289    i.__scatterload_null  mc_w.l(handlers.o)
+    0x000008dc   0x0000000e   Code   RO          290    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x000008ea   0x00000002   PAD
+    0x000008ec   0x00000094   Code   RO          146    i.addWaves          music.o
+    0x00000980   0x00000078   Code   RO           93    i.main              main.o
+    0x000009f8   0x00000680   Data   RO          148    .constdata          music.o
+    0x00001078   0x00000020   Data   RO          286    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000020, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000024, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x00000004   Data   RW           55    .data               timer0a.o
     0x20000004   0x00000004   Data   RW           95    .data               main.o
-    0x20000008   0x00000010   Data   RW          149    .data               music.o
-    0x20000018   0x00000004   Data   RW          224    .data               timer1.o
-    0x2000001c   0x00000004   Data   RW          245    .data               timer2.o
+    0x20000008   0x00000014   Data   RW          149    .data               music.o
+    0x2000001c   0x00000004   Data   RW          227    .data               timer1.o
+    0x20000020   0x00000004   Data   RW          248    .data               timer2.o
 
 
-    Execution Region ER_ZI (Base: 0x20000020, Size: 0x00000608, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Base: 0x20000024, Size: 0x00000604, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000020   0x00000204   Zero   RW          147    .bss                music.o
-    0x20000224   0x00000004   PAD
+    0x20000024   0x00000204   Zero   RW          147    .bss                music.o
     0x20000228   0x00000400   Zero   RW            1    STACK               startup.o
 
 
@@ -440,19 +441,19 @@ Image component sizes
 
        192         34          0          0          0        833   dac.o
        232         50          0          4          0       2562   main.o
-       400         76       1664         16        516       2731   music.o
+       416         82       1664         20        516       2771   music.o
        124          6          0          0          0        407   pll.o
        672        622          0          0       1024        884   startup.o
        288         36          0          0          0       5102   switch.o
-       170         28          0          0          0        853   systickints.o
+       182         34          0          0          0        857   systickints.o
        116         24          0          4          0       1328   timer0a.o
        120         28          0          4          0       1264   timer1.o
        120         28          0          4          0       1292   timer2.o
 
     ----------------------------------------------------------------------
-      2436        932       1696         32       1544      17256   Object Totals
+      2464        944       1696         36       1540      17300   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         2          0          0          0          4          0   (incl. Padding)
+         2          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -489,15 +490,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      2524        948       1696         32       1544      16440   Grand Totals
-      2524        948       1696         32       1544      16440   ELF Image Totals
-      2524        948       1696         32          0          0   ROM Totals
+      2552        960       1696         36       1540      16484   Grand Totals
+      2552        960       1696         36       1540      16484   ELF Image Totals
+      2552        960       1696         36          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 4220 (   4.12kB)
+    Total RO  Size (Code + RO Data)                 4248 (   4.15kB)
     Total RW  Size (RW Data + ZI Data)              1576 (   1.54kB)
-    Total ROM Size (Code + RO Data + RW Data)       4252 (   4.15kB)
+    Total ROM Size (Code + RO Data + RW Data)       4284 (   4.18kB)
 
 ==============================================================================
 

@@ -19,7 +19,7 @@ Main.c: 1 warning, 0 errors
 compiling Music.c...
 Music.h(50): warning:  #1-D: last line of file ends without a newline
   #endif
-Music.c(136): warning:  #1-D: last line of file ends without a newline
+Music.c(149): warning:  #1-D: last line of file ends without a newline
   }
 Music.c: 2 warnings, 0 errors
 compiling PLL.c...
@@ -30,9 +30,12 @@ SysTickInts.c: 1 warning, 0 errors
 compiling Timer1.c...
 compiling Timer2.c...
 linking...
-Program Size: Code=2524 RO-data=1696 RW-data=32 ZI-data=1544  
+Program Size: Code=2552 RO-data=1696 RW-data=36 ZI-data=1540  
 ".\MAX549.axf" - 0 Error(s), 4 Warning(s).
-Load "C:\\Users\\Jack\\Documents\\GitHub\\EmbSysLab\\Lab5\\MAX549.axf" 
+</pre>
+</body>
+</html>
+uments\\GitHub\\EmbSysLab\\Lab5\\MAX549.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
@@ -42,9 +45,12 @@ Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
- undefined
-    TIMER3_TAMR_R = 0x00000002;   // 3) configure for periodic mode, default down-count settings
-Timer3.c(39): error:  #20: identifier "uint32_t" is undefined
+Load "C:\\Users\\Jack\\Documents\\GitHub\\EmbSysLab\\Lab5\\MAX549.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+" is undefined
     TIMER3_TAILR_R = period-1;    // 4) reload value
 Timer3.c(40): error:  #20: identifier "uint32_t" is undefined
     TIMER3_TAPR_R = 0;            // 5) bus clock resolution

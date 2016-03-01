@@ -35,6 +35,7 @@ D4, D4, D4, D4, D4, D4, D4, D4,
 D4, D4, D4, D4, D4, D4, D4, C4,
 C4, C4, C4, C4, C4, C4, C4, C4,
 0, 0, 0, 0, 0, 0, 0, 0, };
+
 const uint32_t Song[128] = {A4, A4, A4, A4, A4, A4, B4, B4, C5, C5, E5, E5, E5, E5, C5, C5, B4, B4, G4, G4, G4, G4, F4, E4, F4, F4, F4, F4, F4, 0, 
 	A4, C5, D5, D5, D5, D5, D5, D5, E5, E5, F5, F5, A4, A4, A4, A4, F5, F5, G5, G5, C5, C5, C5, C5, E5, F5, G5, G5, G5, G5, G5, G5, 0, 0,
 	F5, F5, F5, F5, F5, F5, E5, E5, D5, D5, A5, A5, A5, A5, F5, F5, E5, E5, C5, C5, C5, C5, B_Flat4, A4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, 0, 
@@ -65,6 +66,7 @@ extern volatile uint16_t stop;
 extern volatile uint16_t changeSound;
 volatile uint32_t addedWaves;
 volatile uint32_t addedWaves2;
+volatile uint32_t refresh =0;
 
 void Music_Init(void){
 	current_song.length=128;
@@ -76,8 +78,10 @@ void Music_Init(void){
 
 void PlaySong(void)
 {
+
 	if(!stop)
 	{
+			refresh++;
 		PF1 ^= 0x02;
 		soundIndex += 1;
 		if(soundIndex > 31)
@@ -86,7 +90,7 @@ void PlaySong(void)
 		}
 		if(changeSound == 0)
 		{
-			//DAC_Out(addedWaves);//Wave[soundIndex]
+			//DAC_Out(Wave[soundIndex]);//
 		}
 		else if(changeSound==1){
 			DAC_Out(Horn[soundIndex]);
@@ -97,6 +101,7 @@ void PlaySong(void)
 
 void PlaySong2(void)
 {
+	//refresh+=1;
 	if(!stop)
 	{
 		PF1 ^= 0x02;
@@ -119,8 +124,16 @@ void PlaySong2(void)
 
 void addWaves(void){
 long sr=StartCritical();
-	addedWaves=Wave[soundIndex]+Wave[soundIndex2];
-	addedWaves=addedWaves/2;
+
+	addedWaves=Wave[soundIndex]+Wave[soundIndex2];//
+	addedWaves=(addedWaves)/2;//
+//	if(addedWaves<1024)
+//	{
+//		addedWaves+=refresh;
+//	}
+//	else{
+//		addedWaves-=refresh;
+//	}
 	addedWaves2=Horn[soundIndex]+Horn[soundIndex2];
 	addedWaves2=addedWaves2/2;
 	
