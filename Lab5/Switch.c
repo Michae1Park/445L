@@ -66,6 +66,19 @@ extern volatile uint32_t isPlaying;
 extern volatile uint32_t isFast;
 
 
+void DisableInterrupts(void); // Disable interrupts
+void EnableInterrupts(void);  // Enable interrupts
+long StartCritical (void);    // previous I bit, disable interrupts
+void EndCritical(long sr);    // restore I bit to previous value
+void WaitForInterrupt(void);  // low power mode
+
+
+extern volatile uint16_t stop;
+extern volatile uint16_t changeSound;
+extern volatile uint32_t note;
+extern unsigned char soundIndex;
+
+
 //------------Switch_Init------------
 // Initialize GPIO Port B bit 0-2 for input
 // Input: none
@@ -120,6 +133,49 @@ uint32_t in,old,time;
   }
   return old;
 }
+
+/*
+GIPOPortB_Handler
+ISR for Switch interface: PB0-2
+Input: None
+Output: None
+*/
+void GPIOPortB_Handler(void)
+{
+	if (GPIO_PORTB_RIS_R & 0X01) //poll PB0
+	{
+		GPIO_PORTB_ICR_R = 0x01; //acknowledge flag1 and clear
+		if(stop==0){
+			stop =1;
+		}
+		else{
+			stop = 0;									//PLAY
+		}
+
+	}
+	if (GPIO_PORTB_RIS_R & 0X02) //poll PB1
+	{
+		GPIO_PORTB_ICR_R = 0x02; //acknowledge flag1 and clear	
+		long sr= StartCritical();
+		stop =1;
+		note=0;
+		soundIndex = 0;
+		EndCritical(sr);
+		
+	}
+	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
+	{
+		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
+		//SysTick_Init(5000000);					//Tempo set to 1 bit/sec	
+		if(changeSound==0){
+			changeSound =1;
+		}
+		else{
+			changeSound = 0;									//PLAY
+		}
+	}
+}
+
 
 
 

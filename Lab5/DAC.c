@@ -89,6 +89,9 @@ void DAC_Init(uint16_t data)
 */
 void DAC_Out(uint16_t output)
 {
+	uint32_t measure;
 	while((SSI0_SR_R&0x00000002)==0){ };// SSI Transmit FIFO Not Full
   SSI0_DR_R = output;	// data out, no reply
+	measure=0;
+	measure++;
 }

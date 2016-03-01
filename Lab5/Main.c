@@ -37,6 +37,7 @@
 #include "Switch.h"
 #include "../Shared/tm4c123gh6pm.h"
 #include "Timer0A.h"
+#include "Timer1.h"
 
 
 #define PF1       (*((volatile uint32_t *)0x40025008))
@@ -48,6 +49,7 @@
 #define GREEN     0x08
 #define WHEELSIZE 8           // must be an integer multiple of 2
 
+extern const uint32_t Song2[128];
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -56,50 +58,27 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void PORTF_Init(void);
 
+volatile uint16_t stop = 0;
+volatile uint16_t changeSound = 0;
+extern volatile uint32_t note;
+
+extern const uint32_t Song[128];
+
 
 const long COLORWHEEL[WHEELSIZE] = {RED, RED+GREEN, GREEN, GREEN+BLUE, BLUE, BLUE+RED, RED+GREEN+BLUE, 0};
-
-const uint16_t Wave[32] = {1024,1122,1215,1302,1378,1440,1486,1514,1524,1514,1486,1440,1378,1302,1215,1122,1024,926,833,746,670,608,562,534,524,534,562,608,670,746,833,926};
-unsigned char soundIndex = 0; //varies from 0 to 32
-
-//const uint32_t Song[1] = {A4};	
-	
-const uint32_t Song[128] = {A4, A4, A4, A4, A4, A4, B4, B4, C5, C5, E5, E5, E5, E5, C5, C5, B4, B4, G4, G4, G4, G4, F4, E4, F4, F4, F4, F4, F4, 0, 
-	A4, C5, D5, D5, D5, D5, D5, D5, E5, E5, F5, F5, A4, A4, A4, A4, F5, F5, G5, G5, C5, C5, C5, C5, E5, F5, G5, G5, G5, G5, G5, G5, 0, 0,
-	F5, F5, F5, F5, F5, F5, E5, E5, D5, D5, A5, A5, A5, A5, F5, F5, E5, E5, C5, C5, C5, C5, B_Flat4, A4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, 0, 
-	D5, F5, G5, G5, G5, G5, G5, G5, A5, A5, B_Flat5, B_Flat5, D5, D5, D5, D5, B_Flat5, B_Flat5, C6, C6, F5, F5, F5, F5, A5, B_Flat5, C6, C6, C6, C6, C6, C6, 0, 0};
-
-static uint16_t stop = 0;
-static uint16_t changeSound = 0;
-int note = 0;
-
-void PlaySong(void)
-{
-	PF1 ^= 0x02;
-	soundIndex += 1;
-  if(soundIndex > 31)
-  {
-    soundIndex = 0;
-  }
-	if(changeSound == 0)
-	{
-		DAC_Out(Wave[soundIndex]);
-	}
-//	else if(changeSound == 1)
-//	{
-//		DAC_Out(Wave[soundIndex]);
-//	}
-	PF1 ^= 0x02;
-}
 
 int main(void)
 {
 	PLL_Init(Bus50MHz);              // bus clock at 50 MHz
 	PORTF_Init();
-//	Switch_Init();
+	Switch_Init();
 	SysTick_Init(50000000);					//Tempo set to 1 bit/sec	
 	Timer0A_Init(&PlaySong, (Song[note] / 32));  // initialize timer0A to 440 Hz * 32 (to account for the size of the waveform table)
+	Timer1_Init(&PlaySong2, (Song2[note] / 32) );
+	
 	DAC_Init(2095);
+	Music_Init();
+	//stop=1;
 	EnableInterrupts();
 	while(1)
 	{
@@ -107,6 +86,9 @@ int main(void)
 	}
 }
 
+
+
+//Initialize Port F
 void PORTF_Init(void)
 {
 	SYSCTL_RCGCGPIO_R |= 0x20;       // activate port F
@@ -120,59 +102,7 @@ void PORTF_Init(void)
 	LEDS = 0;                        // turn all LEDs off
 }
 
-void SysTick_Handler(void)
-{
-  PF2 ^= 0x04;                // toggle PF2
-  PF2 ^= 0x04;                // toggle PF2
-/*	if(!stop)
-	{
-		note += 1;
-		if(note > 127)
-		{
-			note = 0;
-		}
-		TIMER0_TAILR_R = (Song[note] / 32) - 1;
-	}
-	*/
-  PF2 ^= 0x04;                // Debugging Profile
-}
 
 
-/*
-GIPOPortB_Handler
-ISR for Switch interface: PB0-2
-Input: None
-Output: None
-*/
-void GPIOPortB_Handler(void)
-{
-	if (GPIO_PORTB_RIS_R & 0X01) //poll PB0
-	{
-		GPIO_PORTB_ICR_R = 0x01; //acknowledge flag1 and clear
-		stop = 0;									//PLAY
-	}
-	if (GPIO_PORTB_RIS_R & 0X02) //poll PB1
-	{
-		GPIO_PORTB_ICR_R = 0x02; //acknowledge flag1 and clear	
-		stop = 1;									//STOP
-	}
-	if (GPIO_PORTB_RIS_R & 0X04) //poll PB2
-	{
-		GPIO_PORTB_ICR_R = 0x04; //acknowledge flag1 and clear
-		note = 0;									//REWIND
-	}
-	if (GPIO_PORTB_RIS_R & 0X08) //poll PB2
-	{
-		GPIO_PORTB_ICR_R = 0x08; //acknowledge flag1 and clear
-		note = 0;									//REWIND
-		
-		if(changeSound == 0)
-		{
-			changeSound = 1;
-		}
-		else if(changeSound == 1)
-		{
-			changeSound = 0;
-		}
-	}
-}
+
+

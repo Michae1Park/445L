@@ -23,7 +23,7 @@
 #include <stdint.h>
 #include "../Shared/tm4c123gh6pm.h"
 
-//void (*PeriodicTask)(void);   // user function
+void (*PeriodicTask2)(void);   // user function
 
 // ***************** TIMER1_Init ****************
 // Activate TIMER1 interrupts to run user task periodically
@@ -32,7 +32,7 @@
 // Outputs: none
 void Timer1_Init(void(*task)(void), uint32_t period){
   SYSCTL_RCGCTIMER_R |= 0x02;   // 0) activate TIMER1
-  //PeriodicTask = task;          // user function
+  PeriodicTask2 = task;          // user function
   TIMER1_CTL_R = 0x00000000;    // 1) disable TIMER1A during setup
   TIMER1_CFG_R = 0x00000000;    // 2) configure for 32-bit mode
   TIMER1_TAMR_R = 0x00000002;   // 3) configure for periodic mode, default down-count settings
@@ -49,5 +49,5 @@ void Timer1_Init(void(*task)(void), uint32_t period){
 
 void Timer1A_Handler(void){
   TIMER1_ICR_R = TIMER_ICR_TATOCINT;// acknowledge TIMER1A timeout
-  //(*PeriodicTask)();                // execute user task
+  (*PeriodicTask2)();                // execute user task
 }

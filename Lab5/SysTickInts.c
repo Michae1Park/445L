@@ -25,7 +25,21 @@
 #include <stdint.h>
 #include "../Shared/tm4c123gh6pm.h"
 #include "SysTickInts.h"
+#include "Music.h"
 
+
+#define PF1       (*((volatile uint32_t *)0x40025008))
+#define PF2       (*((volatile uint32_t *)0x40025010))
+#define PF3       (*((volatile uint32_t *)0x40025020))
+	
+
+extern volatile uint16_t stop;
+extern volatile uint16_t changeSound;
+extern volatile uint32_t note;
+extern unsigned char soundIndex;
+extern Music current_song;
+
+extern const uint32_t Song2[128];
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -69,6 +83,24 @@ void SysTick_Wait10ms(uint32_t delay){
   for(i=0; i<delay; i++){
     SysTick_Wait(500000);  // wait 10ms (assumes 50 MHz clock)
   }
+}
+
+void SysTick_Handler(void)
+{
+  PF2 ^= 0x04;                // toggle PF2
+  PF2 ^= 0x04;                // toggle PF2
+	if(!stop)
+	{
+		note += 1;
+		if(note > 127)
+		{
+			note = 0;
+		}
+		TIMER0_TAILR_R = (current_song.Song[note] / 32)  - 1;
+		TIMER0_TAILR_R = (Song2[note]/32)  - 1;
+	}
+	
+  PF2 ^= 0x04;                // Debugging Profile
 }
 
 

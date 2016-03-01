@@ -8,3 +8,4 @@
 .\main.o: Switch.h
 .\main.o: ../Shared/tm4c123gh6pm.h
 .\main.o: Timer0A.h
+.\main.o: Timer1.h
