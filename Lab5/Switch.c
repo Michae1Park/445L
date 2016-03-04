@@ -7,6 +7,14 @@
 // Daniel and Jonathan Valvano
 // September 12, 2013
 
+// Switch.c
+// Michael Park, Jack Zhao
+// Date Modified: 02/24/2016
+// PORTB switch init and handler
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 02/29/2016
+
 /* This example accompanies the book
    "Embedded Systems: Introduction to ARM Cortex M Microcontrollers",
    ISBN: 978-1469998749, Jonathan Valvano, copyright (c) 2015

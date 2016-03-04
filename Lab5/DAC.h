@@ -5,6 +5,14 @@
 // Daniel Valvano
 // September 11, 2013
 
+// DAC.h
+// Michael Park, Jack Zhao
+// Date Created: 02/24/2016
+// 16bit DAC init and output
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 02/29/2016
+
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2015

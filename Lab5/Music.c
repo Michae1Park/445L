@@ -1,3 +1,11 @@
+// Music.c
+// Michael Park, Jack Zhao
+// Date Created: 02/24/2016
+// Includes music data and timer invoked task functions
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 02/29/2016
+
 #include <stdint.h>
 #include "DAC.h"
 #include "Music.h"
@@ -15,8 +23,8 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 	
 
-const uint16_t Wave[32] = {1024,1122,1215,1302,1378,1440,1486,1514,1524,1514,1486,1440,1378,1302,1215,1122,1024,926,833,746,670,608,562,534,524,534,562,608,670,746,833,926};
-const uint16_t Horn[32] = {1063,1082,1119,1275,1678,1748,1275,755,661,661,703,731,769,845,1039,1134,1209,1332,1465,1545,1427,1588,1370,1086,708,519,448,490,566,684,802,992};
+const uint16_t Wave[32] = {1024,1124,1218,1304,1380,1443,1488,1516,1526,1516,1488,1442,1380,1304,1218,1124,1026,928,835,748,672,610,564,536,526,536,564,610,672,748,835,928};
+const uint16_t Horn[32] = {1065,1084,1122,1277,1680,1750,1277,757,663,663,705,734,770,847,1040,1136,1211,1333,1467,1547,1429,1589,1372,1088,709,520,450,492,568,685,803,994};
 
 
 const uint32_t Song3[128] ={0, 0, A4, A4, E5, E5, A4, A4, 
@@ -35,11 +43,6 @@ D4, D4, D4, D4, D4, D4, D4, D4,
 D4, D4, D4, D4, D4, D4, D4, C4,
 C4, C4, C4, C4, C4, C4, C4, C4,
 0, 0, 0, 0, 0, 0, 0, 0, };
-
-const uint32_t Song[128] = {A4, A4, A4, A4, A4, A4, B4, B4, C5, C5, E5, E5, E5, E5, C5, C5, B4, B4, G4, G4, G4, G4, F4, E4, F4, F4, F4, F4, F4, 0, 
-	A4, C5, D5, D5, D5, D5, D5, D5, E5, E5, F5, F5, A4, A4, A4, A4, F5, F5, G5, G5, C5, C5, C5, C5, E5, F5, G5, G5, G5, G5, G5, G5, 0, 0,
-	F5, F5, F5, F5, F5, F5, E5, E5, D5, D5, A5, A5, A5, A5, F5, F5, E5, E5, C5, C5, C5, C5, B_Flat4, A4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, B_Flat4, 0, 
-	D5, F5, G5, G5, G5, G5, G5, G5, A5, A5, B_Flat5, B_Flat5, D5, D5, D5, D5, B_Flat5, B_Flat5, C6, C6, F5, F5, F5, F5, A5, B_Flat5, C6, C6, C6, C6, C6, C6, 0, 0};
 	
 const uint32_t Song2[128]={0, 0, E5, E5, A5, A5, E5, E5, 
 G5, G5, G5, F5, F5, F5, F5, F5, 

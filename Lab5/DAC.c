@@ -5,10 +5,10 @@
 // Daniel Valvano
 // September 11, 2013
 
-// DAC.c 
+// DAC.c
 // Michael Park, Jack Zhao
-// Date Created: 02/27/2016
-// modified DAC output
+// Date Created: 02/24/2016
+// 16bit DAC init and output
 // Lab Number: 16340
 // TA: Mahesh Srinivasan
 // Last Revised: 02/29/2016

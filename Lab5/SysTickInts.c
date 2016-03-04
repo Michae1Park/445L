@@ -4,6 +4,14 @@
 // Daniel Valvano
 // October 11, 2012
 
+// SysTickInts.c
+// Michael Park, Jack Zhao
+// Date modified: 02/24/2016
+// handles note chaniging in a song
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 02/29/2016
+
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
    ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2015
@@ -40,7 +48,6 @@ extern unsigned char soundIndex;
 extern Music current_song;
 extern uint32_t addedWaves;
 extern volatile uint32_t refresh;
-volatile uint32_t prevNote;
 
 extern const uint32_t Song2[128];
 
@@ -91,8 +98,8 @@ void SysTick_Wait10ms(uint32_t delay){
 void SysTick_Handler(void)
 {
 
-  PF2 ^= 0x04;                // toggle PF2
-  PF2 ^= 0x04;                // toggle PF2
+  PF2 ^= 0x04;                
+  PF2 ^= 0x04;                
 	if(!stop)
 	{
 		refresh=0;
@@ -107,7 +114,7 @@ void SysTick_Handler(void)
 		
 	}
 	
-  PF2 ^= 0x04;                // Debugging Profile
+  PF2 ^= 0x04;                
 }
 
 
