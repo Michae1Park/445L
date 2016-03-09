@@ -62,7 +62,13 @@ void Timer0A_Init(void(*task)(void), uint32_t period){long sr;
   EndCritical(sr);
 }
 
-void Timer0A_Handler(void){
+
+//93 clock 
+void Timer0A_Handler(void){uint32_t time;
+	time=NVIC_ST_CURRENT_R;
   TIMER0_ICR_R = TIMER_ICR_TATOCINT;// acknowledge timer0A timeout
   (*PeriodicTask)();                // execute user task
+	time=time-NVIC_ST_CURRENT_R;
+	
+	time++;
 }

@@ -85,13 +85,24 @@ void DAC_Init(uint16_t data)
 *	Input: uint16_t value corresponding to the next value to be output from the DAC
 *	Output: none
 *	Sets the next value for the DAC to output
+
+348- 0.589 V
+261- 0.441 V
+400- 0.67  V
+440- 0.745 V
+522- 0.885 V
+660- 1.120 V
+742- 1.259 V
+880- 1.493 V
 *
 */
 void DAC_Out(uint16_t output)
 {
+	//debug
+	
 	uint32_t measure;
 	while((SSI0_SR_R&0x00000002)==0){ };// SSI Transmit FIFO Not Full
-  SSI0_DR_R = output;	// data out, no reply
+  SSI0_DR_R = 3000;	// data out, no reply
 	measure=0;
 	measure++;
 }

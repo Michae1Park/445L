@@ -84,7 +84,7 @@ void PlaySong(void)
 
 	if(!stop)
 	{
-			refresh++;
+		//refresh++;
 		PF1 ^= 0x02;
 		soundIndex += 1;
 		if(soundIndex > 31)
@@ -130,13 +130,6 @@ long sr=StartCritical();
 
 	addedWaves=Wave[soundIndex]+Wave[soundIndex2];//
 	addedWaves=(addedWaves)/2;//
-//	if(addedWaves<1024)
-//	{
-//		addedWaves+=refresh;
-//	}
-//	else{
-//		addedWaves-=refresh;
-//	}
 	addedWaves2=Horn[soundIndex]+Horn[soundIndex2];
 	addedWaves2=addedWaves2/2;
 	

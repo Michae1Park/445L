@@ -41,7 +41,8 @@ extern volatile uint32_t note;
 
 
 int main(void)
-{
+{uint32_t time;
+
 	PLL_Init(Bus50MHz);              // bus clock at 50 MHz
 	PORTF_Init();
 	Switch_Init();
@@ -54,9 +55,13 @@ int main(void)
 	Music_Init();
 	//stop=1;
 	EnableInterrupts();
+	//time = 275
 	while(1)
 	{
+		time=NVIC_ST_CURRENT_R;
 		WaitForInterrupt();
+		time=time-NVIC_ST_CURRENT_R;
+		time++;
 	}
 }
 

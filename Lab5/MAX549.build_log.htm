@@ -4,7 +4,7 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Jack\Documents\GitHub\EmbSysLab\Lab5\MAX549.uvproj
-Project File Date:  02/29/2016
+Project File Date:  03/01/2016
 
 <h2>Output:</h2>
 Rebuild target 'MAX549'
@@ -19,7 +19,7 @@ Main.c: 1 warning, 0 errors
 compiling Music.c...
 Music.h(50): warning:  #1-D: last line of file ends without a newline
   #endif
-Music.c(149): warning:  #1-D: last line of file ends without a newline
+Music.c(142): warning:  #1-D: last line of file ends without a newline
   }
 Music.c: 2 warnings, 0 errors
 compiling PLL.c...
@@ -30,8 +30,13 @@ SysTickInts.c: 1 warning, 0 errors
 compiling Timer1.c...
 compiling Timer2.c...
 linking...
-Program Size: Code=2552 RO-data=1696 RW-data=36 ZI-data=1540  
+Program Size: Code=2572 RO-data=1696 RW-data=36 ZI-data=1540  
 ".\MAX549.axf" - 0 Error(s), 4 Warning(s).
+Load "C:\\Users\\Jack\\Documents\\GitHub\\EmbSysLab\\Lab5\\MAX549.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
 </pre>
 </body>
 </html>
@@ -45,29 +50,3 @@ Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-Load "C:\\Users\\Jack\\Documents\\GitHub\\EmbSysLab\\Lab5\\MAX549.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-" is undefined
-    TIMER3_TAILR_R = period-1;    // 4) reload value
-Timer3.c(40): error:  #20: identifier "uint32_t" is undefined
-    TIMER3_TAPR_R = 0;            // 5) bus clock resolution
-Timer3.c(41): error:  #20: identifier "uint32_t" is undefined
-    TIMER3_ICR_R = 0x00000001;    // 6) clear TIMER3A timeout flag
-Timer3.c(42): error:  #20: identifier "uint32_t" is undefined
-    TIMER3_IMR_R = 0x00000001;    // 7) arm timeout interrupt
-Timer3.c(43): error:  #20: identifier "uint32_t" is undefined
-    NVIC_PRI8_R = (NVIC_PRI8_R&0x00FFFFFF)|0x80000000; // 8) priority 4
-Timer3.c(43): error:  #20: identifier "uint32_t" is undefined
-    NVIC_PRI8_R = (NVIC_PRI8_R&0x00FFFFFF)|0x80000000; // 8) priority 4
-Timer3.c(46): error:  #20: identifier "uint32_t" is undefined
-    NVIC_EN1_R = 1<<(35-32);      // 9) enable IRQ 35 in NVIC
-Timer3.c(47): error:  #20: identifier "uint32_t" is undefined
-    TIMER3_CTL_R = 0x00000001;    // 10) enable TIMER3A
-Timer3.c(51): error:  #20: identifier "uint32_t" is undefined
-    TIMER3_ICR_R = TIMER_ICR_TATOCINT;// acknowledge TIMER3A timeout
-Timer3.c: 0 warnings, 13 errors
-".\MAX549.axf" - 13 Error(s), 4 Warning(s).
-Target not created
