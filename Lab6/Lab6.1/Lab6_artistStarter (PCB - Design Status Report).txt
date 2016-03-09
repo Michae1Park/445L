@@ -1,0 +1,106 @@
+Design Status Report
+--------------------
+
+Report File:        D:\UT2016\445L\Labs\Lab6.1\Lab6_artistStarter (PCB - Design Status Report).txt
+Report Written:     Tuesday, March 08, 2016
+Design Path:        D:\UT2016\445L\Labs\Lab6.1\Lab6_artistStarter.pcb
+Design Title:       
+Created:            1/28/2013 11:01:41 PM
+Last Saved:         3/8/2016 6:43:04 AM
+Editing Time:       1830 min
+Units:              mil (precision 0)
+
+
+Board Area
+==========
+
+    8578125 mil squared
+
+
+Board Extents
+=============
+
+    X:3813 mil Y:2250 mil
+Layers
+======
+
+Name               Type          Side   Net
+--------------------------------------------------
+Top Silkscreen     Silk Screen   Top
+Top Copper         Electrical    Top
+Top Solder Mask    Solder Mask   Top
+Documentation1     Documentation Top
+Top Paste Mask     Paste Mask    Top
+Bottom Silkscreen  Silk Screen   Bottom
+Bottom Copper      Electrical    Bottom
+Bottom Solder Mask Solder Mask   Bottom
+Documentation2     Documentation Bottom
+
+Components
+==========
+
+Component      Package  Components Top Bottom Pins
+------------------------------------------------------------
+0.25Wresistor  DIP               4   4      0    8
+0.125Wresistor DIL               3   3      0    6
+1N914          MISC              1   0      1    2
+2N2222         TO92              1   1      0    3
+B3F-1050       DIP               5   1      4   20
+Ceramic        C                11  11      0   22
+Header2        SIP               1   1      0    2
+Header5        SIP               1   1      0    5
+LM2937ET-3.3   TO220             1   1      0    3
+LogicAnalyzer  DIP               1   1      0   16
+Speaker        DIP               1   1      0    2
+ST7735         LCD               1   0      1   10
+tantalum       C                 1   1      0    2
+testpoint      BIG               2   2      0    2
+testpoint      SIP               3   3      0    3
+TM4C123GH6PM   LQFP              1   1      0   64
+XTAL           NX5032            1   1      0    2
+------------------------------------------------------------
+Total:                          39  33      6  172
+------------------------------------------------------------
+
+Total Pin Count
+===============
+
+Free Pads:                             4
+Total PinCount:                        176
+
+
+Net List
+========
+
+Net Class Nets  Track Length Vias Connections Connection Length
+-------------------------------------------------------------------------
+Signal    121          37050   49           4              4335
+Power     10           13803    6           1               220
+Ground    1            17222   14           7              3454
+-------------------------------------------------------------------------
+Total:    132          68075   69          12              8009
+-------------------------------------------------------------------------
+
+Drill List
+==========
+
+Drill Diameter  Number of holes
+---------------------------------
+15                           69
+29                           43
+33                            9
+35                           16
+40                           30
+42                            3
+43                            3
+60                            2
+125                           4
+---------------------------------
+Total:                      179
+---------------------------------
+Total number of free pads 4.
+
+
+
+
+End Of Report.

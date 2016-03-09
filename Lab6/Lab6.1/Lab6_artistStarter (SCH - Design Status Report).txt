@@ -1,0 +1,56 @@
+Design Status Report
+--------------------
+
+Report File:        C:\Users\Jack\Documents\UT2016\EE445L\Lab6.1\Lab6.1\Lab6_artistStarter (SCH - Design Status Report).txt
+Report Written:     Tuesday, March 08, 2016
+Design Path:        C:\Users\Jack\Documents\UT2016\EE445L\Lab6.1\Lab6.1\Lab6_artistStarter.sch
+Design Title:       
+Created:            
+Last Saved:         3/8/2016 1:10:55 PM
+Editing Time:       5009 min
+Units:              mil (precision 0)
+
+
+Component List
+==============
+
+Comp Type      Package  Components Pins Unused Gates
+------------------------------------------------------------
+frame                            2    0            2
+0.125Wresistor DIL               3    6            0
+Ceramic        C                11   22            0
+Gnd                              9    9            0
+tantalum       C                 1    2            0
+B3F-1050       DIP               5   20            0
++3.3V                            4    4            0
+LogicAnalyzer  DIP               1   16            0
+Header2        SIP               1    2            0
+XTAL           NX5032            1    2            0
+Header5        SIP               1    5            0
+TM4C123GH6PM   LQFP              1   64            3
+testpoint      SIP               3    3            0
+testpoint      BIG               2    2            0
+0.25Wresistor  DIP               4    8            0
+Speaker        DIP               1    2            0
+1N914          MISC              1    2            0
+LM2937ET-3.3   TO220             1    3            0
++5V                              1    1            0
+2N2222         TO92              1    3            0
+ST7735         LCD               1   10            0
+------------------------------------------------------------
+Total:                          55  186            5
+------------------------------------------------------------
+
+Net List
+========
+
+Net Class Nets
+-----------------
+Signal    119
+Power     9
+Ground    1
+-----------------
+Total:    129
+-----------------
+
+End Of Report.

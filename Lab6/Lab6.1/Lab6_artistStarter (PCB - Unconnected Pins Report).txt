@@ -1,0 +1,54 @@
+Unconnected Pins Report
+-----------------------
+
+Report File:        C:\Users\Jack\Documents\UT2016\EE445L\Lab6.1\Lab6.1\Lab6_artistStarter (PCB - Unconnected Pins Report).txt
+Report Written:     Tuesday, March 08, 2016
+Design Path:        C:\Users\Jack\Documents\UT2016\EE445L\Lab6.1\Lab6.1\Lab6_artistStarter.pcb
+Design Title:       
+Created:            1/28/2013 11:01:41 PM
+Last Saved:         3/8/2016 1:11:21 PM
+Editing Time:       1867 min
+Units:              mil (precision 0)
+
+Component J3 Pin J3-11 (Chan5)
+Component U1 Pin U1-1 (PB6)
+Component U1 Pin U1-4 (PB7)
+Component U1 Pin U1-5 (PF4)
+Component U1 Pin U1-6 (PE3)
+Component U1 Pin U1-7 (PE2)
+Component U1 Pin U1-8 (PE1)
+Component U1 Pin U1-9 (PE0)
+Component U1 Pin U1-10 (PD7)
+Component U1 Pin U1-13 (PC7)
+Component U1 Pin U1-14 (PC6)
+Component U1 Pin U1-15 (PC5)
+Component U1 Pin U1-16 (PC4)
+Component U1 Pin U1-17 (PA0)
+Component U1 Pin U1-18 (PA1)
+Component U1 Pin U1-21 (PA4)
+Component U1 Pin U1-28 (PF0)
+Component U1 Pin U1-29 (PF1)
+Component U1 Pin U1-30 (PF2)
+Component U1 Pin U1-31 (PF3)
+Component U1 Pin U1-33 (HIB*)
+Component U1 Pin U1-36 (XOSC1)
+Component U1 Pin U1-43 (PD4)
+Component U1 Pin U1-44 (PD5)
+Component U1 Pin U1-53 (PD6)
+Component U1 Pin U1-57 (PB5)
+Component U1 Pin U1-59 (PE4)
+Component U1 Pin U1-60 (PE5)
+Component U1 Pin U1-61 (PD0)
+Component U1 Pin U1-62 (PD1)
+Component U1 Pin U1-63 (PD2)
+Component U1 Pin U1-64 (PD3)
+Component SW2 Pin SW2-3
+Component J5 Pin J5-5 (CARD_CS)
+Component J5 Pin J5-9 (MISO)
+Component SW4 Pin SW4-3
+Component SW3 Pin SW3-3
+Component SW1 Pin SW1-3
+
+Unconnected pins found : 38
+
+End Of Report.
