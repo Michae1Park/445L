@@ -50,7 +50,7 @@
 #include "Switch.h"
 #include "SetTime.h"
 #include "SetAlarm.h"
-#include "TimeDisplay.h"
+#include "Display.h"
 #include "ST7735.h"
 
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
@@ -78,16 +78,16 @@ volatile uint16_t hours2,minutes2;
 void Switch_Init(void){ 
   SYSCTL_RCGCGPIO_R |= 0x08;        // 1) activate clock for Port D
  // while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
-  GPIO_PORTD_DIR_R &= ~0x07;        // PD0-2 is an input
+  GPIO_PORTD_DIR_R &= ~0x0F;        // PD0-3 is an input
   //GPIO_PORTB_AFSEL_R &= ~0x0F;      // regular port function
-  GPIO_PORTD_AMSEL_R &= ~0x07;      // disable analog on PD0-2
+  GPIO_PORTD_AMSEL_R &= ~0x0F;      // disable analog on PD0-3
   //GPIO_PORTB_PCTL_R &= ~0x0000FFFF; // PCTL GPIO on PB1 
-  GPIO_PORTD_DEN_R |= 0x07;         // PD0-2 enabled as a digital port
-	GPIO_PORTD_IS_R &= ~0x07;						// PD 0-2 is edge-sensitive
-	GPIO_PORTD_IBE_R &= ~0x07;					// PD 0-2 is not both edges
-	GPIO_PORTD_IEV_R &= ~0x07;					// Pd 0-2 falling edge event
-	GPIO_PORTD_ICR_R = 0x07;						// clear flag 0-2
-	GPIO_PORTD_IM_R |= 0x07;						// arm interrupt on PD 0-2
+  GPIO_PORTD_DEN_R |= 0x0F;         // PD0-3 enabled as a digital port
+	GPIO_PORTD_IS_R &= ~0x0F;						// PD 0-3 is edge-sensitive
+	GPIO_PORTD_IBE_R &= ~0x0F;					// PD 0-3 is not both edges
+	GPIO_PORTD_IEV_R &= ~0x0F;					// Pd 0-3 falling edge event
+	GPIO_PORTD_ICR_R = 0x0F;						// clear flag 0-3
+	GPIO_PORTD_IM_R |= 0x0F;						// arm interrupt on PD 0-3
 	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
 	NVIC_EN0_R = 0x00000002; 						//enable interrupt 1(PB) in NVIC
 }
@@ -164,5 +164,9 @@ void GPIOPortD_Handler(void)
 	{
 		GPIO_PORTD_ICR_R = 0x04; //acknowledge flag1 and clear
 	}
+	if (GPIO_PORTD_RIS_R & 0X08) //poll PD3
+	{
+		GPIO_PORTD_ICR_R = 0x08; //acknowledge flag1 and clear
+	}	
 }
 

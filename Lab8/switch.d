@@ -6,5 +6,5 @@
 .\switch.o: SetTime.h
 .\switch.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\switch.o: SetAlarm.h
-.\switch.o: TimeDisplay.h
+.\switch.o: Display.h
 .\switch.o: ST7735.h

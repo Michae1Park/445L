@@ -23,7 +23,7 @@
 #include <stdint.h>
 #include "../Shared/tm4c123gh6pm.h"
 #include "Timer1.h"
-#include "TimeDisplay.h"
+#include "Display.h"
 
 #define SECONDS_TIME  	0x3c
 #define MINUTES_TIME  	0x3c

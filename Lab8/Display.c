@@ -11,7 +11,7 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "ST7735.h"
 #include <math.h>
-#include "TimeDisplay.h"
+#include "Display.h"
 #include "Timer1.h"
 #include "SetAlarm.h"
 #include "Common.h"
@@ -39,6 +39,7 @@ extern volatile uint16_t Stopwatch_Triggered;
 extern volatile uint16_t alarm_minutes, alarm_hours;
 extern volatile uint16_t Time_minutes, Time_hours;
 extern volatile uint16_t alarm_flag;
+
 void DisplayAlarm(void)
 {
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
@@ -75,6 +76,7 @@ void DisplaySetTime(void)
 	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
 }
 
+/*
 void DisplaySecond(void)
 {
 	volatile static double x, y;
@@ -137,6 +139,7 @@ void ChooseMode(void)
 	else {}
 }
 
+
 void DisplayAnalog(void)
 {int32_t timeDisplay;
 	timeDisplay=NVIC_ST_CURRENT_R;
@@ -186,81 +189,111 @@ void DisplayAnalog(void)
 			timeDisplay=NVIC_ST_CURRENT_R-timeDisplay;
 			timeDisplay++;
 		}	
-}
+}*/
 
-void DisplayDigital(void)
-{//int32_t timeDisplay;
+//Display
+//Builtint Clock
+//Builtin Alarm time
+//Pulled Weather temperature
+//							 Rainy, Cloudy, Sunny, etc
+//
+//Recommended Outfit
+//						Rainy: Umbrella, Pancho
+//						100+ : Topless
+//						80+	 : Shorts 		 + 	Short Sleeves
+//						75+	 : Shorts 		 + 	Long Sleeves
+//						60+	 : Pants/Jeans + 	Short Sleeves (optional jacket)
+//						50+	 : Pants/Jeans +	Long Sleeves
+//						35+	 : Pants/Jeans +  Long Sleeves + Jacket/Hoodie
+//						35-  : Coat
+//SW1	: SetTime
+//SW2 : SetAlarm
+//SW3	:	Snooze
+//SW4	: Update Weather Data, Recommneded Outfit will follow
+//System Automatically updates at Midnight, Else update switch needs to be pressed to update
+void Display_PG1(void)
+{
+	//int32_t timeDisplay;
 	//timeDisplay=NVIC_ST_CURRENT_R;
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
-	char ch[5];
+	char ch[8];
 	
+/*	
 	ch[0] = AsciiArray[Time_Hours/10];
 	ch[1] = AsciiArray[Time_Hours%10];
 	ch[2] = ':';
 	ch[3] = AsciiArray[Time_Minutes/10];
 	ch[4] = AsciiArray[Time_Minutes%10];
+*/	
 	
 	Output_Clear();
 	ST7735_SetCursor(0, 0);
-	ST7735_OutString("alarm:");
+
+/*	ST7735_OutString("alarm:");
 	ST7735_OutUDec(alarm_hours);
 	ST7735_OutString(":");
 	ST7735_OutUDec(alarm_minutes);
 
-	ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
-	ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
-	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
-	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
-	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
+	ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 3);
+	ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 3);
+	ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 3);
+	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 3);
+	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 3);
 	//timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
-	
-	while(active_In10s)
-	{
-		//timeDisplay=NVIC_ST_CURRENT_R;
-		if(Mode == 3)
-		{
-			break;
-		}
-		if(Mode==0){
-			if((Time_Minutes+5)<60){
-				alarm_minutes=Time_Minutes+5;
-			alarm_hours=Time_Hours;
-				alarm_flag=1;
-			}
+	*/
 
-		}
-
-			ch[0] = AsciiArray[Time_Hours/10];
-			ch[1] = AsciiArray[Time_Hours%10];
-			ch[2] = ':';
-			ch[3] = AsciiArray[Time_Minutes/10];
-			ch[4] = AsciiArray[Time_Minutes%10];
+	ch[0] = AsciiArray[Time_Hours/10];
+	ch[1] = AsciiArray[Time_Hours%10];
+	ch[2] = ':';
+	ch[3] = AsciiArray[Time_Minutes/10];
+	ch[4] = AsciiArray[Time_Minutes%10];
+	ch[5]	= ':';
+	ch[6] = AsciiArray[Time_Seconds/10];
+	ch[7] = AsciiArray[Time_Seconds%10];
 			
-			if(displayFlag == 0x03) 
-			{
-				displayFlag = 0xFF;
-				Output_Clear();
-				ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
-			}
-			if(displayFlag == 0x07) 
-			{
-				displayFlag = 0xFF;
-				Output_Clear();
-				ST7735_DrawCharS(0, 50, ch[0], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(25, 50, ch[1], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(50, 50, ch[2], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
-				ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
-			}
-			//timeDisplay=timeDisplay-NVIC_ST_CURRENT_R;
-			//timeDisplay++;
-		}	
+	if(displayFlag == 0x03) 
+	{
+		displayFlag = 0xFF;
+		Output_Clear();
+		ST7735_DrawCharS(0, 0, ch[0], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(25, 0, ch[1], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(50, 0, ch[2], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(75, 0, ch[3], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(100, 0, ch[4], ST7735_YELLOW, ST7735_BLACK, 2);
+	}
+	if(displayFlag == 0x07) 
+	{
+		displayFlag = 0xFF;
+		Output_Clear();
+		ST7735_DrawCharS(0, 0, ch[0], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(25, 0, ch[1], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(50, 0, ch[2], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(75, 0, ch[3], ST7735_YELLOW, ST7735_BLACK, 2);
+		ST7735_DrawCharS(100, 0, ch[4], ST7735_YELLOW, ST7735_BLACK, 2);
+	}
 }
 
+//Display Calendar
+//Display Month and Day In Standard Calendar Grid
+//Grid for the Day will be marked red, else black
+//Input: SlidePot
+void Display_PG2(void)
+{
+}
+
+//Display important news etc
+//Input: SlidePot, Update SW4
+void Display_PG3(void)
+{
+}
+
+//Display Stock, Currency Exchange rate, Gas Price
+//Input: Slidepot, Update SW4
+void Display_PG4(void)
+{
+}
+
+/*
 void ClockFace_Init(void)
 {
     uint32_t r = 60;
@@ -272,6 +305,7 @@ void ClockFace_Init(void)
     ST7735_DrawCharS(6, 77, '9', ST7735_Color565(255, 0, 0), 0, 1);
     DelayWait10ms(1);     
 }
+*/
 
 // Subroutine to wait 10 msec
 // Inputs: None

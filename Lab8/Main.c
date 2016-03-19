@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "ST7735.h"
-#include "TimeDisplay.h"
+#include "Display.h"
 #include "SetTime.h"
 #include "PLL.h"
 #include "Timer1.h"
@@ -19,15 +19,13 @@
 #include "PWM.h"
 #include "SysTickInts.h"
 #include "Common.h"
-#include "TimeDisplay.h"
 #include "Timer0A.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
 #define PERIOD					0x04C4B400
 #define Tensec					0x2FAF0800	//number of cycle for 10s when each cycle = 12.5ns
-#define A_440 181818
-
+#define A_440 					181818
 
 enum ModeSetting
 {  
@@ -65,12 +63,12 @@ int main(void)
 	SysTick_Init(80000);
 	
 
-	Alarm_Init();
+	Alarm_Init();										//togglesound flag triggers alarm
 	Timer0A_Init(0,A_440);
 	PortF_Init();
 
 	//USER FUNCTION INIT							// Self Described Init Functions									
-	MainMenu();
+	Display_PG1();
 	SysTick_Init(80000);        		// initialize SysTick timer
 	EnableInterrupts();							// Enable Interrupts
 	

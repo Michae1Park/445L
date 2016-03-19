@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include "SetTime.h"
 #include "Timer1.h"
-#include "TimeDisplay.h"
+#include "Display.h"
 #include "../Shared/tm4c123gh6pm.h"
 #include "Common.h"
 #include "ST7735.h"
