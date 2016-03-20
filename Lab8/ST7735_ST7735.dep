@@ -11,7 +11,7 @@ I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C88A34)
 I (ST7735.h)(0x56EE618E)
 I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
 I (C:\Keil\ARM\ARMCC\include\math.h)(0x51C88A34)
-F (.\Switch.c)(0x56EE6145)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
+F (.\Switch.c)(0x56EE75CB)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
 I (SysTick.h)(0x56ED0F52)
@@ -21,7 +21,7 @@ I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (SetAlarm.h)(0x56ED0F52)
 I (Display.h)(0x56EE39F2)
 I (ST7735.h)(0x56EE618E)
-F (.\Timer1.c)(0x56EE7434)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer1.o --omf_browse .\timer1.crf --depend .\timer1.d)
+F (.\Timer1.c)(0x56EE7462)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer1.o --omf_browse .\timer1.crf --depend .\timer1.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
 I (Timer1.h)(0x56ED0F52)

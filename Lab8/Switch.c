@@ -90,7 +90,7 @@ void Switch_Init(void){
 	GPIO_PORTD_ICR_R = 0x0F;						// clear flag 0-3
 	GPIO_PORTD_IM_R |= 0x0F;						// arm interrupt on PD 0-3
 	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
-	NVIC_EN0_R = 0x00000002; 						//enable interrupt 1(PB) in NVIC
+	NVIC_EN0_R = 0x00000008; 						//enable interrupt 1(PB) in NVIC
 }
 
 //------------Switch_Input------------

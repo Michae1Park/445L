@@ -8,58 +8,62 @@ Project File Date:  03/19/2016
 
 <h2>Output:</h2>
 Build target 'ST7735'
-compiling Display.c...
-Display.h(42): warning:  #1-D: last line of file ends without a newline
+compiling Switch.c...
+Display.h(44): warning:  #1-D: last line of file ends without a newline
         
-Display.c: 1 warning, 0 errors
+Switch.c(80): warning:  #177-D: variable "i" was declared but never referenced
+        int i;
+Switch.c: 2 warnings, 0 errors
+compiling Timer1.c...
+Display.h(44): warning:  #1-D: last line of file ends without a newline
+        
+Timer1.c(92): warning:  #186-D: pointless comparison of unsigned integer with zero
+                if((ADCvalue>=0) && (ADCvalue<1024)) 
+Timer1.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=5612 RO-data=2052 RW-data=84 ZI-data=1036  
-".\ST7735.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=8316 RO-data=2104 RW-data=96 ZI-data=1040  
+".\ST7735.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
-ine
+</pre>
+</body>
+</html>
+: last line of file ends without a newline
         
-Timer1.c: 1 warning, 0 errors
-compiling SetTime.c...
-Display.h(42): warning:  #1-D: last line of file ends without a newline
-        
-SetTime.c: 1 warning, 0 errors
-compiling SetAlarm.c...
-Display.h(42): warning:  #1-D: last line of file ends without a newline
-        
-SetAlarm.c(99): warning:  #1-D: last line of file ends without a newline
-  }
-SetAlarm.c: 2 warnings, 0 errors
-compiling SysTickInts.c...
-compiling Timer0A.c...
-compiling Stopwatch.c...
-compiling Display.c...
-Display.h(42): warning:  #1-D: last line of file ends without a newline
-        
-Display.c(227): error:  #65: expected a ";"
-  }
-Display.c: 1 warning, 1 error
+Display.c(228): warning:  #177-D: variable "datepos" was declared but never referenced
+        int datepos = 0;
+Display.c: 2 warnings, 0 errors
 compiling Main.c...
-Display.h(42): warning:  #1-D: last line of file ends without a newline
+Display.h(44): warning:  #1-D: last line of file ends without a newline
         
 Main.c: 1 warning, 0 errors
-".\ST7735.axf" - 1 Error(s), 8 Warning(s).
-Target not created
-g(s).
+linking...
+Program Size: Code=5080 RO-data=2052 RW-data=84 ZI-data=1036  
+".\ST7735.axf" - 0 Error(s), 9 Warning(s).
 Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
 Verify OK.
- Error: L6200E: Symbol Weather_DB1 multiply defined (by display.o and switch.o).
-.\ST7735.axf: Error: L6200E: Symbol Weather_DB1 multiply defined (by main.o and switch.o).
-.\ST7735.axf: Error: L6200E: Symbol Weather_DB2 multiply defined (by timer1.o and switch.o).
-.\ST7735.axf: Error: L6200E: Symbol Weather_DB2 multiply defined (by settime.o and switch.o).
-.\ST7735.axf: Error: L6200E: Symbol Weather_DB2 multiply defined (by setalarm.o and switch.o).
-.\ST7735.axf: Error: L6200E: Symbol Weather_DB2 multiply defined (by display.o and switch.o).
+ng 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+play.c(387): error:  #169: expected a declaration
+  }
+Display.c(555): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+Display.c: 6 warnings, 2 errors
+compiling Main.c...
+Display.h(44): warning:  #1-D: last line of file ends without a newline
+        
+Main.c: 1 warning, 0 errors
+".\ST7735.axf" - 2 Error(s), 13 Warning(s).
+Target not created
+B2 multiply defined (by display.o and switch.o).
 .\ST7735.axf: Error: L6200E: Symbol Weather_DB2 multiply defined (by main.o and switch.o).
 Not enough information to list image symbols.
 Not enough information to list the image map.
