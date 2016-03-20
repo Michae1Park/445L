@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#define ACTUALDATE 20
+
 extern volatile uint16_t display_mode;
 extern char weather_temp[3];
 extern char weather_weather[6];

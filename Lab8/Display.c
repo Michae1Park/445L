@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include "../Shared/tm4c123gh6pm.h"
 #include "ST7735.h"
 #include <math.h>
@@ -224,35 +225,215 @@ void Display_PG1(void)
 //Input: SlidePot
 void Display_PG2(void)
 {
-	ST7735_DrawString(4, 0, "MARCH 2016", ST7735_GREEN);	//substitute with pulled data
+	int datepos = 0;
+	int starthor;	//index for date 1
+	int startver;	//index for date 1
+	int horizontalPos[7] = {1, 4, 7, 10, 13, 16, 19};
+	int verticalPos[6] = {5, 7, 9, 11, 13, 15};
 	
-	ST7735_DrawString(0, 4, "SUN", ST7735_GREEN);
-	ST7735_DrawString(3, 4, "MON", ST7735_WHITE);
-	ST7735_DrawString(6, 4, "TUE", ST7735_YELLOW);
-	ST7735_DrawString(9, 4, "WED", ST7735_CYAN);
-	ST7735_DrawString(12, 4, "THU", ST7735_WHITE);
-	ST7735_DrawString(15, 4, "FRI", ST7735_YELLOW);
-	ST7735_DrawString(18, 4, "SAT", ST7735_CYAN);
+	//pulled Data
+	//Month
+	//Year
+	//Date
+	//Day
 	
-	ST7735_Line(0, 50, 128, 50, ST7735_WHITE);
-	ST7735_Line(0, 70, 128, 70, ST7735_WHITE);
-	ST7735_Line(0, 90, 128, 90, ST7735_WHITE);
-	ST7735_Line(0, 110, 128, 110, ST7735_WHITE);
-	ST7735_Line(0, 130, 128, 130, ST7735_WHITE);
-	ST7735_Line(0, 150, 128, 150, ST7735_WHITE);
+	//just for testing purpose
+	int date;				//tmp date
+	int datemod;
+	char str1[3];	//tmp buffer for day
+	char str2[3]; //tmp buffer for month
 	
-	ST7735_Line(0, 50, 0, 150, ST7735_WHITE);
-	ST7735_Line(18, 50, 18, 150, ST7735_WHITE);
-	ST7735_Line(36, 50, 36, 150, ST7735_WHITE);
-	ST7735_Line(54, 50, 54, 150, ST7735_WHITE);
-	ST7735_Line(72, 50, 72, 150, ST7735_WHITE);
-	ST7735_Line(90, 50, 90, 150, ST7735_WHITE);
-	ST7735_Line(108, 50, 108, 150, ST7735_WHITE);
-	ST7735_Line(127, 50, 127, 150, ST7735_WHITE);
+	if(ACTUALDATE>6) {datemod = ACTUALDATE%7;}	//Hardcoded 20(ACTUALDATE) should be substituted with the actual date
+	strcpy(str1, "Sun");	//Hard Coded Friday should be substituted with the Day pulled from server
+	strcpy(str2, "Mar");
 	
-	for(int i=0; i<31; i++)
+	//determines the position of date 1 on the calendar
+	if(strcmp(str1, "Sun")==0)
 	{
-		
+		if(datemod == 1) {starthor = 0; startver = 0;}
+		if(datemod == 2) {starthor = 6; startver = 0;}
+		if(datemod == 3) {starthor = 5; startver = 0;}
+		if(datemod == 4) {starthor = 4; startver = 0;}
+		if(datemod == 5) {starthor = 3; startver = 0;}
+		if(datemod == 6) {starthor = 2; startver = 0;}
+	}
+	else if(strcmp(str1, "Mon")==0)
+	{
+		if(datemod == 1) {starthor = 1; startver = 0;}
+		if(datemod == 2) {starthor = 0; startver = 0;}
+		if(datemod == 3) {starthor = 6; startver = 0;}
+		if(datemod == 4) {starthor = 5; startver = 0;}
+		if(datemod == 5) {starthor = 4; startver = 0;}
+		if(datemod == 6) {starthor = 3; startver = 0;}
+	}
+	else if(strcmp(str1, "Tue")==0)
+	{
+		if(datemod == 1) {starthor = 2; startver = 0;}
+		if(datemod == 2) {starthor = 1; startver = 0;}
+		if(datemod == 3) {starthor = 0; startver = 0;}
+		if(datemod == 4) {starthor = 6; startver = 0;}
+		if(datemod == 5) {starthor = 5; startver = 0;}
+		if(datemod == 6) {starthor = 4; startver = 0;}
+	}
+	else if(strcmp(str1, "Wed")==0)
+	{
+		if(datemod == 1) {starthor = 3; startver = 0;}
+		if(datemod == 2) {starthor = 2; startver = 0;}
+		if(datemod == 3) {starthor = 1; startver = 0;}
+		if(datemod == 4) {starthor = 0; startver = 0;}
+		if(datemod == 5) {starthor = 6; startver = 0;}
+		if(datemod == 6) {starthor = 5; startver = 0;}
+	}
+	else if(strcmp(str1, "Thu")==0)
+	{
+		if(datemod == 1) {starthor = 4; startver = 0;}
+		if(datemod == 2) {starthor = 3; startver = 0;}
+		if(datemod == 3) {starthor = 2; startver = 0;}
+		if(datemod == 4) {starthor = 1; startver = 0;}
+		if(datemod == 5) {starthor = 0; startver = 0;}
+		if(datemod == 6) {starthor = 6; startver = 0;}
+	}
+	else if(strcmp(str1, "Fri")==0)
+	{
+		if(datemod == 1) {starthor = 5; startver = 0;}
+		if(datemod == 2) {starthor = 4; startver = 0;}
+		if(datemod == 3) {starthor = 3; startver = 0;}
+		if(datemod == 4) {starthor = 2; startver = 0;}
+		if(datemod == 5) {starthor = 1; startver = 0;}
+		if(datemod == 6) {starthor = 0; startver = 0;}
+	}
+	else if(strcmp(str1, "Sat")==0)
+	{
+		if(datemod == 1) {starthor = 6; startver = 0;}
+		if(datemod == 2) {starthor = 5; startver = 0;}
+		if(datemod == 3) {starthor = 4; startver = 0;}
+		if(datemod == 4) {starthor = 3; startver = 0;}
+		if(datemod == 5) {starthor = 2; startver = 0;}
+		if(datemod == 6) {starthor = 1; startver = 0;}
+	}
+	else 
+	{
+		//Error
+	}
+	
+	//determines number of dates based on month
+	int month = 0;
+	if((strcmp(str2, "Jan")==0) ||
+		 (strcmp(str2, "Mar")==0) ||
+		 (strcmp(str2, "May")==0) ||
+		 (strcmp(str2, "Jul")==0) ||
+		 (strcmp(str2, "Aug")==0) ||
+		 (strcmp(str2, "Oct")==0) ||
+		 (strcmp(str2, "Dec")==0) 
+		)
+	{
+		month = 31;
+	}
+	else if((strcmp(str2, "Apr")==0) ||
+					(strcmp(str2, "Jun")==0) ||
+					(strcmp(str2, "Sep")==0) ||
+					(strcmp(str2, "Nov")==0) 
+				 )
+	{
+		month = 30;
+	}
+	else if(strcmp(str2, "Feb")==0)
+	{
+		month = 28;
+	}
+	else
+	{
+		//Error
+	}
+	
+	
+	ST7735_DrawString(5, 1, "MARCH 2016", ST7735_GREEN);	//substitute with pulled data
+	ST7735_DrawString(0, 3, "SUN", ST7735_GREEN);
+	ST7735_DrawString(3, 3, "MON", ST7735_WHITE);
+	ST7735_DrawString(6, 3, "TUE", ST7735_YELLOW);
+	ST7735_DrawString(9, 3, "WED", ST7735_CYAN);
+	ST7735_DrawString(12, 3, "THU", ST7735_WHITE);
+	ST7735_DrawString(15, 3, "FRI", ST7735_YELLOW);
+	ST7735_DrawString(18, 3, "SAT", ST7735_CYAN);
+	//horizontal lines
+	ST7735_Line(0, 40, 128, 40, ST7735_WHITE);
+	ST7735_Line(0, 60, 128, 60, ST7735_WHITE);
+	ST7735_Line(0, 80, 128, 80, ST7735_WHITE);
+	ST7735_Line(0, 100, 128, 100, ST7735_WHITE);
+	ST7735_Line(0, 120, 128, 120, ST7735_WHITE);
+	ST7735_Line(0, 140, 128, 140, ST7735_WHITE);
+	ST7735_Line(0, 159, 128, 159, ST7735_WHITE);
+	//veritcal lines
+	ST7735_Line(0, 40, 0, 159, ST7735_WHITE);
+	ST7735_Line(18, 40, 18, 159, ST7735_WHITE);
+	ST7735_Line(36, 40, 36, 159, ST7735_WHITE);
+	ST7735_Line(54, 40, 54, 159, ST7735_WHITE);
+	ST7735_Line(72, 40, 72, 159, ST7735_WHITE);
+	ST7735_Line(90, 40, 90, 159, ST7735_WHITE);
+	ST7735_Line(108, 40, 108, 159, ST7735_WHITE);
+	ST7735_Line(127, 40, 127, 159, ST7735_WHITE);
+	
+	//need to distinguish month with 31days, 30days, 28days
+	date = 1;
+	int startflag = 1;
+	int color = 0;
+	for(int i=startver; i<6; i++)
+	{
+		for(int j=0; j<7; j++)
+		{
+			if(startflag)
+			{
+				if(date<datemod) 
+				{
+					j = starthor;
+					startflag = 0;
+				}
+			}
+			
+			if(date == ACTUALDATE) {color = ST7735_GREEN;}
+			else {color = ST7735_WHITE;}
+				
+			if(date==1) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "1", color);}
+			if(date==2) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "2", color);}
+			if(date==3) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "3", color);}
+			if(date==4) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "4", color);}
+			if(date==5) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "5", color);}
+			if(date==6) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "6", color);}
+			if(date==7) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "7", color);}
+			if(date==8) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "8", color);}
+			if(date==9) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "9", color);}
+			if(date==10) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "10", color);}
+			if(date==11) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "11", color);}
+			if(date==12) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "12", color);}
+			if(date==13) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "13", color);}
+			if(date==14) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "14", color);}
+			if(date==15) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "15", color);}
+			if(date==16) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "16", color);}
+			if(date==17) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "17", color);}
+			if(date==18) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "18", color);}
+			if(date==19) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "19", color);}
+			if(date==20) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "20", color);}
+			if(date==21) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "21", color);}
+			if(date==22) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "22", color);}
+			if(date==23) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "23", color);}
+			if(date==24) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "24", color);}
+			if(date==25) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "25", color);}
+			if(date==26) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "26", color);}
+			if(date==27) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "27", color);}
+			if(date==28) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "28", color);}
+			
+			if(month>28)
+			{
+				if(date==29) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "29", ST7735_WHITE);}
+				if(date==30) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "30", ST7735_WHITE);}
+				
+				if(month>30)
+				{
+					if(date==31) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "31", ST7735_WHITE);}
+				}
+			}
+			date++;
+		}
 	}
 }
 
