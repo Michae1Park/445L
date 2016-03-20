@@ -57,7 +57,7 @@ int main(void)
 {
 	//system component setup
 	PLL_Init(Bus80MHz);                  	// set system clock to 80 MHz
-//	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
+	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
   ST7735_InitR(INITR_REDTAB);						// Init PORTA and LCD initializations
 	Switch_Init(); 												// Init PORTB and switch initialization
 	SysTick_Init(80000);
@@ -68,8 +68,10 @@ int main(void)
 	PortF_Init();
 
 	//USER FUNCTION INIT							// Self Described Init Functions									
-	//Display_PG1();
-	Display_PG2();
+	Display_PG1();
+	//Display_PG2();
+	//Display_PG3();
+	//Display_PG4();
 	SysTick_Init(80000);        		// initialize SysTick timer
 	EnableInterrupts();							// Enable Interrupts
 	

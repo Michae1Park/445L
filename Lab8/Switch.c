@@ -77,6 +77,7 @@ volatile uint16_t hours2,minutes2;
 // Output: none
 void Switch_Init(void){ 
   SYSCTL_RCGCGPIO_R |= 0x08;        // 1) activate clock for Port D
+	int i;
  // while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
   GPIO_PORTD_DIR_R &= ~0x0F;        // PD0-3 is an input
   //GPIO_PORTB_AFSEL_R &= ~0x0F;      // regular port function

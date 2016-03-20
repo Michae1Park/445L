@@ -441,12 +441,22 @@ void Display_PG2(void)
 //Input: SlidePot, Update SW4
 void Display_PG3(void)
 {
+	ST7735_DrawString(8, 1, "NEWS", ST7735_CYAN);
+	
 }
 
 //Display Stock, Currency Exchange rate, Gas Price
 //Input: Slidepot, Update SW4
 void Display_PG4(void)
 {
+	ST7735_DrawString(0, 0, "STOCK (APPLE)", ST7735_CYAN);
+	
+	ST7735_DrawString(0, 5, "CURRENCY XRT", ST7735_CYAN);
+	ST7735_DrawString(0, 7, "Euro: 0.89/$", ST7735_YELLOW);	//need to subsititue hardcoded values with pulled data
+	ST7735_DrawString(0, 8, "Yen: 111.55/$", ST7735_YELLOW);
+	ST7735_DrawString(0, 9, "Yuan: 6.47/$", ST7735_YELLOW);
+	
+	ST7735_DrawString(0, 12, "GAS PRICE (AUSTIN)", ST7735_CYAN);
 }
 
 
