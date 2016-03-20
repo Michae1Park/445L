@@ -24,10 +24,13 @@
 #include "../Shared/tm4c123gh6pm.h"
 #include "Timer1.h"
 #include "Display.h"
+#include "ADCSWTrigger.h"
+#include "ST7735.h"
 
 #define SECONDS_TIME  	0x3c
 #define MINUTES_TIME  	0x3c
 #define HOURS_TIME	  	0x17
+#define JITTER					15
 
 void (*PeriodicTask)(void);   // user function
 
@@ -35,6 +38,8 @@ volatile uint16_t Time_Seconds = 0;
 volatile uint16_t Time_Minutes = 0;
 volatile uint16_t Time_Hours = 0; 
 volatile uint8_t displayFlag;
+volatile uint32_t ADCvalue;
+volatile uint32_t prevADCvalue;
 
 // ***************** TIMER1_Init ****************
 // Activate TIMER1 interrupts to run user task periodically
@@ -67,7 +72,7 @@ void Timer1A_Handler(void){
 		Time_Minutes++;
 		Time_Seconds=0;
 		displayFlag = 0x03;
-		Display_PG1();
+		//Display_PG1();
 	}
 	if(Time_Minutes>=MINUTES_TIME){
 		Time_Hours++;
@@ -80,5 +85,29 @@ void Timer1A_Handler(void){
 		Display_PG1();
 	}
 	
-	
+	ADCvalue = ADC0_InSeq3();
+	if (!((ADCvalue>=prevADCvalue-JITTER) && (ADCvalue<=prevADCvalue+JITTER)))
+	{
+		prevADCvalue = ADCvalue;
+		if((ADCvalue>=0) && (ADCvalue<1024)) 
+		{
+			Output_Clear();
+			Display_PG1();
+		}
+		else if((ADCvalue>=1024) && (ADCvalue<2048)) 
+		{
+			Output_Clear();
+			Display_PG2();
+		}
+		else if((ADCvalue>=2048) && (ADCvalue<3072))
+		{
+			Output_Clear();
+			Display_PG3();
+		}
+		else 
+		{
+			Output_Clear();
+			Display_PG4();
+		}
+	}
 }

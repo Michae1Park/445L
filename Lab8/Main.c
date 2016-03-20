@@ -20,6 +20,7 @@
 #include "SysTickInts.h"
 #include "Common.h"
 #include "Timer0A.h"
+#include "ADCSWTrigger.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -53,17 +54,18 @@ volatile uint32_t timeout=0;
 volatile uint16_t toggleSound=1;
 volatile uint16_t AllowAlarmChange=1;
 
+
 int main(void)
 {
 	//system component setup
 	PLL_Init(Bus80MHz);                  	// set system clock to 80 MHz
 	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
   ST7735_InitR(INITR_REDTAB);						// Init PORTA and LCD initializations
+	ADC0_InitSWTriggerSeq3_Ch9(); 
 	Switch_Init(); 												// Init PORTB and switch initialization
 	SysTick_Init(80000);
 	
-
-	Alarm_Init();										//togglesound flag triggers alarm
+	//Alarm_Init();										//togglesound flag triggers alarm
 	Timer0A_Init(0,A_440);
 	PortF_Init();
 
@@ -78,7 +80,7 @@ int main(void)
 	//Main Loop
   while(1) 
   {
-	 WaitForInterrupt();
+   	WaitForInterrupt();
 	}
 }
 

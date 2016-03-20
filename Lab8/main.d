@@ -13,3 +13,4 @@
 .\main.o: SysTickInts.h
 .\main.o: Common.h
 .\main.o: Timer0A.h
+.\main.o: ADCSWTrigger.h

@@ -21,12 +21,14 @@ I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (SetAlarm.h)(0x56ED0F52)
 I (Display.h)(0x56EE39F2)
 I (ST7735.h)(0x56EE618E)
-F (.\Timer1.c)(0x56EE0E2D)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer1.o --omf_browse .\timer1.crf --depend .\timer1.d)
+F (.\Timer1.c)(0x56EE7434)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer1.o --omf_browse .\timer1.crf --depend .\timer1.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
 I (Timer1.h)(0x56ED0F52)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (Display.h)(0x56EE39F2)
+I (ADCSWTrigger.h)(0x56ED0E37)
+I (ST7735.h)(0x56EE618E)
 F (.\SetTime.c)(0x56ED2775)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\settime.o --omf_browse .\settime.crf --depend .\settime.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
@@ -53,14 +55,6 @@ I (SysTickInts.h)(0x56ED0F52)
 F (.\Timer0A.c)(0x56ED0F52)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer0a.o --omf_browse .\timer0a.crf --depend .\timer0a.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
-F (.\Stopwatch.c)(0x56ED0F52)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\stopwatch.o --omf_browse .\stopwatch.crf --depend .\stopwatch.d)
-I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (SetAlarm.h)(0x56ED0F52)
-I (ToggleAlarm.h)(0x56ED0F52)
-I (ST7735.h)(0x56EE618E)
-I (Stopwatch.h)(0x56ED0F52)
-I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
 F (.\Display.c)(0x56EE5F0A)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\display.o --omf_browse .\display.crf --depend .\display.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
@@ -74,7 +68,7 @@ I (SetAlarm.h)(0x56ED0F52)
 I (Common.h)(0x56ED0F50)
 I (Systick.h)(0x56ED0F52)
 I (Stopwatch.h)(0x56ED0F52)
-F (.\Main.c)(0x56EE5F1C)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (.\Main.c)(0x56EE6EB1)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (ST7735.h)(0x56EE618E)
@@ -89,3 +83,7 @@ I (PWM.h)(0x56ED0F51)
 I (SysTickInts.h)(0x56ED0F52)
 I (Common.h)(0x56ED0F50)
 I (Timer0A.h)(0x56ED0F52)
+I (ADCSWTrigger.h)(0x56ED0E37)
+F (.\ADCSWTrigger.c)(0x56ED0E37)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adcswtrigger.o --omf_browse .\adcswtrigger.crf --depend .\adcswtrigger.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (../Shared/tm4c123gh6pm.h)(0x56ED0E3E)
