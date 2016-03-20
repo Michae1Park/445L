@@ -10,6 +10,8 @@
 #include <stdint.h>
 
 extern volatile uint16_t display_mode;
+extern char weather_temp[3];
+extern char weather_weather[6];
 
 void TimeDisplay_Init(void);
 void DisplaySecond(void);
@@ -31,3 +33,10 @@ void Display_PG1(void);
 void Display_PG2(void);
 void Display_PG3(void);
 void Display_PG4(void);
+int Convert_StringToInteger(const char* str);
+
+//Sunny, Rainy, Cloudy, Stormy, Snowy, 
+//const char Weather_DB1 [5] = {'S', 'R', 'C', 'S', 'S'};
+//const char Weather_DB2 [5] = {'u', 'a', 'l', 't', 'n'};
+	
+	

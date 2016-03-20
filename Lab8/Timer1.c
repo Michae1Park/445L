@@ -67,13 +67,18 @@ void Timer1A_Handler(void){
 		Time_Minutes++;
 		Time_Seconds=0;
 		displayFlag = 0x03;
+		Display_PG1();
 	}
 	if(Time_Minutes>=MINUTES_TIME){
 		Time_Hours++;
 		Time_Minutes=0;
 		displayFlag = 0x07;
+		Display_PG1();
 	}
 	if(Time_Hours>=HOURS_TIME){
 		Time_Hours=0;
+		Display_PG1();
 	}
+	
+	
 }
