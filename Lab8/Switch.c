@@ -52,6 +52,7 @@
 #include "SetAlarm.h"
 #include "Display.h"
 #include "ST7735.h"
+#include "Timer0A.h"
 
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
 #define PF0                     (*((volatile uint32_t *)0x40025004))
@@ -152,22 +153,78 @@ void GPIOPortD_Handler(void)
 {
 	//Debouncer
 	Switch_Debounce();
+	static int button_type = DEFAULT;
 	
-	if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+	if(display_status == PG1)
 	{
-		GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
+		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		{
+			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
+			//update
+		}
+		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		{
+			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear	
+			toggleSound ^= 1;
+		}
+		if (GPIO_PORTD_RIS_R & 0X04) //poll PD2
+		{
+			GPIO_PORTD_ICR_R = 0x04; //acknowledge flag1 and clear
+			//set alarm
+			button_type = INCDEC_TIME_ALARM;
+		}
+		if (GPIO_PORTD_RIS_R & 0X08) //poll PD3
+		{
+			GPIO_PORTD_ICR_R = 0x08; //acknowledge flag1 and clear
+			//set time
+			button_type = INCDEC_TIME_ALARM;
+		}	
 	}
-	if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+	else if (display_status == PG2)
 	{
-		GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear	
+		//snooze, update
+		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		{
+			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
+			//update info
+		}
+		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		{
+			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear
+			toggleSound ^= 1;
+		}	
 	}
-	if (GPIO_PORTD_RIS_R & 0X04) //poll PD2
+	else if (display_status == PG3)
 	{
-		GPIO_PORTD_ICR_R = 0x04; //acknowledge flag1 and clear
+		//snooze, update
+		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		{
+			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
+			//update info
+		}
+		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		{
+			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear
+			toggleSound ^= 1;
+		}	
 	}
-	if (GPIO_PORTD_RIS_R & 0X08) //poll PD3
+	else if (display_status == PG4)
 	{
-		GPIO_PORTD_ICR_R = 0x08; //acknowledge flag1 and clear
-	}	
+		//snooze, update
+		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		{
+			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
+			//update info
+		}
+		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		{
+			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear
+			toggleSound ^= 1;
+		}	
+	}
+	else
+	{
+		//ERROR
+	}
 }
 

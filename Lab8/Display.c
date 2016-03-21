@@ -41,6 +41,9 @@ extern volatile uint16_t Time_minutes, Time_hours;
 extern volatile uint16_t alarm_flag;
 extern char weather_temp[3];
 extern char weather_weather[6];
+volatile uint16_t display_status;
+
+
 
 void DisplayAlarm(void)
 {
@@ -103,7 +106,9 @@ void Display_PG1(void)
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
 	char ch[8];
 	int weather_temp_int = 88;
-
+	
+	display_status = PG1;
+	
 //TODO: CONVERT DATA PULLED (STR) into INTEGER!	
 //test code
 //	weather_temp[0] = '8';
@@ -230,6 +235,8 @@ void Display_PG2(void)
 	int startver;	//index for date 1
 	int horizontalPos[7] = {1, 4, 7, 10, 13, 16, 19};
 	int verticalPos[6] = {5, 7, 9, 11, 13, 15};
+	
+	display_status = PG2;
 	
 	//pulled Data
 	//Month
@@ -441,6 +448,7 @@ void Display_PG2(void)
 //Input: SlidePot, Update SW4
 void Display_PG3(void)
 {
+	display_status = PG3;
 	ST7735_DrawString(8, 1, "NEWS", ST7735_CYAN);
 	
 }
@@ -449,6 +457,8 @@ void Display_PG3(void)
 //Input: Slidepot, Update SW4
 void Display_PG4(void)
 {
+	display_status = PG4;
+	
 	ST7735_DrawString(0, 0, "STOCK (APPLE)", ST7735_CYAN);
 	
 	ST7735_DrawString(0, 5, "CURRENCY XRT", ST7735_CYAN);

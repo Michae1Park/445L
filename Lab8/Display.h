@@ -11,9 +11,18 @@
 
 #define ACTUALDATE 20
 
+enum display_stat 
+{
+	PG1,
+	PG2,
+	PG3, 
+	PG4
+};
+
 extern volatile uint16_t display_mode;
 extern char weather_temp[3];
 extern char weather_weather[6];
+extern volatile uint16_t display_status;
 
 void TimeDisplay_Init(void);
 void DisplaySecond(void);

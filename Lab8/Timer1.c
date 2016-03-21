@@ -86,7 +86,7 @@ void Timer1A_Handler(void){
 	}
 	
 	ADCvalue = ADC0_InSeq3();
-	if (!((ADCvalue>=prevADCvalue-JITTER) && (ADCvalue<=prevADCvalue+JITTER)))
+	if (!((ADCvalue>=prevADCvalue-JITTER) && (ADCvalue<=prevADCvalue+JITTER)))	//Might have to adjust jitter in case the slidepot it at the very end
 	{
 		prevADCvalue = ADCvalue;
 		if((ADCvalue>=0) && (ADCvalue<1024)) 

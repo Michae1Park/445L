@@ -51,7 +51,7 @@ volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
 volatile uint32_t timeout=0;
-volatile uint16_t toggleSound=1;
+//volatile uint16_t toggleSound=1;
 volatile uint16_t AllowAlarmChange=1;
 
 
@@ -65,7 +65,7 @@ int main(void)
 	Switch_Init(); 												// Init PORTB and switch initialization
 	SysTick_Init(80000);
 	
-	//Alarm_Init();										//togglesound flag triggers alarm
+	Alarm_Init();										//togglesound flag triggers alarm
 	Timer0A_Init(0,A_440);
 	PortF_Init();
 
@@ -76,6 +76,10 @@ int main(void)
 	//Display_PG4();
 	SysTick_Init(80000);        		// initialize SysTick timer
 	EnableInterrupts();							// Enable Interrupts
+
+	//alarm snooze init
+	toggleSound = 1;
+	display_status = PG1;
 	
 	//Main Loop
   while(1) 

@@ -37,7 +37,7 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 //void (*PeriodicTask)(void);   // user function
 
-extern volatile uint16_t toggleSound;
+volatile uint16_t toggleSound;
 
 #define E1 (*((volatile uint32_t *)0x40024008))
 // ***************** Timer0A_Init ****************

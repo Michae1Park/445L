@@ -9,6 +9,11 @@
 #include <stdint.h>
 #include "../Shared/tm4c123gh6pm.h"
 
+enum button_type
+{
+	DEFAULT,
+	INCDEC_TIME_ALARM
+};
 
 void changeTime(void);
 

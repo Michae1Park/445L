@@ -22,8 +22,11 @@
  http://users.ece.utexas.edu/~valvano/
  */
 
+#include <stdint.h>
 #ifndef __TIMER0AINTS_H__ // do not include more than once
 #define __TIMER0AINTS_H__
+
+extern volatile uint16_t toggleSound;
 
 // ***************** Timer0A_Init ****************
 // Activate Timer0A interrupts to run user task periodically
