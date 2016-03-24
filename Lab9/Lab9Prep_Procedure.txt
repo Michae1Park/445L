@@ -1,0 +1,60 @@
+1. Crude calibration. The thermistor resistance varies nonlinearly with its temperature. Perform a very crude temperature calibration experiment with two points somewhere in your temperature range of 0 to 40 ˚C. We expect most students to use room temperature and axilla temperature for calibration. Your skin temperature in the axilla region (arm pit) is about 36 ˚C. The room temperature can be measured any thermometer. Use the Excel spreadsheet to determine R0 and  from the two calibration points. In particular, Therm12.xls. This quick calibration will only be used to choose resistors in the circuit. A real calibration will be performed as procedure 5. 
+     
+
+R = R0e^(b/T+273.15), when T is in Celsius	//R is the resistance representation of a thermistor in the bridge circuit
+R0 = e^(-H0/H1)
+b = 1/H1
+
+
+
+2. Review the technical information on the ADC system of TM4C123. List three ways you could use to initiate the ADC conversion process. 
+What is the way to know when the conversion process has been completed? 
+Place the answers to these two questions in the beginning comment section of your main program. You may use the example ADC programs, but it is your responsibility to understand the modes. 
+
+
+1) Particularly, ADC0 sample sequencer 3 is used here because it only takes one sample, and only one sample is absolutely needed.  Sample sequencer 3 generates a raw interrupt when the conversion is complete, but it is not promoted to a controller interrupt.  Software triggers the ADC0 conversion and waits for the conversion to finish.
+
+2) A better approach would be to use a hardware timer to trigger the ADC0 conversion independently from software and generate an interrupt when the conversion is finished. Then, the
+   software can transfer the conversion result to memory and process it after all measurements are complete.
+
+3)
+
+
+3. Choose one of the options as discussed in hardware section and design the appropriate thermistor amplifier. Be prepared during checkout to discuss the reasons for your choice of design. You must add a two-pole Butterworth low-pass anti-aliasing analog filter. Show name and number of all the pins involved including power. Add bypass capacitors on all chips. Why is it is important to connect bypass capacitors across the power pins for the analog IC components? Label all resistance and capacitance values and types. For example, 1k 5% carbon, or 0.01F 10% X7R ceramic. You do not need to show circuits on the evaluation board, such as switches and LEDs. Draw the circuit using the CAD tool like PCB Artist or Eagle.
+
+
+Reason: 
+
+
+
+4. This program is not used to measure temperature. Rather it is used to study the Nyquist Theorem as described in Procedure 
+1). Create a real-time data acquisition system that takes 100 samples at 1000 Hz, then prints out the data via the UART (ADCPrintResults_xxx.zip). You should first collect the data, next print it out, and then stop. A “syntax-error-free” hardcopy listing for the software is required as preparation. The TA will check off your listing at the beginning of the lab period.  You are required to do your editing before lab. The debugging will be done during lab. Document clearly the operation of the routines. The ADC and ADC trigger (e.g., Timer0A) modules must be written at a low level, like the book, without calling TivaWare driver code. Other code can use TivaWare driver code
+
+Routine:
+(1)
+(2)
+(3)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Procedure (do this during your lab period)
+     1. Basic understanding: The purpose of this section is to verify the Nyquist Theorem and the Valvano Postulate. Generate a continuous waveform (0.5 to +3V) with an adjustable frequency from 10 Hz to 10 kHz. Use a function generator but make sure the output is 0.5 to +3V. Please connect the analog waveform to a scope and verify the voltage range is between 0 and +3.3V before connecting to the microcontroller. VOLTAGES OUTSIDE THIS RANGE WILL DAMAGE THE TM4C. Next connect the signal to an analog input. In this part, we will not be using the thermistor or analog amplifier. Use the software system from Preparation 4) to capture 100 data points at 1 kHz sampling. Collect data for frequencies about 100 Hz (Valvano Postulate), 500 Hz (Nyquist), and 2 kHz (aliased). Use the UART output to transfer data to the PC. Plot the results by connecting the data points with a straight line. Describe the concepts of Nyquist Theorem, Valvano Postulate, and aliasing using this specific data. Be prepared to explain your results during checkout.   
+
+                  
+Figure 9.5. Results with sampling rate 8 times the frequency and with 32 times the frequency.
+
+     2. Static analog circuit test: Perform these tests before connecting the circuit to the TM4C123. Construct and evaluate the thermistor circuit. One by one replace the thermistor with 4 regular resistors that have resistances within the typical range of your thermistor. One test resistor should have a resistance equal to the resistance of the thermistor near the maximum temperature, and another test resistor should have a resistance equal to the resistance of the thermistor near the minimum temperature. Record the voltage values at strategic places in your analog circuit. What voltage output do you get when the thermistor is disconnected? What voltage output do you get when the thermistor wires are shorted?  These measurements should match the numbers in the therm12.xls design template. You should modify your temperature measurement software to output specific error conditions if the thermistor is shorted or disconnected.
+
+     3. Dynamic analog circuit test: Again, perform these tests before connecting the circuit to the TM4C123. Disconnect the thermistor, and connect a sine-wave signal generator in its place. Make sure the voltage level of the signal generator is within range, so that the inputs and outputs of your analog circuit are not saturated. Record the sine-wave amplitudes of the input and output voltages. Start at about 1 Hz and collect measurements at ten different frequencies. Make sure you choose frequencies large enough to see the gain roll off. Calculate the gain at each frequency. Plot the gain versus frequency response of your circuit. In systems where the shape of the signal is important, such as audio or video, the phase versus frequency response is important. You do not have to measure the phase response of your analog circuit. 
+
+     4. Software system to measure temperature:  Write the software system that samples the ADC at a rate at or above 20 Hz. Pass the data from background into the foreground using a mailbox or FIFO queue. In the main program convert the ADC data to fixed point temperature and display it on the LCD both numerically and graphically. Also include on the LCD display, the ADC sample as 0 to 4095. Connect the output of your thermistor amplifier to the input of the ADC system. 
+
+     5. Calibration. In this section your software will output the ADC sample as a decimal number. We define the temperature as measured by the Fluke 87V multimeter as reference truth. There is a K-type thermocouple that plugs into the Fluke allowing it to measure temperature. Its range is -40 to 260 °C (-40 to 500 °F), and its accuracy is 2.2 °C or 2 %. There are two of these meters on UTA basement lab, so record with which Fluke meter you calibrated. You are allowed to use another temperature reference, as long as it is as good as this Fluke. Place your thermistor and the reference thermometer at the same temperature (room temperature or an insulated cup). Wait for both your ADC measurement and the reference thermometer to stabilize. Record both the true temperature and the ADC sample as measured by your system. Record both the true temperature and the ADC sample as measured by your system.  Incorporate this calibration data into a header file called calib.h. In particular, if you change thermistors or recalibrate, only changes to this header file will be required. You can use or not use the spreadsheet Therm12.xls as long as you incorporate the nonlinearity of the thermistors in an appropriate manner. One possible solution is to use the 10 and 40 ˚C to create a 51-point table from Therm12.xls. Then, use the calibration point as a temperature offset to adjustment. I.e., sample the ADC, use the therm12.xls lookup tables to convert ADC into temperature, then add a temperature correction as determined by the one-point calibration. 
+Figure 9.6. The Fluke 87V can measure temperature.
+
+     6. Accuracy. Accuracy is defined as the absolute difference between the true temperature and the value measured by your device. Accuracy is dependent on the same parameters as resolution, but in addition it is also dependent on the stability of the transducer and the quality of the calibration procedure. Please use the same Fluke meter as you used in calibration. In this section your software will output the temperature as a fixed-point number with a 0.01 ˚C format. Collect 5 measurements at one temperature: either in room air, or in an insulated container, creating a table showing the true temperature (xti as determined by the Fluke meter), and measured temperature (xmi using your device). Calculate average accuracy by calculating the average difference between truth and measurement,
+	Average accuracy  (with units in ˚C)  =   
+ 
+     7. Reproducibility: Place the thermistor in either room air, or in an insulated container, and record 10 independent temperature measurements. Calculate the standard deviation of these data and report S (estimation of ) as reproducibility.  
+
