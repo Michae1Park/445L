@@ -23,15 +23,19 @@ Place the answers to these two questions in the beginning comment section of you
 3. Choose one of the options as discussed in hardware section and design the appropriate thermistor amplifier. Be prepared during checkout to discuss the reasons for your choice of design. You must add a two-pole Butterworth low-pass anti-aliasing analog filter. Show name and number of all the pins involved including power. Add bypass capacitors on all chips. Why is it is important to connect bypass capacitors across the power pins for the analog IC components? Label all resistance and capacitance values and types. For example, 1k 5% carbon, or 0.01F 10% X7R ceramic. You do not need to show circuits on the evaluation board, such as switches and LEDs. Draw the circuit using the CAD tool like PCB Artist or Eagle.
 
 
-Reason: 
+Reason I chose more expensive circuit with OPA2350: 
+	-ASK Ryan how to decide capactior and resistor values - how does INA work?, butterworth filter? datasheet for voltage values?
 
+Why is it important to connect bypass capacitors across the power pins for analog IC components?
+	- Because otherwise, there is a chance of frying the IC if current peaks abrutply. Its a safety feature
 
+*ASK: How to label all resistance and capacitance types? in schematic
 
 4. This program is not used to measure temperature. Rather it is used to study the Nyquist Theorem as described in Procedure 
 1). Create a real-time data acquisition system that takes 100 samples at 1000 Hz, then prints out the data via the UART (ADCPrintResults_xxx.zip). You should first collect the data, next print it out, and then stop. A “syntax-error-free” hardcopy listing for the software is required as preparation. The TA will check off your listing at the beginning of the lab period.  You are required to do your editing before lab. The debugging will be done during lab. Document clearly the operation of the routines. The ADC and ADC trigger (e.g., Timer0A) modules must be written at a low level, like the book, without calling TivaWare driver code. Other code can use TivaWare driver code
 
 Routine:
-(1)
+(1)n
 (2)
 (3)
 

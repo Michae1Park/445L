@@ -23,7 +23,7 @@
  */
 #include <stdint.h>
 #include "ADCSWTrigger.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 
 // There are many choices to make when using the ADC, and many
 // different combinations of settings will all do basically the
