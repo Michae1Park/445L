@@ -14,3 +14,6 @@
 .\main.o: Common.h
 .\main.o: Timer0A.h
 .\main.o: ADCSWTrigger.h
+.\main.o: esp8266.h
+.\main.o: LED.h
+.\main.o: UART.h

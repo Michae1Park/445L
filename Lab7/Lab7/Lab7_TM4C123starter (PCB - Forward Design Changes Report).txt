@@ -1,0 +1,18 @@
+Forward Design Changes Report
+-----------------------------
+
+Report File:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter (PCB - Forward Design Changes Report).txt
+Report Written:     Thursday, March 24, 2016
+Design Path:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         3/24/2016 5:50:27 PM
+Editing Time:       886 min
+Units:              mil (precision 0)
+
+Connected pin "U1-8" to net "PE1R4".
+
+Net N0010 renamed to PA3
+
+
+End Of Report.

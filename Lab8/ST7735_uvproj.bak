@@ -441,21 +441,6 @@
               <FilePath>.\SetAlarm.c</FilePath>
             </File>
             <File>
-              <FileName>PWM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\PWM.c</FilePath>
-            </File>
-            <File>
-              <FileName>TimeDisplay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\TimeDisplay.c</FilePath>
-            </File>
-            <File>
-              <FileName>AlarmClockMain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\AlarmClockMain.c</FilePath>
-            </File>
-            <File>
               <FileName>SysTickInts.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SysTickInts.c</FilePath>
@@ -466,9 +451,19 @@
               <FilePath>.\Timer0A.c</FilePath>
             </File>
             <File>
-              <FileName>Stopwatch.c</FileName>
+              <FileName>Display.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Stopwatch.c</FilePath>
+              <FilePath>.\Display.c</FilePath>
+            </File>
+            <File>
+              <FileName>Main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Main.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADCSWTrigger.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ADCSWTrigger.c</FilePath>
             </File>
           </Files>
         </Group>

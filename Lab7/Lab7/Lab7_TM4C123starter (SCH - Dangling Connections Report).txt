@@ -1,0 +1,14 @@
+Dangling Connections Report
+---------------------------
+
+Report File:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter (SCH - Dangling Connections Report).txt
+Report Written:     Thursday, March 24, 2016
+Design Path:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter.sch
+Design Title:       
+Created:            
+Last Saved:         3/24/2016 5:57:05 PM
+Editing Time:       7120 min
+Units:              mil (precision 0)
+
+
+End Of Report.

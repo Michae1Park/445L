@@ -1,0 +1,20 @@
+Design Consistency Status Report
+--------------------------------
+
+Report File:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter (PCB - Design Consistency Status Report).txt
+Report Written:     Thursday, March 24, 2016
+Design Path:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter.pcb
+Design Title:       
+Created:            1/29/2013 12:01:41 AM
+Last Saved:         3/24/2016 5:50:27 PM
+Editing Time:       889 min
+Units:              mil (precision 0)
+
+
+Checking integrity of Schematic "D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter.sch" with PCB "D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter.pcb"
+==============================================================================================================================================
+
+The designs are the same.
+
+
+End Of Report.

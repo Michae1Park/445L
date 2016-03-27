@@ -7,30 +7,28 @@ C:\Users\MichaelPark\Desktop\UT\4-1 Spring 2016\EE 445L\Labs\EmbSysLab\Lab8\ST77
 Project File Date:  03/20/2016
 
 <h2>Output:</h2>
-Build target 'ST7735'
+Rebuild target 'ST7735'
+assembling startup.s...
+compiling PLL.c...
+compiling ST7735.c...
+ST7735.c(1646): warning:  #177-D: variable "store" was declared but never referenced
+        int32_t store=0;        
+ST7735.c: 1 warning, 0 errors
 compiling Switch.c...
 Display.h(53): warning:  #1-D: last line of file ends without a newline
         
 Switch.c(81): warning:  #177-D: variable "i" was declared but never referenced
         int i;
-Switch.c: 2 warnings, 0 errors
-linking...
-Program Size: Code=8764 RO-data=2104 RW-data=156 ZI-data=1036  
-".\ST7735.axf" - 0 Error(s), 2 Warning(s).
-Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-</pre>
-</body>
-</html>
-rk\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-piling SetTime.c...
+Switch.c(156): warning:  #550-D: variable "button_type" was set but never used
+        static int button_type = DEFAULT;
+Switch.c: 3 warnings, 0 errors
+compiling Timer1.c...
+Display.h(53): warning:  #1-D: last line of file ends without a newline
+        
+Timer1.c(92): warning:  #186-D: pointless comparison of unsigned integer with zero
+                if((ADCvalue>=0) && (ADCvalue<1024)) 
+Timer1.c: 2 warnings, 0 errors
+compiling SetTime.c...
 Display.h(53): warning:  #1-D: last line of file ends without a newline
         
 SetTime.c: 1 warning, 0 errors
@@ -53,10 +51,48 @@ Display.h(53): warning:  #1-D: last line of file ends without a newline
         
 Main.c: 1 warning, 0 errors
 compiling ADCSWTrigger.c...
+compiling LED.c...
+compiling esp8266.c...
+compiling UART.c...
 linking...
-.\ST7735.axf: Error: L6218E: Undefined symbol display_status (referred from switch.o).
-.\ST7735.axf: Error: L6218E: Undefined symbol toggleSound (referred from switch.o).
+Program Size: Code=12456 RO-data=2104 RW-data=284 ZI-data=4156  
+".\ST7735.axf" - 0 Error(s), 12 Warning(s).
+Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+</pre>
+</body>
+</html>
+.
+".\ST7735.axf" - 2 Error(s), 12 Warning(s).
+Target not created
+7735.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+266_SendTCP" declared implicitly
+      ESP8266_SendTCP();
+Main.c(94): warning:  #223-D: function "ESP8266_CloseTCPConnection" declared implicitly
+      ESP8266_CloseTCPConnection();
+Main.c(101): warning:  #223-D: function "LED_GreenOff" declared implicitly
+      LED_GreenOff();
+Main.c(102): warning:  #223-D: function "LED_RedToggle" declared implicitly
+      LED_RedToggle();
+Main.c: 10 warnings, 0 errors
+compiling ADCSWTrigger.c...
+compiling LED.c...
+compiling esp8266.c...
+linking...
+.\ST7735.axf: Error: L6218E: Undefined symbol UART_OutCharNonBlock (referred from esp8266.o).
 Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 2 error messages.
-".\ST7735.axf" - 2 Error(s), 11 Warning(s).
+Finished: 1 information, 0 warning and 1 error messages.
+".\ST7735.axf" - 1 Error(s), 21 Warning(s).
+Target not created
+
+  #include "../inc/tm4c123gh6pm.h"
+esp8266.c: 0 warnings, 1 error
+".\ST7735.axf" - 2 Error(s), 21 Warning(s).
 Target not created

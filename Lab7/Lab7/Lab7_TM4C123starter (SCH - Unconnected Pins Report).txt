@@ -1,0 +1,49 @@
+Unconnected Pins Report
+-----------------------
+
+Report File:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter (SCH - Unconnected Pins Report).txt
+Report Written:     Thursday, March 24, 2016
+Design Path:        D:\UT2016\445L\Labs\Lab7\Lab7_TM4C123starter.sch
+Design Title:       
+Created:            
+Last Saved:         3/24/2016 5:57:05 PM
+Editing Time:       7120 min
+Units:              mil (precision 0)
+
+Component U1 Pin U1-21 (PA4)
+Component U1 Pin U1-18 (PA1)
+Component U1 Pin U1-17 (PA0)
+Component U1 Pin U1-4 (PB7)
+Component U1 Pin U1-1 (PB6)
+Component U1 Pin U1-58 (PB4)
+Component U1 Pin U1-48 (PB3)
+Component U1 Pin U1-47 (PB2)
+Component U1 Pin U1-13 (PC7)
+Component U1 Pin U1-14 (PC6)
+Component U1 Pin U1-15 (PC5)
+Component U1 Pin U1-16 (PC4)
+Component U1 Pin U1-10 (PD7)
+Component U1 Pin U1-53 (PD6)
+Component U1 Pin U1-44 (PD5)
+Component U1 Pin U1-43 (PD4)
+Component U1 Pin U1-60 (PE5)
+Component U1 Pin U1-6 (PE3)
+Component U1 Pin U1-7 (PE2)
+Component U1 Pin U1-9 (PE0)
+Component U1 Pin U1-5 (PF4)
+Component U1 Pin U1-31 (PF3)
+Component U1 Pin U1-30 (PF2)
+Component U1 Pin U1-29 (PF1)
+Component U1 Pin U1-28 (PF0)
+Component U1 Pin U1-36 (XOSC1)
+Component U1 Pin U1-33 (HIB*)
+Component J4 Pin J4-5 (CARD_CS)
+Component J4 Pin J4-9 (MISO)
+Component SW1 Pin SW1-3
+Component SW2 Pin SW2-3
+Component SW3 Pin SW3-3
+Component SW4 Pin SW4-3
+
+Unconnected pins found : 33
+
+End Of Report.

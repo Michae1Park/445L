@@ -21,6 +21,9 @@
 #include "Common.h"
 #include "Timer0A.h"
 #include "ADCSWTrigger.h"
+#include "esp8266.h"
+#include "LED.h"
+#include "UART.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -57,35 +60,50 @@ volatile uint16_t AllowAlarmChange=1;
 
 int main(void)
 {
+	DisableInterrupts();
 	//system component setup
 	PLL_Init(Bus80MHz);                  	// set system clock to 80 MHz
 	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
   ST7735_InitR(INITR_REDTAB);						// Init PORTA and LCD initializations
 	ADC0_InitSWTriggerSeq3_Ch9(); 
 	Switch_Init(); 												// Init PORTB and switch initialization
-	SysTick_Init(80000);
-	
+	LED_Init();
+//	SysTick_Init(80000);
 	Alarm_Init();										//togglesound flag triggers alarm
 	Timer0A_Init(0,A_440);
-	PortF_Init();
-
+//	PortF_Init();
+	Output_Init();       // UART0 only used for debugging
+  printf("\n\r-----------\n\rSystem starting...\n\r");
+  ESP8266_Init();      // global enable interrupts
+	
 	//USER FUNCTION INIT							// Self Described Init Functions									
 	Display_PG1();
 	//Display_PG2();
 	//Display_PG3();
 	//Display_PG4();
-	SysTick_Init(80000);        		// initialize SysTick timer
-	EnableInterrupts();							// Enable Interrupts
 
 	//alarm snooze init
 	toggleSound = 1;
 	display_status = PG1;
 	
-	//Main Loop
-  while(1) 
-  {
-   	WaitForInterrupt();
-	}
+	while(1){
+    ESP8266_GetStatus();
+    if(ESP8266_MakeTCPConnection()==0){ // data streamed to UART0
+      printf("MakeTCPConnection, could not make connection\n\r");
+      while(1){};
+    }
+    LED_GreenOn();
+    ESP8266_SendTCP();
+    ESP8266_CloseTCPConnection();
+		
+		EnableInterrupts();							// Enable Interrupts
+
+    while(Board_Input()==0){
+      WaitForInterrupt();
+    }; // wait for touch
+    LED_GreenOff();
+    LED_RedToggle();
+  }
 }
 
 
@@ -161,3 +179,78 @@ void AllowAlarmChangeMode(void){
 void DisAllowAlarmChangeMode(void){
 		AllowAlarmChange=0;
 }*/
+
+/*
+// this is used for printf to output to the usb uart
+int fputc(int ch, FILE *f){
+  UART_OutChar(ch);
+  return 1;
+}*/
+
+#ifdef __TI_COMPILER_VERSION__
+  //Code Composer Studio Code
+#include "file.h"
+int uart_open(const char *path, unsigned flags, int llv_fd){
+  UART_Init();
+  return 0;
+}
+int uart_close( int dev_fd){
+  return 0;
+}
+int uart_read(int dev_fd, char *buf, unsigned count){char ch;
+  ch = UART_InChar();    // receive from keyboard
+  ch = *buf;         // return by reference
+  UART_OutChar(ch);  // echo
+  return 1;
+}
+int uart_write(int dev_fd, const char *buf, unsigned count){ unsigned int num=count;
+  while(num){
+    UART_OutChar(*buf);
+    buf++;
+    num--;
+  }
+  return count;
+}
+off_t uart_lseek(int dev_fd, off_t ioffset, int origin){
+  return 0;
+}
+int uart_unlink(const char * path){
+  return 0;
+}
+int uart_rename(const char *old_name, const char *new_name){
+  return 0;
+}
+
+/*
+//------------Output_Init------------
+// Initialize the UART for 115,200 baud rate (assuming 3 MHz bus clock),
+// 8 bit word length, no parity bits, one stop bit
+// Input: none
+// Output: none
+void Output_Init(void){int ret_val; FILE *fptr;
+  UART_Init();
+  ret_val = add_device("uart", _SSA, uart_open, uart_close, uart_read, uart_write, uart_lseek, uart_unlink, uart_rename);
+  if(ret_val) return; // error
+  fptr = fopen("uart","w");
+  if(fptr == 0) return; // error
+  freopen("uart:", "w", stdout); // redirect stdout to uart
+  setvbuf(stdout, NULL, _IONBF, 0); // turn off buffering for stdout
+
+}
+#else
+//Keil uVision Code
+//------------Output_Init------------
+// Initialize the Nokia5110
+// Input: none
+// Output: none
+//------------Output_Init------------
+// Initialize the UART for 115,200 baud rate (assuming 16 MHz bus clock),
+// 8 bit word length, no parity bits, one stop bit, FIFOs enabled
+// Input: none
+// Output: none
+void Output_Init(void){
+  UART_Init();
+}
+*/
+#endif
+
