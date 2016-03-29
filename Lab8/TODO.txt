@@ -1,0 +1,9 @@
+Lab8/445L Final TODO.
+
+When PCB comes, there's gonna be all kinds of problems. So it is best to my interest to get all the SW working by Lab8.
+
+
+1) SetTime, SetAlarm - Switch
+2) ADC - Having Issues
+3) Need API to retrieve data
+4) Need Wifi init to be integrated completely

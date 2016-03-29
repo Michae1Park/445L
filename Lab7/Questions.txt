@@ -1,0 +1,15 @@
+Questions to Ask during checkout
+
+1. XTAL, JTAG, Logic Analyzer, processor, 2n222, 1n914, battery
+
+2. Capacitor type tatnium dipped (polarized)? monolithic cap? does it matter? As long as i don't exceed voltage rating doesn't matter
+
+3. Got the box from my friend. Can we modify it and use it?
+
+
+
+
+PCB - ESP
+-change the surface mount to a through hole part. Double check RX, TX. 
+-Three checks (consistency check, netlist check, component check)
+-carve in the pcb number into pcb
