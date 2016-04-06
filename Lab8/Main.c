@@ -52,7 +52,6 @@ void Alarm_Init(void);
 
 char FetchStock[] = "GET /webservice/v1/symbols/GOOG/quote?format=json HTTP/1.1\r\nHost:finance.yahoo.com\r\nConnection: keep-alive\r\n\r\n";
 
-volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
 volatile uint32_t timeout=0;

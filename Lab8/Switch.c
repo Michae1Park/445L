@@ -64,14 +64,16 @@
 #define SYSCTL_RCGC2_GPIOF      0x00000020  // port F Clock Gating Control\
 
 
-#define MENU_MAIN							0x00
+#define MENU_NONE							0x00
 #define MENU_SET_TIME					0x01
 #define	MENU_SET_ALARM				0x02
-#define MENU_DISPLAY_TIME			0x03
-#define MENU_ALARM						0x04
+//#define MENU_DISPLAY_TIME			0x03
+//#define MENU_ALARM						0x04
 
 volatile uint16_t menu_mode;
 volatile uint16_t hours2,minutes2;
+
+volatile uint16_t Mode;
 //------------Switch_Init------------
 // Initialize GPIO Port D 
 // Input: none
@@ -153,31 +155,83 @@ void GPIOPortD_Handler(void)
 {
 	//Debouncer
 	Switch_Debounce();
-	static int button_type = DEFAULT;
 	
+	/*
+	SetTime and SetAlarm button functionality:
+	PD0 = Exit (From time_set or alarm_set mode)
+	PD1 = decrement min
+	PD2 = increment min
+	PD3 = increment hours
+	*/
 	if(display_status == PG1)
 	{
+		
 		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
 		{
 			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
-			//update
+			
+			if (Mode == (MENU_SET_ALARM|MENU_SET_TIME))
+			{
+				Mode = MENU_NONE;
+			}
+			else 
+			{
+				//update PG1 data
+			}
 		}
+		
 		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
 		{
 			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear	
-			toggleSound ^= 1;
+			
+			if (Mode == MENU_SET_TIME)
+			{
+				decrementMin();
+			}
+			else if (Mode == MENU_SET_ALARM)
+			{
+				decrementAlarmMin();
+			}
+			else 
+			{
+				toggleSound ^= 1;
+			}
 		}
+		
 		if (GPIO_PORTD_RIS_R & 0X04) //poll PD2
 		{
 			GPIO_PORTD_ICR_R = 0x04; //acknowledge flag1 and clear
-			//set alarm
-			button_type = INCDEC_TIME_ALARM;
+
+			if (Mode == MENU_SET_TIME)
+			{
+				incrementMin();
+			}
+			else if (Mode == MENU_SET_ALARM)
+			{
+				incrementAlarmMin();
+			}
+			else
+			{
+				Mode = MENU_SET_ALARM;
+			}
 		}
+		
 		if (GPIO_PORTD_RIS_R & 0X08) //poll PD3
 		{
 			GPIO_PORTD_ICR_R = 0x08; //acknowledge flag1 and clear
-			//set time
-			button_type = INCDEC_TIME_ALARM;
+			
+			if (Mode == MENU_SET_TIME)
+			{
+				incrementHour();
+			}
+			else if (Mode == MENU_SET_ALARM)
+			{
+				incrementAlarmHour();
+			}
+			else
+			{
+				Mode = MENU_SET_TIME;
+			}
 		}	
 	}
 	else if (display_status == PG2)
