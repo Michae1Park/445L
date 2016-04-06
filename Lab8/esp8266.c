@@ -105,6 +105,7 @@ volatile bool ESP8266_ClientEnabled = false;
 volatile bool ESP8266_ServerEnabled = false;
 volatile bool ESP8266_InputProcessingEnabled = false;
 volatile bool ESP8266_PageRequested = false;
+extern volatile char temp[3];
 
 /*
 =======================================================================
@@ -573,7 +574,14 @@ int ESP8266_SendTCP(char* fetch){
 	DelayMs(5000);
 	DelayMs(5000);
 	//this is when RXBuffer recieves the info
-	
+	for(int i=0;i<BUFFER_SIZE;i++){
+		if(RXBuffer[i]=='h' && RXBuffer[i] !='}'){
+			if(RXBuffer[i+1]=='i' && RXBuffer[i+2]=='g' && RXBuffer[i+3]== 'h'){
+				sprintf(temp,"%c%c",RXBuffer[i+7],RXBuffer[i+8]);
+			}
+		}
+	}
+	printf("s",temp);
   ServerResponseSearchStart();
   n = 8000;
   while(n&&(ServerResponseSearchFinished==0)){

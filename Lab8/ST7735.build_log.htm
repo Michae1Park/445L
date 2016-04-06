@@ -3,7 +3,7 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\MichaelPark\Desktop\UT\4-1 Spring 2016\EE 445L\Labs\EmbSysLab\Lab8\ST7735.uvproj
+C:\Users\Jack\Documents\GitHub\EmbSysLab\Lab8\ST7735.uvproj
 Project File Date:  04/06/2016
 
 <h2>Output:</h2>
@@ -39,20 +39,33 @@ compiling Timer0A.c...
 compiling Display.c...
 Display.h(53): warning:  #1-D: last line of file ends without a newline
         
-Display.c(233): warning:  #177-D: variable "datepos" was declared but never referenced
+Display.c(180): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+        ST7735_DrawString(8, 6, temp, ST7735_GREEN);    //Substitute Temperature data with data pulled from server
+Display.c(234): warning:  #177-D: variable "datepos" was declared but never referenced
         int datepos = 0;
-Display.c: 2 warnings, 0 errors
+Display.c: 3 warnings, 0 errors
 compiling Main.c...
 Display.h(53): warning:  #1-D: last line of file ends without a newline
         
-Main.c: 1 warning, 0 errors
+Main.c(52): warning:  #1295-D: Deprecated declaration Output_Init2 - give arg types
+  extern void Output_Init2();
+Main.c: 2 warnings, 0 errors
 compiling ADCSWTrigger.c...
 compiling LED.c...
 compiling esp8266.c...
+esp8266.c(580): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *restrict"
+                                sprintf(temp,"%c%c",RXBuffer[i+7],RXBuffer[i+8]);
+esp8266.c(584): warning:  #225-D: the format string ends before this argument
+        printf("s",temp);
+esp8266.c: 2 warnings, 0 errors
 compiling UART.c...
 linking...
-Program Size: Code=13188 RO-data=2104 RW-data=360 ZI-data=6192  
-".\ST7735.axf" - 0 Error(s), 10 Warning(s).
+Program Size: Code=13624 RO-data=2104 RW-data=648 ZI-data=6192  
+".\ST7735.axf" - 0 Error(s), 14 Warning(s).
 </pre>
 </body>
 </html>
+nough information to list the image map.
+Finished: 2 information, 0 warning and 1 error messages.
+".\ST7735.axf" - 1 Error(s), 14 Warning(s).
+Target not created

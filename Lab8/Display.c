@@ -42,6 +42,7 @@ extern volatile uint16_t alarm_flag;
 extern char weather_temp[3];
 extern char weather_weather[6];
 volatile uint16_t display_status;
+extern volatile char temp[3];
 
 
 
@@ -176,7 +177,7 @@ void Display_PG1(void)
 	//Weather
 	ST7735_DrawString(0, 5, "WEATHER", ST7735_GREEN);
 	ST7735_DrawString(0, 6, "Austin: ", ST7735_GREEN);	//Substitute Temperature data with data pulled from server
-	ST7735_DrawString(8, 6, "77F", ST7735_GREEN);	//Substitute Temperature data with data pulled from server
+	ST7735_DrawString(8, 6, temp, ST7735_GREEN);	//Substitute Temperature data with data pulled from server
 	ST7735_DrawString(8, 7, "Rainy", ST7735_GREEN);				//Substitute Weather data with data pulled from server
 																												//Maybe insert an icon image to show weather
 	
