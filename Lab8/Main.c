@@ -50,6 +50,8 @@ void DisAllowAlarmChangeMode(void);
 void PortF_Init(void);
 void Alarm_Init(void);
 
+char FetchStock[] = "GET /webservice/v1/symbols/GOOG/quote?format=json HTTP/1.1\r\nHost:finance.yahoo.com\r\nConnection: keep-alive\r\n\r\n";
+
 volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
@@ -61,43 +63,47 @@ volatile uint16_t AllowAlarmChange=1;
 int main(void)
 {
 	DisableInterrupts();
-	//system component setup
-	PLL_Init(Bus80MHz);                  	// set system clock to 80 MHz
-	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
-  ST7735_InitR(INITR_REDTAB);						// Init PORTA and LCD initializations
-	ADC0_InitSWTriggerSeq3_Ch9(); 
-	Switch_Init(); 												// Init PORTB and switch initialization
+//system component setup
+	PLL_Init(Bus80MHz);                 // set system clock to 80 MHz
 	LED_Init();
-//	SysTick_Init(80000);
-	Alarm_Init();										//togglesound flag triggers alarm
+	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
+  ST7735_InitR(INITR_REDTAB);					// Init PORTA and LCD initializations
+	ADC0_InitSWTriggerSeq3_Ch9(); 
+	Switch_Init(); 											// Init PORTB and switch initialization
+	Alarm_Init();												//togglesound flag triggers alarm
 	Timer0A_Init(0,A_440);
-//	PortF_Init();
+//SysTick_Init(80000);
+//PortF_Init();
 	Output_Init();       // UART0 only used for debugging
   printf("\n\r-----------\n\rSystem starting...\n\r");
-  ESP8266_Init();      // global enable interrupts
+  ESP8266_Init(115200);      // global enable interrupts
+	ESP8266_GetVersionNumber();
+	EnableInterrupts();							// Enable Interrupts
 	
-	//USER FUNCTION INIT							// Self Described Init Functions									
+//USER FUNCTION INIT							// Self Described Init Functions									
 	Display_PG1();
-	//Display_PG2();
-	//Display_PG3();
-	//Display_PG4();
+//Display_PG2();
+//Display_PG3();
+//Display_PG4();
 
-	//alarm snooze init
+//alarm snooze init
 	toggleSound = 1;
 	display_status = PG1;
-	
+
+
 	while(1){
     ESP8266_GetStatus();
-    if(ESP8266_MakeTCPConnection()==0){ // data streamed to UART0
-      printf("MakeTCPConnection, could not make connection\n\r");
-      while(1){};
+		
+    if(ESP8266_MakeTCPConnection("finance.yahoo.com")){ // open socket in YAHOO stock server
+      printf("TCPConnection established\n\r");
+			
+			LED_GreenOn();
+      ESP8266_SendTCP(FetchStock);
+
     }
-    LED_GreenOn();
-    ESP8266_SendTCP();
+		
     ESP8266_CloseTCPConnection();
 		
-		EnableInterrupts();							// Enable Interrupts
-
     while(Board_Input()==0){
       WaitForInterrupt();
     }; // wait for touch
