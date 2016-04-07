@@ -1,0 +1,22 @@
+1) Explain how the prototype is different from the final product. 
+
+	-Will pull data from more sources (API, Web servers). Currently we are only pulling weather data and stock.
+	-Might Change the Alarm sound to play a rythm/beat 
+	-Might make the screen scroll side ways
+
+	-will use PCB
+	-will use Normal 9V Duracel Battery for power source
+	-will have a case
+
+2) Discuss the testing features of your design. 
+
+	-We will have testpoints for Speaker pin and the slidepot pin on our PCB board.
+	-We have logic anaylzer connected in our PCB
+	-Our software debugging features include printf statements here and there.
+
+3) Discuss your top three worries about finishing Lab 11 on time. 
+
+	-Problem with PCB board
+	-Unstable ESP Wifi Module
+	-change in open API addresses or cessation of their service
+
