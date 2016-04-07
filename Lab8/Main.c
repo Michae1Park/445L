@@ -51,9 +51,8 @@ void PortF_Init(void);
 void Alarm_Init(void);
 extern void Output_Init2();
 
-
 char FetchStock[] = "GET /webservice/v1/symbols/GOOG/quote?format=json HTTP/1.1\r\nHost:finance.yahoo.com\r\nConnection: keep-alive\r\n\r\n";
-char FetchTemp[] = "GET /v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22austin%2C%20tx%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys HTTP/1.1\r\nHost:query.yahooapis.com\r\nConnection: keep-alive\r\n\r\n";
+char FetchTemp[] = "GET /v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys HTTP/1.1\r\nHost:query.yahooapis.com\r\nConnection: keep-alive\r\n\r\n";
 //volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
