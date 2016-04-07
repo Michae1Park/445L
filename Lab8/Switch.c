@@ -154,7 +154,7 @@ Output: None
 void GPIOPortD_Handler(void)
 {
 	//Debouncer
-	Switch_Debounce();
+//	Switch_Debounce();
 	
 	/*
 	SetTime and SetAlarm button functionality:
@@ -187,10 +187,12 @@ void GPIOPortD_Handler(void)
 			if (Mode == MENU_SET_TIME)
 			{
 				decrementMin();
+				Display_PG1();
 			}
 			else if (Mode == MENU_SET_ALARM)
 			{
 				decrementAlarmMin();
+				Display_PG1();
 			}
 			else 
 			{
@@ -205,10 +207,12 @@ void GPIOPortD_Handler(void)
 			if (Mode == MENU_SET_TIME)
 			{
 				incrementMin();
+				Display_PG1();
 			}
 			else if (Mode == MENU_SET_ALARM)
 			{
 				incrementAlarmMin();
+				Display_PG1();
 			}
 			else
 			{
@@ -223,10 +227,12 @@ void GPIOPortD_Handler(void)
 			if (Mode == MENU_SET_TIME)
 			{
 				incrementHour();
+				Display_PG1();
 			}
 			else if (Mode == MENU_SET_ALARM)
 			{
 				incrementAlarmHour();
+				Display_PG1();
 			}
 			else
 			{

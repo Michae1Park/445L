@@ -82,6 +82,9 @@ int main(void)
 	ST7735_DrawString(0, 2, "\n\r-----------\n\rSystem starting...\n\r", ST7735_WHITE);
   ESP8266_Init(115200);      // global enable interrupts
 	ESP8266_GetVersionNumber();
+	
+	toggleSound = 1;
+//	display_status = PG1;
 	EnableInterrupts();							// Enable Interrupts
 	
 //USER FUNCTION INIT							// Self Described Init Functions									
@@ -91,7 +94,7 @@ int main(void)
 //Display_PG4();
 
 //alarm snooze init
-	toggleSound = 1;
+//	toggleSound = 1;
 	display_status = PG1;
 
 
@@ -107,7 +110,7 @@ int main(void)
     }
 		
     ESP8266_CloseTCPConnection();
-		
+//		EnableInterrupts();							// Enable Interrupts
     while(Board_Input()==0){
       WaitForInterrupt();
     }; // wait for touch
@@ -151,36 +154,7 @@ void PortF_Init(void)
   GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF
 }
 
-/*
-Initializes to print the Main Menu
-*/
-void MainMenu(void)
-{
-	Output_Clear();
-	ST7735_DrawString(0, 0, "Set Time", ST7735_YELLOW);
-	ST7735_DrawString(0, 3, "Set Alarm", ST7735_YELLOW);
-	if (alarm_flag){ST7735_DrawString(0, 6, "Alarm On", ST7735_YELLOW);}
-	else {ST7735_DrawString(0, 6, "Alarm Off", ST7735_YELLOW); }
-	ST7735_DrawString(0, 9, "Display Mode", ST7735_YELLOW);
-}
 
-// Interrupt service routine
-// Executed every 12.5ns*(period) = 1ms
-void SysTick_Handler(void)
-{
-  counts = counts + 1;
-	if((counts % 1000) == 0)	//every 1s
-	{
-		PF2 ^= 0x04;                // toggle PF2
-		timeout += 1;
-	}
-	
-	if(timeout == 10)
-	{
-		active_In10s = 0;
-		timeout = 0;
-	}
-}
 
 /*
 void AllowAlarmChangeMode(void){

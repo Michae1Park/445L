@@ -57,8 +57,8 @@ ESP8266    TM4C123
 #include "esp8266.h"
 #include "UART.h"
 // Access point parameters
-#define SSID_NAME  "PHONE"
-#define PASSKEY    "j1002k_B"
+#define SSID_NAME  "MIKE"
+#define PASSKEY    "mpmp1234"
 //#define SEC_TYPE   ESP8266_ENCRYPT_MODE_WPA2_PSK
 
 #define BUFFER_SIZE 1024
