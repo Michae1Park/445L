@@ -1,4 +1,4 @@
-// ATimeDisplay.c
+// Display.c
 // Michael Park, Jack Zhao
 // Date Created: 2/12/2016
 // Includes analog and digital time display functions
@@ -45,7 +45,7 @@ volatile uint16_t display_status;
 extern volatile char temp[3];
 
 
-
+/*
 void DisplayAlarm(void)
 {
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
@@ -81,7 +81,7 @@ void DisplaySetTime(void)
 	ST7735_DrawCharS(75, 50, ch[3], ST7735_YELLOW, ST7735_BLACK, 4);
 	ST7735_DrawCharS(100, 50, ch[4], ST7735_YELLOW, ST7735_BLACK, 4);
 }
-
+*/
 
 //Display
 //Builtint Clock

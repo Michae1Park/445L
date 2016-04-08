@@ -31,6 +31,8 @@
 #define Tensec					0x2FAF0800	//number of cycle for 10s when each cycle = 12.5ns
 #define A_440 					181818
 
+#define DEBUG	1	//commnet out this line to disable debugging feature for measuring adc jitter
+
 enum ModeSetting
 {  
 	SetTime_Mode, 
@@ -87,7 +89,7 @@ int main(void)
 	EnableInterrupts();							// Enable Interrupts
 	
 //USER FUNCTION INIT							// Self Described Init Functions									
-	Display_PG1();
+//	Display_PG1();
 //Display_PG2();
 //Display_PG3();
 //Display_PG4();
@@ -110,9 +112,47 @@ int main(void)
 		
     ESP8266_CloseTCPConnection();
 //		EnableInterrupts();							// Enable Interrupts
-    while(Board_Input()==0){
+
+#ifdef DEBUG 				//debugging feature for collecting 1000 samples
+				int count = 0;
+				int jitterflag = 0;
+				uint32_t adc_dump[1000];
+				uint32_t maxj, minj;
+				uint32_t adcjitter;
+				volatile uint32_t ADCvalue;
+		
+				while(count<1000)
+				{
+					ADCvalue = ADC0_InSeq3();
+					adc_dump[count]=ADCvalue;
+					count++;
+				}
+				
+				jitterflag=1;			
+			
+				if (jitterflag==1)
+				{
+					maxj = adc_dump[0];
+					minj = adc_dump[0];
+					for(int i=1; i<1000; i++)
+					{
+						if(adc_dump[i]>maxj) {maxj = adc_dump[i];}
+						if(adc_dump[i]<minj) {minj = adc_dump[i];}
+					}
+					adcjitter = maxj - minj;
+				}
+				//dummy code. put break point, debug and read value of adcjitter
+				int adcjitterfound = 1;
+#endif	
+
+    while(Board_Input()==0)
+		{
+			printf("max: %d\n", maxj);
+			printf("min: %d\n", minj);
+			printf("jitter: %d\n", adcjitter);	
       WaitForInterrupt();
     }; // wait for touch
+
     LED_GreenOff();
     LED_RedToggle();
   }

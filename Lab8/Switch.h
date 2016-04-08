@@ -61,37 +61,6 @@ void Switch_Init(void);
 //         0x00 if PA5 is low
 uint32_t Switch_Input(void);
 
-//------------Board_Init------------
-// Initialize GPIO Port F for negative logic switches on PF0 and
-// PF4 as the Launchpad is wired.  Weak internal pull-up
-// resistors are enabled, and the NMI functionality on PF0 is
-// disabled.
-// Input: none
-// Output: none
-void Board_Init(void);
-
-//------------Board_Input------------
-// Read and return the status of the switches.
-// Input: none
-// Output: 0x01 if only Switch 1 is pressed
-//         0x10 if only Switch 2 is pressed
-//         0x00 if both switches are pressed
-//         0x11 if no switches are pressed
-uint32_t Board_Input(void);
-
-// Program 2.9 from Volume 2
-//------------Switch_Init3------------
-// Initialize GPIO Port B bit 1 for input.
-// Input: none
-// Output: none
-void Switch_Init3(void);
-//------------Switch_Input3------------
-// Read and return the status of GPIO Port B bit 1.
-// Input: none
-// Output: 0x02 if PB1 is high
-//         0x00 if PB1 is low
-uint32_t Switch_Input3(void); 
-
 //------------Switch_Debounce------------
 // Read and return the status of the switch 
 // Input: none

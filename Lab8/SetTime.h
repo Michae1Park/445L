@@ -1,4 +1,4 @@
-// SetTime.c
+// SetTime.h
 // Michael Park, Jack Zhao
 // Date Created: 02/10/2016
 // class for set time function prototypes
@@ -15,12 +15,32 @@ enum button_type
 	INCDEC_TIME_ALARM
 };
 
-void changeTime(void);
+//global variable for alarm clock
+//extern volatile uint16_t time_hours, time_minutes;
+//extern volatile uint16_t time_flag;
 
+//void changeTime(void);
+
+//IncrementHour
+//Increments global variable time_hours
+//Input: None
+//Output: None
 void incrementHour(void);
 
+//DecrementHour
+//Decrements global variable time_hours
+//Input: None
+//Output: None
 void decrementHour(void);
 
+//IncrementMin
+//Increments global variable time_minutes
+//Input: None
+//Output: None
 void incrementMin(void);
 
+//DeccrementMin
+//Deccrements global variable time_minutes
+//Input: None
+//Output: None
 void decrementMin(void);

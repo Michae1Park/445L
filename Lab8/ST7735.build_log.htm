@@ -47,9 +47,11 @@ Display.c: 3 warnings, 0 errors
 compiling Main.c...
 Display.h(53): warning:  #1-D: last line of file ends without a newline
         
-Main.c(52): warning:  #1295-D: Deprecated declaration Output_Init2 - give arg types
+Main.c(54): warning:  #1295-D: Deprecated declaration Output_Init2 - give arg types
   extern void Output_Init2();
-Main.c: 2 warnings, 0 errors
+Main.c(145): warning:  #177-D: variable "adcjitterfound" was declared but never referenced
+                                int adcjitterfound = 1;
+Main.c: 3 warnings, 0 errors
 compiling ADCSWTrigger.c...
 compiling LED.c...
 compiling esp8266.c...
@@ -60,9 +62,17 @@ esp8266.c(584): warning:  #225-D: the format string ends before this argument
 esp8266.c: 2 warnings, 0 errors
 compiling UART.c...
 linking...
-Program Size: Code=13464 RO-data=2104 RW-data=648 ZI-data=6192  
-".\ST7735.axf" - 0 Error(s), 14 Warning(s).
+Program Size: Code=13612 RO-data=2104 RW-data=648 ZI-data=6192  
+".\ST7735.axf" - 0 Error(s), 15 Warning(s).
 Load "C:\\Users\\MichaelPark\\Desktop\\UT\\4-1 Spring 2016\\EE 445L\\Labs\\EmbSysLab\\Lab8\\ST7735.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+</pre>
+</body>
+</html>
+ab8\\ST7735.axf" 
 Connecting: Mode=JTAG, Speed=1000000Hz
 Erase Done.
 Programming Done.
