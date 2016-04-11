@@ -5,6 +5,11 @@ R = R0e^(b/T+273.15), when T is in Celsius	//R is the resistance representation 
 R0 = e^(-H0/H1)
 b = 1/H1
 
+Pick Two points
+87.5 Kohms at 25C
+63 Kohms at 32C
+R0 = 
+beta = 
 
 
 2. Review the technical information on the ADC system of TM4C123. List three ways you could use to initiate the ADC conversion process. 
@@ -24,14 +29,14 @@ Place the answers to these two questions in the beginning comment section of you
         -schematic
 
     Be prepared during checkout to discuss the reasons for your choice of design. (check)
-        -I chose INA122 because of its high input impedance and good CMRR.
+        -I chose INA122 because of its high input impedance, large gain, and good CMRR.
         -Butterworth filter is good cuz?
         -I chose bridge circuit to measure the voltage difference and calibrate it into temperature
 
     You must add a two-pole Butterworth low-pass anti-aliasing analog filter. (check)
         -I did
 
-    Show name and number of all the pins involved including power. 
+    Show name and number of all the pins involved including power. (check)
         -netlist, pin numbers 
 
     Add bypass capacitors on all chips. Why is it is important to connect bypass capacitors across the power pins for the analog IC components? (check)
@@ -41,7 +46,7 @@ Place the answers to these two questions in the beginning comment section of you
             => only AC goes through the bypass capcitor to ground. Therefore only DC current goes into the chips.
 
     Label all resistance and capacitance values and types. For example, 1k 5% carbon, or 0.01F 10% X7R ceramic.
-        -TODO
+        -TODO - need to figure out
 
     You do not need to show circuits on the evaluation board, such as switches and LEDs. Draw the circuit using the CAD tool like PCB Artist or Eagle. (check)
         -Done
