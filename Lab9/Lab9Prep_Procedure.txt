@@ -16,6 +16,7 @@ beta =
 What is the way to know when the conversion process has been completed? 
 Place the answers to these two questions in the beginning comment section of your main program. You may use the example ADC programs, but it is your responsibility to understand the modes. 
 
+(Book)
 
 1) Particularly, ADC0 sample sequencer 3 is used here because it only takes one sample, and only one sample is absolutely needed.  Sample sequencer 3 generates a raw interrupt when the conversion is complete, but it is not promoted to a controller interrupt.  Software triggers the ADC0 conversion and waits for the conversion to finish.
 
@@ -37,7 +38,7 @@ Place the answers to these two questions in the beginning comment section of you
         -I did
 
     Show name and number of all the pins involved including power. (check)
-        -netlist, pin numbers 
+        -netlist, pin numbers (done)
 
     Add bypass capacitors on all chips. Why is it is important to connect bypass capacitors across the power pins for the analog IC components? (check)
         -A capacitor that filters out the AC signal removing the noise and provides a DC signal is known as a bypass capacitor. The capacitor connected in the figure below is a bypass capacitor bypassing AC noise and allowing pure DC signal to pass through the component.
@@ -46,7 +47,7 @@ Place the answers to these two questions in the beginning comment section of you
             => only AC goes through the bypass capcitor to ground. Therefore only DC current goes into the chips.
 
     Label all resistance and capacitance values and types. For example, 1k 5% carbon, or 0.01F 10% X7R ceramic.
-        -TODO - need to figure out
+        -TODO - need to figure out (done)
 
     You do not need to show circuits on the evaluation board, such as switches and LEDs. Draw the circuit using the CAD tool like PCB Artist or Eagle. (check)
         -Done
