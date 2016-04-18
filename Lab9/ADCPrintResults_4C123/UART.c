@@ -28,7 +28,7 @@
 
 #include <stdint.h>
 #include "UART.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 
 
 #define UART_FR_TXFF            0x00000020  // UART Transmit FIFO Full

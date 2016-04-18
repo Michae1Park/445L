@@ -1,3 +1,11 @@
+// ******* ADCSWTrigger.c ************** 
+// Michael Park, Jack Zhao
+// Date Created: 04/09/2016
+// Includes ADC functions
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 04/15/2016
+
 // ADCSWTrigger.c
 // Runs on LM4F120/TM4C123
 // Provide functions that initialize ADC0 SS3 to be triggered by
@@ -23,7 +31,7 @@
  */
 #include <stdint.h>
 #include "ADCSWTrigger.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 
 // There are many choices to make when using the ADC, and many
 // different combinations of settings will all do basically the

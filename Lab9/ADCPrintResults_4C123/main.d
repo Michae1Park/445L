@@ -6,3 +6,4 @@
 .\main.o: PLL.h
 .\main.o: ST7735.h
 .\main.o: Timer1.h
+.\main.o: Calib.h

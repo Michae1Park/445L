@@ -1,3 +1,11 @@
+// ******* ADCSWTrigger.h ************** 
+// Michael Park, Jack Zhao
+// Date Created: 04/09/2016
+// Includes prototype functions for the ADC
+// Lab Number: 16340
+// TA: Mahesh Srinivasan
+// Last Revised: 04/15/2016
+
 // ADCSWTrigger.h
 // Runs on LM4F120/TM4C123
 // Provide functions that initialize ADC0 SS3 to be triggered by
