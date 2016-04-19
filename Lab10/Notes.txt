@@ -1,0 +1,8 @@
+445L book integral controller - pg330
+
+Integral controller adjust the pulse width based on the calculation using reference speed and captured speed
+Input capture measures pulse width for speed
+should call timer0 less freuquently considering the inertia of the motor
+
+What does a cap do in the circuit?
+what do each part of the circuit do?
