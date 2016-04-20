@@ -3,8 +3,8 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-D:\UT2016\445L\Labs\PWM_4C123\PWM.uvproj
-Project File Date:  04/18/2016
+C:\Users\Jack\Documents\GitHub\EmbSysLab\Lab10\PWM_4C123\PWM.uvproj
+Project File Date:  04/20/2016
 
 <h2>Output:</h2>
 Rebuild target 'PWM'
@@ -14,21 +14,36 @@ compiling PWM.c...
 compiling PWMtest.c...
 compiling PeriodMeasure.c...
 compiling Switch.c...
-Switch.c(68): warning:  #550-D: variable "i" was set but never used
+Switch.c(76): warning:  #550-D: variable "i" was set but never used
         int i;
 Switch.c: 1 warning, 0 errors
 compiling SysTick.c...
+compiling ST7735.c...
 linking...
-Program Size: Code=3760 RO-data=32 RW-data=44 ZI-data=1124  
+Program Size: Code=5204 RO-data=2052 RW-data=108 ZI-data=1132  
 ".\PWM.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Jack\\Documents\\GitHub\\EmbSysLab\\Lab10\\PWM_4C123\\PWM.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
 </pre>
 </body>
 </html>
-.c...
-Switch.c(68): warning:  #550-D: variable "i" was set but never used
-        int i;
-Switch.c: 1 warning, 0 errors
+uments\\GitHub\\EmbSysLab\\Lab10\\PWM_4C123\\PWM.axf" 
+Connecting: Mode=JTAG, Speed=1000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+000000Hz
+Erase Done.
+Programming Done.
+Verify OK.
+h"
+Switch.c: 0 warnings, 1 error
 compiling SysTick.c...
-linking...
-Program Size: Code=3624 RO-data=32 RW-data=36 ZI-data=1124  
-".\PWM.axf" - 0 Error(s), 3 Warning(s).
+SysTick.c(36): error:  #5: cannot open source input file "../inc/tm4c123gh6pm.h": No such file or directory
+  #include "../inc/tm4c123gh6pm.h"
+SysTick.c: 0 warnings, 1 error
+".\PWM.axf" - 5 Error(s), 0 Warning(s).
+Target not created

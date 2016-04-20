@@ -44,6 +44,11 @@
 // re-configure the JTAG and NMI pins as GPIO, which can lock the
 // debugger out of the processor and make it permanently unable to be
 // debugged or re-programmed.
+#include <stdint.h>
+
+
+extern volatile uint32_t desiredRev;
+
 
 //------------Switch_Init------------
 // Initialize GPIO Port A bit 5 for input.

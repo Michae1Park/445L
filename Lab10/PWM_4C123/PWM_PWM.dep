@@ -1,28 +1,37 @@
 Dependencies for Project 'PWM', Target 'PWM': (DO NOT MODIFY !)
-F (.\startup.s)(0x5198397A)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork -I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
-F (.\PLL.c)(0x5545A0E2)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"-Drvmdk -DPART_LM4F120H5QR-o .\pll.o --omf_browse .\pll.crf --depend .\pll.d)
-I (D:\Program Files (x86)\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (PLL.h)(0x55463040)
-I (../inc/tm4c123gh6pm.h)(0x5388C2DA)
-F (.\PWM.c)(0x57159EA6)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"-Drvmdk -DPART_LM4F120H5QR-o .\pwm.o --omf_browse .\pwm.crf --depend .\pwm.d)
-I (D:\Program Files (x86)\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (../inc/tm4c123gh6pm.h)(0x5388C2DA)
-F (.\PWMtest.c)(0x5717157A)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"-Drvmdk -DPART_LM4F120H5QR-o .\pwmtest.o --omf_browse .\pwmtest.crf --depend .\pwmtest.d)
-I (D:\Program Files (x86)\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (PLL.h)(0x55463040)
-I (PWM.h)(0x57159F0A)
-I (Switch.h)(0x55906BE8)
-I (PeriodMeasure.h)(0x57171345)
-F (.\PeriodMeasure.c)(0x571715B4)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"-Drvmdk -DPART_LM4F120H5QR-o .\periodmeasure.o --omf_browse .\periodmeasure.crf --depend .\periodmeasure.d)
-I (D:\Program Files (x86)\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (../inc/tm4c123gh6pm.h)(0x5388C2DA)
-I (PLL.h)(0x55463040)
-I (PWM.h)(0x57159F0A)
-I (PeriodMeasure.h)(0x57171345)
-F (.\Switch.c)(0x5715B52B)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
-I (D:\Program Files (x86)\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (../inc/tm4c123gh6pm.h)(0x5388C2DA)
-I (SysTick.h)(0x5590A3B4)
-F (.\SysTick.c)(0x5590A3B4)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I "D:\Program Files (x86)\ARM\RV31\INC"-I "D:\Program Files (x86)\ARM\CMSIS\Include"-I "D:\Program Files (x86)\ARM\Inc\Luminary"-Drvmdk -DPART_LM4F120H5QR-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
-I (D:\Program Files (x86)\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (../inc/tm4c123gh6pm.h)(0x5388C2DA)
+F (.\startup.s)(0x571727DA)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\PLL.c)(0x57172835)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pll.o --omf_browse .\pll.crf --depend .\pll.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (PLL.h)(0x571727DA)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)
+F (.\PWM.c)(0x5717281A)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pwm.o --omf_browse .\pwm.crf --depend .\pwm.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)
+F (.\PWMtest.c)(0x5717FA34)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pwmtest.o --omf_browse .\pwmtest.crf --depend .\pwmtest.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
+I (PLL.h)(0x571727DA)
+I (PWM.h)(0x571727DA)
+I (Switch.h)(0x5717DD01)
+I (PeriodMeasure.h)(0x5717EAA2)
+I (ST7735.h)(0x56A8262E)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)
+F (.\PeriodMeasure.c)(0x5717EE87)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\periodmeasure.o --omf_browse .\periodmeasure.crf --depend .\periodmeasure.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)
+I (PLL.h)(0x571727DA)
+I (PWM.h)(0x571727DA)
+I (PeriodMeasure.h)(0x5717EAA2)
+I (Switch.h)(0x5717DD01)
+F (.\Switch.c)(0x5717F70D)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)
+I (SysTick.h)(0x571727DA)
+F (.\SysTick.c)(0x57172835)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\systick.o --omf_browse .\systick.crf --depend .\systick.d)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)
+F (.\ST7735.c)(0x571744BF)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735.o --omf_browse .\st7735.crf --depend .\st7735.d)
+I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
+I (ST7735.h)(0x56A8262E)
+I (..\../Shared/tm4c123gh6pm.h)(0x57142E2E)

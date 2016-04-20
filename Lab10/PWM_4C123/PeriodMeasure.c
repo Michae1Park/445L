@@ -24,10 +24,11 @@
 
 // external signal connected to PB6 (T0CCP0) (trigger on rising edge)
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 #include "PLL.h"
 #include "PWM.h"
 #include "PeriodMeasure.h"
+#include "Switch.h"
 
 #define NVIC_EN0_INT19          0x00080000  // Interrupt 19 enable
 #define PF2                     (*((volatile uint32_t *)0x40025010))
@@ -53,13 +54,15 @@ long StartCritical (void);    // previous I bit, disable interrupts
 void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 
-extern volatile uint32_t desiredRev;
-extern volatile uint32_t currentDuty;
-extern volatile uint32_t newDuty;
+volatile int32_t currentDuty;
+volatile int32_t newDuty;
 
-uint32_t currentSpeed;
-uint32_t error;
-uint32_t rps;
+volatile uint32_t currentSpeed;
+volatile int32_t error;
+volatile uint32_t rps;
+
+volatile int32_t Ui=30000;
+volatile int32_t Up;
 
 uint32_t Period;              // (1/clock) units
 uint32_t First;               // Timer0A first edge
@@ -140,11 +143,19 @@ void Timer0A_Handler(void){
 
 void integralControl(void)
 {
-	currentSpeed = 800000000/(1.65 * Period); // 0.1 Hz, 0.025rps
+	currentSpeed = 80000000/(Period*4); // 0.1 Hz, 0.025rps
+	//currentSpeed = 800000000/(1.65 * Period); // 0.1 Hz, 0.025rps
   error = desiredRev-currentSpeed;          // 0.1 Hz, 0.025rps
-	rps = currentSpeed/40;
-  newDuty = newDuty+((100*error)/256);         // calculation of duty
-  if(newDuty < 100) newDuty = 100;        		 // lower/upper bounds
-  if(newDuty > 39960) newDuty = 39960;
+	//rps = currentSpeed/40;
+	Ui= Ui +(10000*error)/256;
+	if(Ui < 100) Ui = 100;        		 // lower/upper bounds
+  if(Ui > 39960) Ui = 39960; 
+	Up=(10000*error)/256;
+	
+	newDuty=Ui+Up;
+	
+  //newDuty = newDuty+((100*error)/256);         // calculation of duty
+  if(newDuty < 23000) newDuty = 23000;        		 // lower/upper bounds
+  if(newDuty > 39960) newDuty = 39960;   
 	PWM0B_Duty(newDuty);
 }

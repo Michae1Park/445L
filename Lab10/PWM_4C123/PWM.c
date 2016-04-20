@@ -25,7 +25,7 @@
  http://users.ece.utexas.edu/~valvano/
  */
 #include <stdint.h>
-#include "../inc/tm4c123gh6pm.h"
+#include "../Shared/tm4c123gh6pm.h"
 #define PWM_0_GENA_ACTCMPAD_ONE 0x000000C0  // Set the output signal to 1
 #define PWM_0_GENA_ACTLOAD_ZERO 0x00000008  // Set the output signal to 0
 #define PWM_0_GENB_ACTCMPBD_ONE 0x00000C00  // Set the output signal to 1

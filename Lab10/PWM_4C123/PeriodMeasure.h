@@ -1,4 +1,9 @@
 
+#include <stdint.h>
+
+extern volatile int32_t currentDuty;
+extern volatile int32_t newDuty;
+
 void PeriodMeasure_Init(void);
 uint32_t returnPeriod(void);
 void integralControl(void);
