@@ -147,7 +147,7 @@ void integralControl(void)
 	//currentSpeed = 800000000/(1.65 * Period); // 0.1 Hz, 0.025rps
   error = desiredRev-currentSpeed;          // 0.1 Hz, 0.025rps
 	//rps = currentSpeed/40;
-	Ui= Ui +(10000*error)/256;
+	Ui= Ui +(5000*error)/256;
 	if(Ui < 100) Ui = 100;        		 // lower/upper bounds
   if(Ui > 39960) Ui = 39960; 
 	Up=(10000*error)/256;

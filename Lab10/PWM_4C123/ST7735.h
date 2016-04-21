@@ -432,6 +432,7 @@ void ST7735_OutString(char *ptr);
 // Output: none
 // ********************************************************
 void ST7735_SetTextColor(uint16_t color);
+void ST7735_PlotPoint2(int32_t y);
 
 // *************** Output_Init ********************
 // Standard device driver initialization function for printf

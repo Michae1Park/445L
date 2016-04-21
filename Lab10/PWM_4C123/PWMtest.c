@@ -90,7 +90,9 @@ int main(void){
 		ST7735_OutUDec(currentSpeed);
 			
 		ST7735_PlotNextErase();
+
 		ST7735_PlotPoint(currentSpeed*100);
+		ST7735_PlotPoint2(desiredRev*100);
 		ST7735_PlotNext();
 		ST7735_PlotNextErase();
 			
