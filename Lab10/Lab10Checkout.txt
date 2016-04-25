@@ -1,0 +1,13 @@
+cap removes unwanted DC generated from the tachometer.
+two diode and resistors (safety feature - preven oscillation caused by back emf)
+-upper diode: when middle goes above 3.3v, forward bias and current comes back through resistor brings down the voltage to 3.3v
+-lower diode: when middle goes below 0, forward bias, and current comes back through the diode goes down to lower resistor.
+basically prevents voltage overflow and underflow
+
+opa2350 is a comparator - if voltage coming in to (-) is bigger than the reference (+) -> high
+							else -> low
+
+						:: positive feedback saturates to the extreme
+
+
+software - input capture, measure pulse width, find period/speed and use them in PI control
