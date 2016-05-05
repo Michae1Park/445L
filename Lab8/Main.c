@@ -27,6 +27,7 @@
 #include "LED.h"
 #include "UART.h"
 #include "Timer2.h"
+#include "Timer1.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -78,6 +79,7 @@ volatile uint32_t ADCvalue;
 volatile uint32_t prevADCvalue;
 int pg=0;
 int prevpg=0;
+int pulltrigger=1;
 
 
 
@@ -108,7 +110,7 @@ int main(void)
 	ADC0_InitSWTriggerSeq3_Ch9(); 
 	Switch_Init(); 											// Init PORTB and switch initialization
 	Alarm_Init();												//togglesound flag triggers alarm
-	Timer0A_Init(0,A_440/2);
+	Timer0A_Init(0,A_440);
 //SysTick_Init(80000);
 //PortF_Init();
 
@@ -129,6 +131,8 @@ int main(void)
 	while(1){
 		for(int i =0;i<1000;i++){
 		}
+
+		if(pulltrigger==1){
     ESP8266_GetStatus();
 		//ST7735_DrawString(0, 1, "Start loop", ST7735_WHITE);
     if(ESP8266_MakeTCPConnection("query.yahooapis.com")){ // open socket in YAHOO stock server  finance.yahoo.com
@@ -161,12 +165,19 @@ int main(void)
 			ESP8266_CloseTCPConnection();
 		}
 		parseRedditBuff();
-		
+	}
 		/*
 		LED_GreenToggle();
     LED_GreenOff();
     LED_RedToggle();*/
+		if(Time_Minutes==59 ||Time_Minutes==58){
+			pulltrigger=1;
+		}
+		else{
+			pulltrigger=0;
+		}
   }
+
 }
 
 
@@ -250,7 +261,7 @@ void Change_Display(void){
 }
 void parseWeatherBuff(void){
 	printf("entered loop");
-	//ST7735_DrawString(0, 3, "parse started", ST7735_WHITE);
+	ST7735_DrawString(0, 15, "parse started", ST7735_WHITE);
 	char* tempPointer= strstr(weatherBuff, "temp");
 	if(tempPointer != NULL){
 		strncpy(temp, tempPointer+7,2);
@@ -269,7 +280,7 @@ void parseWeatherBuff(void){
 		strncpy(description,textPointer,size-1);
 		description[size]=0;
 	}
-	//ST7735_DrawString(0, 4, description, ST7735_WHITE);
+	ST7735_DrawString(0, 15, description, ST7735_WHITE);
 	char monthC[2];
 	char dayC[2];
 	char* dayPointer =strstr(weatherBuff,"created");
@@ -306,17 +317,18 @@ void parseWeatherBuff(void){
 }
 void parseGOOGBuff(void){
 	
-	//ST7735_DrawString(0, 5, "Start parse stock", ST7735_WHITE);
+ST7735_DrawString(0,15, "start goog",ST7735_WHITE);
 	char* stockGOOGPointer= strstr(stockGOOGBuff, "Alphabet Inc.");
 	if(stockGOOGPointer != NULL){
 		stockGOOGPointer+=27;
 		//memset(&GOOGquote, 0,sizeof(GOOGquote));
 		strncpy(GOOGquote, stockGOOGPointer,6);
 		GOOGquote[6]=0;
+			ST7735_DrawString(0, 15, GOOGquote, ST7735_WHITE);
 	}
 }
 void parseStockBuff(void){
-	//ST7735_DrawString(0, 7, "Start parse stock OTHERS", ST7735_WHITE);
+	ST7735_DrawString(0, 15, "Start parse stock OTHERS", ST7735_WHITE);
 	char* stockAAPLPointer=strstr(stockRestBuff, "Apple Inc.");
 	if(stockAAPLPointer != NULL){
 		stockAAPLPointer+=24;
@@ -324,7 +336,7 @@ void parseStockBuff(void){
 		strncpy(AAPLquote, stockAAPLPointer,6);
 		AAPLquote[6]=0;
 	}
-	//ST7735_DrawString(0, 7, stockAAPLPointer+10, ST7735_WHITE);
+	ST7735_DrawString(0, 15, stockAAPLPointer+10, ST7735_WHITE);
 	char* stockFBPointer=strstr(stockRestBuff+5, "Facebook, Inc.");
 	if(stockFBPointer != NULL){
 		stockFBPointer+=28;
@@ -332,11 +344,11 @@ void parseStockBuff(void){
 		strncpy(FBquote, stockFBPointer,6);
 		FBquote[6]=0;
 	}
-	//ST7735_DrawString(0, 7, stockFBPointer+10, ST7735_WHITE);
+	ST7735_DrawString(0, 15, stockFBPointer+10, ST7735_WHITE);
 }
 void parseRedditBuff(void){
 	
-	ST7735_DrawString(0, 6, "Parsed", ST7735_WHITE);
+	ST7735_DrawString(0, 15, "Parsed", ST7735_WHITE);
 	char* redditPointer= strstr(redditBuff, "title");
 	if(redditPointer != NULL){
 		redditPointer+=9;
@@ -347,5 +359,6 @@ void parseRedditBuff(void){
 		strncpy(redditTitle, redditPointer,size-17);
 		redditTitle[size-16]=0;
 		redditSize=size;
+		ST7735_DrawString(0, 15, redditTitle, ST7735_WHITE);
 	}
 }
