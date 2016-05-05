@@ -7,3 +7,4 @@
 .\esp8266.o: ../Shared/tm4c123gh6pm.h
 .\esp8266.o: esp8266.h
 .\esp8266.o: UART.h
+.\esp8266.o: ST7735.h

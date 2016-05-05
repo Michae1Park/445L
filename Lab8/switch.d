@@ -9,3 +9,4 @@
 .\switch.o: Display.h
 .\switch.o: ST7735.h
 .\switch.o: Timer0A.h
+.\switch.o: ST7735.h

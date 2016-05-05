@@ -26,6 +26,8 @@
 #include "Display.h"
 #include "ADCSWTrigger.h"
 #include "ST7735.h"
+#include "SetAlarm.h"
+#include "Timer0A.h"
 
 #define SECONDS_TIME  	0x3c
 #define MINUTES_TIME  	0x3c
@@ -38,8 +40,6 @@ volatile uint16_t Time_Seconds = 0;
 volatile uint16_t Time_Minutes = 0;
 volatile uint16_t Time_Hours = 0; 
 volatile uint8_t displayFlag;
-volatile uint32_t ADCvalue;
-volatile uint32_t prevADCvalue;
 
 // ***************** TIMER1_Init ****************
 // Activate TIMER1 interrupts to run user task periodically
@@ -67,47 +67,33 @@ void Timer1A_Handler(void){
   TIMER1_ICR_R = TIMER_ICR_TATOCINT;	// acknowledge TIMER1A timeout
 	Time_Seconds++;											//Add 1 Second when the interrupt is triggered. 
 	displayFlag = 0x01;
-
+	Alarm_Handler();
 	if(Time_Seconds>=SECONDS_TIME){
 		Time_Minutes++;
 		Time_Seconds=0;
 		displayFlag = 0x03;
-		//Display_PG1();
+		if(display_status==PG1)
+			Display_PG1();
 	}
 	if(Time_Minutes>=MINUTES_TIME){
 		Time_Hours++;
 		Time_Minutes=0;
 		displayFlag = 0x07;
-		Display_PG1();
+		if(display_status==PG1)
+			Display_PG1();
 	}
 	if(Time_Hours>=HOURS_TIME){
 		Time_Hours=0;
-		Display_PG1();
+		if(display_status==PG1)
+			Display_PG1();
 	}
 	
-	ADCvalue = ADC0_InSeq3();
-	if (!((ADCvalue>=prevADCvalue-JITTER) && (ADCvalue<=prevADCvalue+JITTER)))	//Might have to adjust jitter in case the slidepot it at the very end
-	{
-		prevADCvalue = ADCvalue;
-		if((ADCvalue>=0) && (ADCvalue<1024)) 
-		{
-			Output_Clear();
-			Display_PG1();
-		}
-		else if((ADCvalue>=1024) && (ADCvalue<2048)) 
-		{
-			Output_Clear();
-			Display_PG2();
-		}
-		else if((ADCvalue>=2048) && (ADCvalue<3072))
-		{
-			Output_Clear();
-			Display_PG3();
-		}
-		else 
-		{
-			Output_Clear();
-			Display_PG4();
-		}
+}
+void Alarm_Handler(void){
+	if(alarm_flag==1 && Time_Minutes==alarm_minutes && Time_Hours==alarm_hours){
+		toggleSound=1;
+	}
+	else{
+		toggleSound=0;
 	}
 }

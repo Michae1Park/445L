@@ -18,6 +18,7 @@
 #include "Common.h"
 #include "Systick.h"
 #include "Stopwatch.h"
+#include "esp8266.h"
 
 #define CENTER_X 64
 #define CENTER_Y 80
@@ -42,7 +43,6 @@ extern volatile uint16_t alarm_flag;
 extern char weather_temp[3];
 extern char weather_weather[6];
 volatile uint16_t display_status;
-extern volatile char temp[3];
 
 
 /*
@@ -106,7 +106,10 @@ void Display_PG1(void)
 {
 	char AsciiArray[] = {'0','1','2','3','4','5','6','7','8','9'};
 	char ch[8];
-	int weather_temp_int = 88;
+	int i;
+	sscanf(temp, "%d", &i);
+	
+	int weather_temp_int = i;
 	
 	display_status = PG1;
 	
@@ -143,7 +146,7 @@ void Display_PG1(void)
 	if(displayFlag == 0x03) 
 	{
 		displayFlag = 0xFF;
-		Output_Clear();
+		//Output_Clear();
 		ST7735_DrawCharS(0, 0, ch[0], ST7735_YELLOW, ST7735_BLACK, 2);
 		ST7735_DrawCharS(15, 0, ch[1], ST7735_YELLOW, ST7735_BLACK, 2);
 		ST7735_DrawCharS(30, 0, ch[2], ST7735_YELLOW, ST7735_BLACK, 2);
@@ -156,7 +159,7 @@ void Display_PG1(void)
 	if(displayFlag == 0x07) 
 	{
 		displayFlag = 0xFF;
-		Output_Clear();
+		//Output_Clear();
 		ST7735_DrawCharS(0, 0, ch[0], ST7735_YELLOW, ST7735_BLACK, 2);
 		ST7735_DrawCharS(15, 0, ch[1], ST7735_YELLOW, ST7735_BLACK, 2);
 		ST7735_DrawCharS(30, 0, ch[2], ST7735_YELLOW, ST7735_BLACK, 2);
@@ -178,7 +181,7 @@ void Display_PG1(void)
 	ST7735_DrawString(0, 5, "WEATHER", ST7735_GREEN);
 	ST7735_DrawString(0, 6, "Austin: ", ST7735_GREEN);	//Substitute Temperature data with data pulled from server
 	ST7735_DrawString(8, 6, temp, ST7735_GREEN);	//Substitute Temperature data with data pulled from server
-	ST7735_DrawString(8, 7, "Rainy", ST7735_GREEN);				//Substitute Weather data with data pulled from server
+	ST7735_DrawString(8, 7, description, ST7735_GREEN);				//Substitute Weather data with data pulled from server
 																												//Maybe insert an icon image to show weather
 	
 //Recommendation
@@ -238,6 +241,11 @@ void Display_PG2(void)
 	int verticalPos[6] = {5, 7, 9, 11, 13, 15};
 	
 	display_status = PG2;
+	ST7735_SetCursor(0,0);
+
+	//ST7735_OutUDec(day);
+	//ST7735_OutUDec(month);
+	
 	
 	//pulled Data
 	//Month
@@ -251,9 +259,10 @@ void Display_PG2(void)
 	char str1[3];	//tmp buffer for day
 	char str2[3]; //tmp buffer for month
 	
-	if(ACTUALDATE>6) {datemod = ACTUALDATE%7;}	//Hardcoded 20(ACTUALDATE) should be substituted with the actual date
-	strcpy(str1, "Sun");	//Hard Coded Friday should be substituted with the Day pulled from server
-	strcpy(str2, "Mar");
+	if(day>6) {datemod = day%7;}	//Hardcoded 20(ACTUALDATE) should be substituted with the actual date
+	
+	strcpy(str1, dayString);	//Hard Coded Friday should be substituted with the Day pulled from server
+	strcpy(str2, monthString);
 	
 	//determines the position of date 1 on the calendar
 	if(strcmp(str1, "Sun")==0)
@@ -354,8 +363,8 @@ void Display_PG2(void)
 		//Error
 	}
 	
-	
-	ST7735_DrawString(5, 1, "MARCH 2016", ST7735_GREEN);	//substitute with pulled data
+	ST7735_DrawString(5, 1, monthString, ST7735_GREEN);	//substitute with pulled data
+	ST7735_DrawString(9, 1, "2016", ST7735_GREEN);	//substitute with pulled data
 	ST7735_DrawString(0, 3, "SUN", ST7735_GREEN);
 	ST7735_DrawString(3, 3, "MON", ST7735_WHITE);
 	ST7735_DrawString(6, 3, "TUE", ST7735_YELLOW);
@@ -398,7 +407,7 @@ void Display_PG2(void)
 				}
 			}
 			
-			if(date == ACTUALDATE) {color = ST7735_GREEN;}
+			if(date == day) {color = ST7735_GREEN;}
 			else {color = ST7735_WHITE;}
 				
 			if(date==1) {ST7735_DrawString(horizontalPos[j], verticalPos[i], "1", color);}
@@ -450,7 +459,41 @@ void Display_PG2(void)
 void Display_PG3(void)
 {
 	display_status = PG3;
-	ST7735_DrawString(8, 1, "NEWS", ST7735_CYAN);
+	ST7735_DrawString(0, 1, "REDDIT-SHOWER THOUGHTS", ST7735_CYAN);
+	int size=redditSize;
+	char *tempPt;
+	strcpy(tempPt,redditTitle);
+	char temp1[21];
+	char temp2[21];
+	char temp3[21];
+	char temp4[21];
+	char temp5[21];
+		memcpy(temp1,redditTitle,21);
+		size-=21;
+	ST7735_DrawString(0, 2, temp1, ST7735_YELLOW);
+		//tempPt+=21;
+		if(size>0){
+		memcpy(temp2,redditTitle+21,21);
+			size-=21;
+		ST7735_DrawString(0, 3, temp2, ST7735_YELLOW);
+		}
+		if(size>0){
+		memcpy(temp3,redditTitle+42,21);
+			size-=21;
+		ST7735_DrawString(0, 4, temp3, ST7735_YELLOW);
+		}
+		if(size>0){
+		memcpy(temp4,redditTitle+63, 21);
+			size-=21;
+		ST7735_DrawString(0, 5, temp4, ST7735_YELLOW);
+		}
+		if(size>0){
+		memcpy(temp5,redditTitle+84,21);
+			size-=21;
+		ST7735_DrawString(0, 6, temp5, ST7735_YELLOW);
+		}
+
+	//ST7735_DrawString(0, 2, redditTitle, ST7735_YELLOW);
 	
 }
 
@@ -460,14 +503,15 @@ void Display_PG4(void)
 {
 	display_status = PG4;
 	
-	ST7735_DrawString(0, 0, "STOCK (APPLE)", ST7735_CYAN);
-	
-	ST7735_DrawString(0, 5, "CURRENCY XRT", ST7735_CYAN);
-	ST7735_DrawString(0, 7, "Euro: 0.89/$", ST7735_YELLOW);	//need to subsititue hardcoded values with pulled data
-	ST7735_DrawString(0, 8, "Yen: 111.55/$", ST7735_YELLOW);
-	ST7735_DrawString(0, 9, "Yuan: 6.47/$", ST7735_YELLOW);
-	
-	ST7735_DrawString(0, 12, "GAS PRICE (AUSTIN)", ST7735_CYAN);
+	ST7735_DrawString(0, 0, "STOCK (GOOG)", ST7735_CYAN);
+	ST7735_DrawString(0, 1, "$", ST7735_GREEN);
+	ST7735_DrawString(1, 1, GOOGquote, ST7735_YELLOW);
+	ST7735_DrawString(0, 5, "STOCK (AAPL)", ST7735_CYAN);
+	ST7735_DrawString(0, 6, "$", ST7735_GREEN);
+	ST7735_DrawString(1, 6, AAPLquote, ST7735_YELLOW);
+	ST7735_DrawString(0, 12, "STOCK (FB)", ST7735_CYAN);
+	ST7735_DrawString(0, 13, "$", ST7735_GREEN);
+	ST7735_DrawString(1, 13, FBquote, ST7735_YELLOW);
 }
 
 

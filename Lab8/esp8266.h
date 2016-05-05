@@ -12,6 +12,8 @@
  
  */
 
+#include <stdint.h>
+
 #ifndef ESP8266_H
 #define ESP8266_H
 
@@ -24,6 +26,29 @@
 #define ESP8266_WIFI_MODE_CLIENT            1
 #define ESP8266_WIFI_MODE_AP                2
 #define ESP8266_WIFI_MODE_AP_AND_CLIENT     3
+
+
+
+extern char weatherBuff[];
+extern char stockGOOGBuff[];
+extern char stockRestBuff[];
+extern char redditBuff[];
+
+extern char temp[3];
+extern char description[];
+extern int year;
+extern int month;
+extern int day;
+extern char yearString[5];
+extern char monthString[4];
+extern char dayString[4];
+extern char GOOGquote[7];
+extern char AAPLquote[7];
+extern char FBquote[7];
+
+extern char redditTitle[];
+
+extern int redditSize;
 
 //-------------------ESP8266_Init --------------
 // initializes the module as a client
@@ -109,7 +134,7 @@ int ESP8266_MakeTCPConnection(char *IPaddress);
 // Send a TCP packet to server 
 // Input: TCP payload to send
 // output: 1 if success, 0 if fail 
-int ESP8266_SendTCP(char* fetch);
+int ESP8266_SendTCP(char* fetch, int mode);
 
 //---------ESP8266_SetDataTransmissionMode----------
 // set data transmission mode

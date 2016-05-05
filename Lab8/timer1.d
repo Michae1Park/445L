@@ -6,3 +6,5 @@
 .\timer1.o: Display.h
 .\timer1.o: ADCSWTrigger.h
 .\timer1.o: ST7735.h
+.\timer1.o: SetAlarm.h
+.\timer1.o: Timer0A.h

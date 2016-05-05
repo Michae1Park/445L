@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
 #include "ST7735.h"
 #include "Display.h"
 #include "SetTime.h"
@@ -24,12 +26,14 @@
 #include "esp8266.h"
 #include "LED.h"
 #include "UART.h"
+#include "Timer2.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
 #define PERIOD					0x04C4B400
 #define Tensec					0x2FAF0800	//number of cycle for 10s when each cycle = 12.5ns
 #define A_440 					181818
+#define BUFFER_SIZE 1024
 
 #define DEBUG	1	//commnet out this line to disable debugging feature for measuring adc jitter
 
@@ -51,17 +55,31 @@ void AllowAlarmChangeMode(void);
 void DisAllowAlarmChangeMode(void);
 void PortF_Init(void);
 void Alarm_Init(void);
+void Change_Display(void);
+void parseWeatherBuff(void);
+void parseGOOGBuff(void);
+void parseStockBuff(void);
+void parseRedditBuff(void);
+
 extern void Output_Init2();
 
-char FetchStock[] = "GET /webservice/v1/symbols/GOOG/quote?format=json HTTP/1.1\r\nHost:finance.yahoo.com\r\nConnection: keep-alive\r\n\r\n";
-char FetchTemp[] = "GET /v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys HTTP/1.1\r\nHost:query.yahooapis.com\r\nConnection: keep-alive\r\n\r\n";
+char FetchStockGOOG[] = "GET /webservice/v1/symbols/GOOG/quote?format=json HTTP/1.1\r\nHost:finance.yahoo.com\r\nConnection: keep-alive\r\n\r\n";
+char FetchStock[] = "GET /webservice/v1/symbols/AAPL,FB/quote?format=json HTTP/1.1\r\nHost:finance.yahoo.com\r\nConnection: keep-alive\r\n\r\n";
+char FetchTemp[] = "GET /v1/public/yql?q=select+item.condition+from+weather.forecast+where+woeid+%3D+2357536&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys HTTP/1.1\r\nHost:query.yahooapis.com\r\nConnection: keep-alive\r\n\r\n";
+char FetchTrends[] ="GET /r/Showerthoughts/top/.json?limit=1 HTTP/1.1\r\nHost:www.reddit.com\r\nUser-Agent: ESP8266_HTTP_Client\r\nConnection: keep-alive\r\n\r\n";
 //volatile uint16_t Mode;
 volatile uint16_t active_In10s = 1;
 volatile uint32_t counts;
 volatile uint32_t timeout=0;
 //volatile uint16_t toggleSound=1;
 volatile uint16_t AllowAlarmChange=1;
-volatile char temp[3];
+
+volatile uint32_t ADCvalue;
+volatile uint32_t prevADCvalue;
+int pg=0;
+int prevpg=0;
+
+
 
 
 int main(void)
@@ -71,18 +89,29 @@ int main(void)
 	PLL_Init(Bus80MHz);                 // set system clock to 80 MHz
 	LED_Init();
   Output_Init();       // UART0 only used for debugging
-  printf("\n\r-----------\n\rSystem starting...\n\r");
+	ST7735_InitR(INITR_REDTAB);					// Init PORTA and LCD initializations
+	Output_Clear();		
+	ST7735_DrawString(0, 1, "System starting...\n\r", ST7735_WHITE);
+	ESP8266_Init(115200);      // global enable interrupts
+	ESP8266_GetVersionNumber();
+	Output_Clear();	
+	ST7735_DrawString(0, 1, "ESP initialized...\n\r", ST7735_WHITE);
+	Output_Clear();	
+	
+	for(int i=0;i<1000;i++){
+		int delay=0;
+	}
+	
 	Timer1_Init(0, PERIOD);							// Init Timer1 for global clock
-  ST7735_InitR(INITR_REDTAB);					// Init PORTA and LCD initializations
+	Timer2_Init(&Change_Display, 4000000);
+
 	ADC0_InitSWTriggerSeq3_Ch9(); 
 	Switch_Init(); 											// Init PORTB and switch initialization
 	Alarm_Init();												//togglesound flag triggers alarm
-	Timer0A_Init(0,A_440);
+	Timer0A_Init(0,A_440/2);
 //SysTick_Init(80000);
 //PortF_Init();
-	ST7735_DrawString(0, 2, "\n\r-----------\n\rSystem starting...\n\r", ST7735_WHITE);
-  ESP8266_Init(115200);      // global enable interrupts
-	ESP8266_GetVersionNumber();
+
 	
 	toggleSound = 1;
 //	display_status = PG1;
@@ -96,65 +125,47 @@ int main(void)
 
 //alarm snooze init
 //	toggleSound = 1;
-	display_status = PG1;
-
-
+	//display_status = PG1;
 	while(1){
+		for(int i =0;i<1000;i++){
+		}
     ESP8266_GetStatus();
-		
+		//ST7735_DrawString(0, 1, "Start loop", ST7735_WHITE);
     if(ESP8266_MakeTCPConnection("query.yahooapis.com")){ // open socket in YAHOO stock server  finance.yahoo.com
-      printf("TCPConnection established\n\r");
-			
-			LED_GreenOn();
-      ESP8266_SendTCP(FetchTemp);
-
+			//ST7735_DrawString(0, 1, "TCPloop", ST7735_WHITE);
+      //printf("TCPConnection established\n\r");
+      ESP8266_SendTCP(FetchTemp,0);
+			ESP8266_CloseTCPConnection();
+			//while(1){};
     }
+		parseWeatherBuff();
+
+		if(ESP8266_MakeTCPConnection("finance.yahoo.com")){ // open socket in YAHOO stock server  finance.yahoo.com
+      printf("TCPConnection established\n\r");
+      ESP8266_SendTCP(FetchStockGOOG,1);
+			ESP8266_CloseTCPConnection();
+    }	
+		parseGOOGBuff();
 		
-    ESP8266_CloseTCPConnection();
-//		EnableInterrupts();							// Enable Interrupts
-
-#ifdef DEBUG 				//debugging feature for collecting 1000 samples
-				int count = 0;
-				int jitterflag = 0;
-				uint32_t adc_dump[1000];
-				uint32_t maxj, minj;
-				uint32_t adcjitter;
-				volatile uint32_t ADCvalue;
 		
-				while(count<1000)
-				{
-					ADCvalue = ADC0_InSeq3();
-					adc_dump[count]=ADCvalue;
-					count++;
-				}
-				
-				jitterflag=1;			
-			
-				if (jitterflag==1)
-				{
-					maxj = adc_dump[0];
-					minj = adc_dump[0];
-					for(int i=1; i<1000; i++)
-					{
-						if(adc_dump[i]>maxj) {maxj = adc_dump[i];}
-						if(adc_dump[i]<minj) {minj = adc_dump[i];}
-					}
-					adcjitter = maxj - minj;
-				}
-				//dummy code. put break point, debug and read value of adcjitter
-				int adcjitterfound = 1;
-#endif	
-
-    while(Board_Input()==0)
-		{
-			printf("max: %d\n", maxj);
-			printf("min: %d\n", minj);
-			printf("jitter: %d\n", adcjitter);	
-      WaitForInterrupt();
-    }; // wait for touch
-
+		if(ESP8266_MakeTCPConnection("finance.yahoo.com")){ // open socket in YAHOO stock server  finance.yahoo.com
+      printf("TCPConnection established\n\r");
+      ESP8266_SendTCP(FetchStock,2);
+			ESP8266_CloseTCPConnection();
+    }
+		parseStockBuff();
+		if(ESP8266_MakeTCPConnection("www.reddit.com")){ // open socket in YAHOO stock server  finance.yahoo.com
+			//ST7735_DrawString(0, 2, "TCP established", ST7735_WHITE);
+      printf("TCPConnection established\n\r");
+      ESP8266_SendTCP(FetchTrends,3);
+			ESP8266_CloseTCPConnection();
+		}
+		parseRedditBuff();
+		
+		/*
+		LED_GreenToggle();
     LED_GreenOff();
-    LED_RedToggle();
+    LED_RedToggle();*/
   }
 }
 
@@ -193,87 +204,148 @@ void PortF_Init(void)
   GPIO_PORTF_AMSEL_R = 0;     // disable analog functionality on PF
 }
 
+void Change_Display(void){
+	ADCvalue = ADC0_InSeq3();
 
+		if((ADCvalue<1024)) 
+		{
+			pg=1;
+		}
+		else if((ADCvalue>=1024) && (ADCvalue<2048)) 
+		{
+			pg=2;
+		}
+		else if((ADCvalue>=2048) && (ADCvalue<3072))
+		{
+			pg=3;
+		}
+		else 
+		{
+			pg=4;
+		}
+		
+		if(pg==1 && pg!=prevpg){
+			Output_Clear();		
+			
+			Display_PG1();
+			//ST7735_DrawString(0, 6, dayString, ST7735_WHITE);
+			//ST7735_DrawString(0, 7, monthString, ST7735_WHITE);
+		}
+		else if(pg==2 && pg!=prevpg){
+			Output_Clear();		
+			Display_PG2();
+		}
+		else if(pg==3 &&pg!=prevpg){
+			Output_Clear();		
+			Display_PG3();
+		}
+		else if(pg==4 && pg!= prevpg){
+			Output_Clear();		
+			Display_PG4();
+		}
+		else{
+			
+		}
+		prevpg=pg;
+}
+void parseWeatherBuff(void){
+	printf("entered loop");
+	//ST7735_DrawString(0, 3, "parse started", ST7735_WHITE);
+	char* tempPointer= strstr(weatherBuff, "temp");
+	if(tempPointer != NULL){
+		strncpy(temp, tempPointer+7,2);
+		temp[2]=0;
+		//ST7735_DrawString(0, 3, temp, ST7735_WHITE);
+	}
+	char* textPointer=strstr(weatherBuff,"text");
+	//ST7735_DrawString(0, 3, textPointer, ST7735_WHITE);
+	if(textPointer != NULL){
+		int size=0;
+		textPointer+=7;
+		while(strncmp(textPointer+size,"}",1) != 0){
+			size++;
+		}
+		//memset(&description, 0,sizeof(description));
+		strncpy(description,textPointer,size-1);
+		description[size]=0;
+	}
+	//ST7735_DrawString(0, 4, description, ST7735_WHITE);
+	char monthC[2];
+	char dayC[2];
+	char* dayPointer =strstr(weatherBuff,"created");
+	if(dayPointer != NULL){
+		dayPointer+=18;
+		//memset(&dayC, 0,sizeof(dayC));
+		strncpy(dayC, dayPointer,2);
+	}
+	char* monthPointer =strstr(weatherBuff,"created");
+	if(monthPointer != NULL){
+		monthPointer+=15;
+		//memset(&monthC, 0,sizeof(monthC));
+		strncpy(monthC, monthPointer,2);
+	}	
+	sscanf(monthC, "%d", &month);
+	sscanf(dayC, "%d", &day);
 
-/*
-void AllowAlarmChangeMode(void){
-	AllowAlarmChange=1;
+	char*	dayStringPointer =strstr(weatherBuff,"date");
+	if(dayStringPointer != NULL){
+		dayStringPointer+=7;
+		//memset(&dayString, 0,sizeof(dayString));
+		strncpy(dayString, dayStringPointer,3);
+		dayString[3]=0;
+	}
+	
+	char * monthStringPointer =strstr(weatherBuff,"date");
+	if(monthStringPointer != NULL){
+		
+		monthStringPointer+=15;
+		//memset(&monthString, 0,sizeof(monthString));
+		strncpy(monthString, monthStringPointer,3);
+		monthString[3]=0;
+	}
 }
-void DisAllowAlarmChangeMode(void){
-		AllowAlarmChange=0;
-}*/
-
-/*
-// this is used for printf to output to the usb uart
-int fputc(int ch, FILE *f){
-  UART_OutChar(ch);
-  return 1;
-}*/
-
-#ifdef __TI_COMPILER_VERSION__
-  //Code Composer Studio Code
-#include "file.h"
-int uart_open(const char *path, unsigned flags, int llv_fd){
-  UART_Init();
-  return 0;
+void parseGOOGBuff(void){
+	
+	//ST7735_DrawString(0, 5, "Start parse stock", ST7735_WHITE);
+	char* stockGOOGPointer= strstr(stockGOOGBuff, "Alphabet Inc.");
+	if(stockGOOGPointer != NULL){
+		stockGOOGPointer+=27;
+		//memset(&GOOGquote, 0,sizeof(GOOGquote));
+		strncpy(GOOGquote, stockGOOGPointer,6);
+		GOOGquote[6]=0;
+	}
 }
-int uart_close( int dev_fd){
-  return 0;
+void parseStockBuff(void){
+	//ST7735_DrawString(0, 7, "Start parse stock OTHERS", ST7735_WHITE);
+	char* stockAAPLPointer=strstr(stockRestBuff, "Apple Inc.");
+	if(stockAAPLPointer != NULL){
+		stockAAPLPointer+=24;
+		//memset(&AAPLquote, 0,sizeof(AAPLquote));
+		strncpy(AAPLquote, stockAAPLPointer,6);
+		AAPLquote[6]=0;
+	}
+	//ST7735_DrawString(0, 7, stockAAPLPointer+10, ST7735_WHITE);
+	char* stockFBPointer=strstr(stockRestBuff+5, "Facebook, Inc.");
+	if(stockFBPointer != NULL){
+		stockFBPointer+=28;
+		//memset(&FBquote, 0,sizeof(FBquote));
+		strncpy(FBquote, stockFBPointer,6);
+		FBquote[6]=0;
+	}
+	//ST7735_DrawString(0, 7, stockFBPointer+10, ST7735_WHITE);
 }
-int uart_read(int dev_fd, char *buf, unsigned count){char ch;
-  ch = UART_InChar();    // receive from keyboard
-  ch = *buf;         // return by reference
-  UART_OutChar(ch);  // echo
-  return 1;
+void parseRedditBuff(void){
+	
+	ST7735_DrawString(0, 6, "Parsed", ST7735_WHITE);
+	char* redditPointer= strstr(redditBuff, "title");
+	if(redditPointer != NULL){
+		redditPointer+=9;
+		int size=0;
+		while(strncmp(redditPointer+size,":",1) != 0){
+			size++;
+		}
+		strncpy(redditTitle, redditPointer,size-17);
+		redditTitle[size-16]=0;
+		redditSize=size;
+	}
 }
-int uart_write(int dev_fd, const char *buf, unsigned count){ unsigned int num=count;
-  while(num){
-    UART_OutChar(*buf);
-    buf++;
-    num--;
-  }
-  return count;
-}
-off_t uart_lseek(int dev_fd, off_t ioffset, int origin){
-  return 0;
-}
-int uart_unlink(const char * path){
-  return 0;
-}
-int uart_rename(const char *old_name, const char *new_name){
-  return 0;
-}
-
-/*
-//------------Output_Init------------
-// Initialize the UART for 115,200 baud rate (assuming 3 MHz bus clock),
-// 8 bit word length, no parity bits, one stop bit
-// Input: none
-// Output: none
-void Output_Init(void){int ret_val; FILE *fptr;
-  UART_Init();
-  ret_val = add_device("uart", _SSA, uart_open, uart_close, uart_read, uart_write, uart_lseek, uart_unlink, uart_rename);
-  if(ret_val) return; // error
-  fptr = fopen("uart","w");
-  if(fptr == 0) return; // error
-  freopen("uart:", "w", stdout); // redirect stdout to uart
-  setvbuf(stdout, NULL, _IONBF, 0); // turn off buffering for stdout
-
-}
-#else
-//Keil uVision Code
-//------------Output_Init------------
-// Initialize the Nokia5110
-// Input: none
-// Output: none
-//------------Output_Init------------
-// Initialize the UART for 115,200 baud rate (assuming 16 MHz bus clock),
-// 8 bit word length, no parity bits, one stop bit, FIFOs enabled
-// Input: none
-// Output: none
-void Output_Init(void){
-  UART_Init();
-}
-*/
-#endif
-

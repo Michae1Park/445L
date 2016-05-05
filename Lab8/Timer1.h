@@ -39,6 +39,7 @@ extern volatile uint8_t displayFlag;	//first three bits mean hour, min second
 //          period in units (1/clockfreq)
 // Outputs: none
 void Timer1_Init(void(*task)(void), uint32_t period);
+void Alarm_Handler(void);
 
 #endif // __TIMER2INTS_H__
 

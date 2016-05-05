@@ -56,9 +56,11 @@ ESP8266    TM4C123
 #include "../Shared/tm4c123gh6pm.h"
 #include "esp8266.h"
 #include "UART.h"
+#include "ST7735.h"
+
 // Access point parameters
-#define SSID_NAME  "MIKE"
-#define PASSKEY    "mpmp1234"
+#define SSID_NAME  "PHONE"
+#define PASSKEY    "j1002k_B"
 //#define SEC_TYPE   ESP8266_ENCRYPT_MODE_WPA2_PSK
 
 #define BUFFER_SIZE 1024
@@ -105,8 +107,26 @@ volatile bool ESP8266_ClientEnabled = false;
 volatile bool ESP8266_ServerEnabled = false;
 volatile bool ESP8266_InputProcessingEnabled = false;
 volatile bool ESP8266_PageRequested = false;
-extern volatile char temp[3];
 
+char weatherBuff[BUFFER_SIZE];
+char stockGOOGBuff[BUFFER_SIZE];
+char stockRestBuff[BUFFER_SIZE];
+char redditBuff[BUFFER_SIZE];
+
+char temp[3];
+char description[6];
+int year=0;
+int month=0;
+int day=0;
+char yearString[5];
+char monthString[4];
+char dayString[4];
+char GOOGquote[7];
+char AAPLquote[7];
+char FBquote[7];
+char redditTitle[100];
+
+int redditSize;
 /*
 =======================================================================
 ==========              search FUNCTIONS                     ==========
@@ -360,7 +380,7 @@ void ESP8266_Init(uint32_t baud){
   if(ESP8266_Reset()==0){ 
     printf("Reset failure, could not reset\n\r"); while(1){};
   }
-
+		ST7735_DrawString(0, 2, "Reset passed", ST7735_WHITE);
     DelayMs(5000);
 //  ESP8266SendCommand("AT+UART_CUR=115200,8,1,0,0\r\n");
 //  UART_InChar();
@@ -371,28 +391,33 @@ void ESP8266_Init(uint32_t baud){
   if(ESP8266_SetWifiMode(ESP8266_WIFI_MODE_CLIENT)==0){ 
     printf("SetWifiMode, could not set mode\n\r"); while(1){};
   }
-
+ST7735_DrawString(0, 3, "SetWifi Passed", ST7735_WHITE);
 // step 3: AT+CWJAP="ValvanoAP","12345678"  connect to access point 
   if(ESP8266_JoinAccessPoint(SSID_NAME,PASSKEY)==0){ 
     printf("JoinAccessPoint error, could not join AP\n\r"); while(1){};
   }
+	ST7735_DrawString(0, 4, "JoinAccessPoint Passed", ST7735_WHITE);
 
 // optional step: AT+CIFSR check to see our IP address
   if(ESP8266_GetIPAddress()==0){ // data streamed to UART0, OK
     printf("GetIPAddress error, could not get IP address\n\r"); while(1){};
   } 
+	ST7735_DrawString(0, 5, "GetIPAddress Passed", ST7735_WHITE);
 // optional step: AT+CIPMUX==0 set mode to single socket 
   if(ESP8266_SetConnectionMux(0)==0){ // single socket
     printf("SetConnectionMux error, could not set connection mux\n\r"); while(1){};
   } 
+	ST7735_DrawString(0, 6, "SetMux Passed", ST7735_WHITE);
 // optional step: AT+CWLAP check to see other AP in area
   if(ESP8266_ListAccessPoints()==0){ 
     printf("ListAccessPoints, could not list access points\n\r"); while(1){};
   }
+	ST7735_DrawString(0, 7, "List Access Points", ST7735_WHITE);
 // step 4: AT+CIPMODE=0 set mode to not data mode
   if(ESP8266_SetDataTransmissionMode(0)==0){ 
     printf("SetDataTransmissionMode, could not make connection\n\r"); while(1){};
   }
+	ST7735_DrawString(0, 8, "SetDataTransmission Passed", ST7735_WHITE);
   ESP8266_InputProcessingEnabled = false; // not a server
 }
 
@@ -462,6 +487,7 @@ int ESP8266_JoinAccessPoint(const char* ssid, const char* password){
   SearchStart("ok");
   while(try){
     sprintf((char*)TXBuffer, "AT+CWJAP=\"%s\",\"%s\"\r\n", ssid, password);
+		ST7735_DrawString(0, 2, TXBuffer, ST7735_WHITE);
     ESP8266SendCommand((const char*)TXBuffer);
     DelayMsSearching(4000);
     if(SearchFound) return 1; // success
@@ -543,13 +569,14 @@ int ESP8266_GetIPAddress(void){
 int ESP8266_MakeTCPConnection(char *IPaddress){
   int try=MAXTRY;
   SearchStart("ok");
+	//DelayMsSearching(10000);
   while(try){
 		//ESP8266SendCommand("AT+CSYSWDTDISABLE\r\n"); 
     sprintf((char*)TXBuffer, "AT+CIPSTART=\"TCP\",\"%s\",80\r\n", IPaddress);
     ESP8266SendCommand(TXBuffer);   // open and connect to a socket
     DelayMsSearching(8000);
     if(SearchFound){
-			DelayMs(5000);
+			DelayMs(3000);
 			//while(1){};
 			return 1; // success		
 			
@@ -563,25 +590,175 @@ int ESP8266_MakeTCPConnection(char *IPaddress){
 // Send a TCP packet to server 
 // Input: TCP payload to send
 // output: 1 if success, 0 if fail 
-int ESP8266_SendTCP(char* fetch){
+int ESP8266_SendTCP(char* fetch,int mode){
   volatile uint32_t time,n;
   sprintf((char*)TXBuffer, "AT+CIPSEND=%d\r\n", strlen(fetch));
   ESP8266SendCommand(TXBuffer);  
-	DelayMs(5000);
-
-	printf("%s",fetch);
+	DelayMs(500);
   ESP8266SendCommand(fetch);
 	DelayMs(5000);
-	DelayMs(5000);
-	//this is when RXBuffer recieves the info
-	for(int i=0;i<BUFFER_SIZE;i++){
-		if(RXBuffer[i]=='h' && RXBuffer[i] !='}'){
-			if(RXBuffer[i+1]=='i' && RXBuffer[i+2]=='g' && RXBuffer[i+3]== 'h'){
-				sprintf(temp,"%c%c",RXBuffer[i+7],RXBuffer[i+8]);
-			}
-		}
+	//ST7735_DrawString(0, 2, "start parse temp", ST7735_WHITE);
+	
+	
+	if(mode==0)
+		strcpy(weatherBuff,RXBuffer);
+	else if(mode==1)
+		memcpy(stockGOOGBuff,RXBuffer,BUFFER_SIZE);
+	else if(mode==2)
+		memcpy(stockRestBuff,RXBuffer,BUFFER_SIZE);
+	else if(mode==3)
+		memcpy(redditBuff,RXBuffer,BUFFER_SIZE);
+	
+
+
+	//char monthC[2];
+	//char dayC[2];
+	/*
+	char* pointer2 =strstr(RXBuffer,"created");
+	if(pointer2 != NULL){
+		pointer2+=15;
+		memset(&monthC, 0,sizeof(monthC));
+		strncpy(monthC, pointer2,2);
+	}	
+	char* pointer3 =strstr(RXBuffer,"created");
+	if(pointer3 != NULL){
+		pointer3+=18;
+		memset(&dayC, 0,sizeof(dayC));
+		strncpy(dayC, pointer3,2);
 	}
-	printf("s",temp);
+	ST7735_DrawString(0, 4, monthC, ST7735_WHITE);
+	ST7735_DrawString(0, 5, dayC, ST7735_WHITE);
+	sscanf(monthC, "%d", &month);
+	sscanf(dayC, "%d", &day);*/
+
+	
+	/*
+	char Buffer[BUFFER_SIZE];
+	strcpy(Buffer,RXBuffer);
+	printf("%s",Buffer);
+	
+	printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+		printf("////////////////////////////////////////////////////////////////////////////\r\n");
+			printf("////////////////////////////////////////////////////////////////////////////\r\n");
+
+if(mode==0){
+	
+	char* pointer0= strstr(RXBuffer, "temp");
+	if(pointer0 != NULL){
+		pointer0+=7;
+		memset(&temp, 0,sizeof(temp));
+		strncpy(temp, pointer0,2);
+		temp[2]=0;
+	}
+	char* pointer1=strstr(RXBuffer,"text");
+	if(pointer1 != NULL){
+		int size=0;
+		pointer1+=7;
+		while(strncmp(pointer1+size,"}",1) != 0){
+			size++;
+		}
+		memset(&text, 0,sizeof(text));
+		strncpy(text, pointer1,size-1);
+	}
+	
+	char yearC[4];
+	char monthC[2];
+	char dayC[2];
+	char* pointer2 =strstr(RXBuffer,"created");
+	if(pointer2 != NULL){
+		pointer2+=15;
+		memset(&monthC, 0,sizeof(monthC));
+		strncpy(monthC, pointer2,2);
+	}
+	char* pointer3 =strstr(RXBuffer,"created");
+	if(pointer3 != NULL){
+		pointer3+=18;
+		memset(&dayC, 0,sizeof(dayC));
+		strncpy(dayC, pointer3,2);
+	}
+	sscanf(monthC, "%d", &month);
+	sscanf(dayC, "%d", &day);
+
+	char*	pointer4 =strtok(RXBuffer,"date");
+	if(pointer4 != NULL){
+		//pointer4+=7;
+		//memset(&dayString, 0,sizeof(dayString));
+		strncpy(dayString, pointer4+7,3);
+		//dayString[3]=0;
+	}
+	char * pointer5 =malloc(4);
+		pointer5=strstr(RXBuffer,"date");
+	
+	printf("%s", RXBuffer);
+	if(pointer5 != NULL){
+		
+		//pointer5+=15;
+		//memset(&monthString, 0,sizeof(monthString));
+		strncpy(monthString, pointer5+15,3);
+		monthString[0]='h';
+		monthString[1]='e';
+		monthString[2]='l';
+		monthString[3]='l';
+		//monthString[3]=0;
+	}
+
+	printf("````````````````````````````````````");/*
+	printf("%s\r\n",temp);
+	printf("````````````````````````````````````");
+	printf("%s\r\n",text);
+	printf("````````````````````````````````````");
+	printf("%s\r\n",dayC);
+	printf("````````````````````````````````````");
+	printf("%s\r\n",monthC);
+	printf("````````````````````````````````````");
+	printf("%s\r\n",dayString);
+	printf("````````````````````````````````````");
+	printf("%s\r\n",monthString);
+	printf("````````````````````````````````````\r\n");*/
+/*}
+else if(mode==1){
+	char* pointer6= strstr(RXBuffer, "price");
+	if(pointer6 != NULL){
+		pointer6+=10;
+		memset(&GOOGquote, 0,sizeof(GOOGquote));
+		strncpy(GOOGquote, pointer6,6);
+	}
+		printf("GOOG````````````````````````````````````");
+		printf("%s\r\n",GOOGquote);
+}
+else if(mode==2){
+	char* pointer7=strstr(RXBuffer, "price");
+	if(pointer7 != NULL){
+		pointer7+=10;
+		memset(&AAPLquote, 0,sizeof(AAPLquote));
+		strncpy(AAPLquote, pointer7,6);
+	}
+	char* pointer8=strstr(pointer7+5, "price");
+	if(pointer8 != NULL){
+		pointer8+=10;
+		memset(&FBquote, 0,sizeof(FBquote));
+		strncpy(FBquote, pointer8,6);
+	}
+	printf("AAPL````````````````````````````````````");
+	printf("%s\r\n",AAPLquote);
+	printf("FB````````````````````````````````````");
+	printf("%s\r\n",FBquote);
+	
+}
+else if(mode==3){
+}
+
+
+*/
   ServerResponseSearchStart();
   n = 8000;
   while(n&&(ServerResponseSearchFinished==0)){
@@ -591,6 +768,7 @@ int ESP8266_SendTCP(char* fetch){
     }
     n--;
   }
+	
   if(ServerResponseSearchFinished==0) return 0; // no response
   return 1; // success
 }
@@ -600,6 +778,7 @@ int ESP8266_SendTCP(char* fetch){
 // Input: none
 // output: 1 if success, 0 if fail 
 int ESP8266_CloseTCPConnection(void){
+
   int try=1;
   SearchStart("ok");
   while(try){
@@ -607,6 +786,7 @@ int ESP8266_CloseTCPConnection(void){
 		DelayMs(5000);
     ESP8266SendCommand("AT+CIPCLOSE\r\n");   
     DelayMsSearching(4000);
+		//DelayMs(10000);
     if(SearchFound) return 1; // success
     try--;
   }
@@ -655,7 +835,11 @@ int ESP8266_GetVersionNumber(void){
   while(try){
     ESP8266SendCommand("AT+GMR\r\n");
     DelayMsSearching(5000);
-    if(SearchFound) return 1; // success
+    if(SearchFound)
+		{
+			ST7735_DrawString(0, 2, RXBuffer, ST7735_WHITE);
+			return 1; // success
+		}
     try--;
   }
   return 0; // fail

@@ -53,6 +53,7 @@
 #include "Display.h"
 #include "ST7735.h"
 #include "Timer0A.h"
+#include "ST7735.h"
 
 #define GPIO_LOCK_KEY           0x4C4F434B  // Unlocks the GPIO_CR register
 #define PF0                     (*((volatile uint32_t *)0x40025004))
@@ -74,6 +75,12 @@ volatile uint16_t menu_mode;
 volatile uint16_t hours2,minutes2;
 
 volatile uint16_t Mode;
+
+int last0=1;
+int last1=1;
+int last2=1;
+int last3=1;
+
 //------------Switch_Init------------
 // Initialize GPIO Port D 
 // Input: none
@@ -81,97 +88,93 @@ volatile uint16_t Mode;
 void Switch_Init(void){ 
   SYSCTL_RCGCGPIO_R |= 0x08;        // 1) activate clock for Port D
 	int i;
- // while((SYSCTL_PRGPIO_R&0x02) == 0){};// ready?
+	i=SYSCTL_RCGCGPIO_R;
   GPIO_PORTD_DIR_R &= ~0x0F;        // PD0-3 is an input
-  //GPIO_PORTB_AFSEL_R &= ~0x0F;      // regular port function
   GPIO_PORTD_AMSEL_R &= ~0x0F;      // disable analog on PD0-3
-  //GPIO_PORTB_PCTL_R &= ~0x0000FFFF; // PCTL GPIO on PB1 
   GPIO_PORTD_DEN_R |= 0x0F;         // PD0-3 enabled as a digital port
 	GPIO_PORTD_IS_R &= ~0x0F;						// PD 0-3 is edge-sensitive
 	GPIO_PORTD_IBE_R &= ~0x0F;					// PD 0-3 is not both edges
 	GPIO_PORTD_IEV_R &= ~0x0F;					// Pd 0-3 falling edge event
 	GPIO_PORTD_ICR_R = 0x0F;						// clear flag 0-3
 	GPIO_PORTD_IM_R |= 0x0F;						// arm interrupt on PD 0-3
-	//NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
+	NVIC_PRI0_R = (NVIC_PRI0_R&0xFF00FFFF)|0x00A00000; // (5) priority 5
 	NVIC_EN0_R = 0x00000008; 						//enable interrupt 1(PB) in NVIC
+	SYSCTL_RCGCTIMER_R |= 0x08;
 }
 
-//------------Switch_Input------------
-// Read and return the status of GPIO Port A bit 5 
-// Input: none
-// Output: 0x20 if PA5 is high
-//         0x00 if PA5 is low
-uint32_t Switch_Input(void){
-  return PA5; // return 0x20(pressed) or 0(not pressed)
+void Timer3_ARM(void){
+	
+  TIMER3_CTL_R = 0x00000000;    // 1) disable TIMER3A during setup
+  TIMER3_CFG_R = 0x00000000;    // 2) configure for 32-bit mode
+  TIMER3_TAMR_R = 0x00000002;   // 3) configure for periodic mode, default down-count settings
+  TIMER3_TAILR_R = 20000000;    // 4) reload value
+  TIMER3_TAPR_R = 0;            // 5) bus clock resolution
+  TIMER3_ICR_R = 0x00000001;    // 6) clear TIMER3A timeout flag
+  TIMER3_IMR_R = 0x00000001;    // 7) arm timeout interrupt
+  NVIC_PRI8_R = (NVIC_PRI8_R&0x00FFFFFF)|0x80000000; // 8) priority 4
+// interrupts enabled in the main program after all devices initialized
+// vector number 51, interrupt number 35
+  NVIC_EN1_R = 1<<(35-32);      // 9) enable IRQ 35 in NVIC
+  TIMER3_CTL_R = 0x00000001;    // 10) enable TIMER3A
+	
+	/*
+  TIMER1_CTL_R = 0x00000000;    // 1) disable timer2A during setup
+  TIMER1_CFG_R = 0x00000000;    // 2) configure for 32-bit mode
+  TIMER1_TAMR_R = 0x00000001;   // 3) configure for periodic mode, default down-count settings
+  TIMER1_TAILR_R = 20000000;    // 4) reload value
+  TIMER1_TAPR_R = 0;            // 5) bus clock resolution
+  TIMER1_ICR_R = 0x00000001;    // 6) clear timer2A timeout flag
+  TIMER1_IMR_R = 0x00000001;    // 7) arm timeout interrupt
+  NVIC_PRI5_R = (NVIC_PRI5_R&0xFFFF00FF)|0x00008000; // 8) priority 4
+// interrupts enabled in the main program after all devices initialized
+// vector number 39, interrupt number 23
+  NVIC_EN0_R = 1<<21;           // 9) enable IRQ 23 in NVIC
+  TIMER1_CTL_R = 0x00000001;    // 10) enable timer2A*/
 }
 
-
-#define DELAY10MS 160000
-#define DELAY10US 160
-//------------Switch_Debounce------------
-// Read and return the status of the switch 
-// Input: none
-// Output: 0x02 if PB1 is high
-//         0x00 if PB1 is low
-// debounces switch
-uint32_t Switch_Debounce(void){
-uint32_t in,old,time; 
-  time = 1000; // 10 ms
-  old = Switch_Input();
-  while(time){
-    SysTick_Wait(DELAY10US); // 10us
-    in = Switch_Input();
-    if(in == old){
-      time--; // same value 
-    }else{
-      time = 1000;  // different
-      old = in;
-    }
-  }
-  return old;
+void GPIO_ARM(void){
+	GPIO_PORTD_ICR_R = 0x0F;						// clear flag 0-3
+	GPIO_PORTD_IM_R |= 0x0F;						// arm interrupt on PD 0-3
+		NVIC_EN0_R = 0x00000008; 						//enable interrupt 1(PB) in NVIC
 }
 
-//------------Switch_Debounce------------
-// wait for the switch to be touched 
-// Input: none
-// Output: none
-// debounces switch
-void Switch_WaitForTouch(void){
-// wait for release
-  while(Switch_Input()){};
-  SysTick_Wait(DELAY10MS); // 10ms
-// wait for touch
-  while(Switch_Input()==0){};
-  SysTick_Wait(800000); // 10ms
+void Timer3A_Handler(void){
+  TIMER3_IMR_R = 0x00000000;    // 7) arm timeout interrupt
+	GPIO_ARM();
+	last0=GPIO_PORTD_DATA_R & 0x01;
+	last1=GPIO_PORTD_DATA_R & 0x02;
+	last2=GPIO_PORTD_DATA_R & 0x04;
+	last3=GPIO_PORTD_DATA_R & 0x08;
+	
 }
+
 
 /*
 GIPOPortD_Handler
 ISR for Switch interface: PB0-3
 Input: None
 Output: None
+
+SetTime and SetAlarm button functionality:
+PD0 = Exit (From time_set or alarm_set mode)
+PD1 = decrement min
+PD2 = increment min
+PD3 = increment hours
+	
 */
 void GPIOPortD_Handler(void)
 {
-	//Debouncer
-//	Switch_Debounce();
-	
-	/*
-	SetTime and SetAlarm button functionality:
-	PD0 = Exit (From time_set or alarm_set mode)
-	PD1 = decrement min
-	PD2 = increment min
-	PD3 = increment hours
-	*/
+	GPIO_PORTD_IM_R &= ~0x0F;						// arm interrupt on PD 0-3
 	if(display_status == PG1)
 	{
 		
-		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		if (GPIO_PORTD_RIS_R & 0X01  && last0) //poll PD0
 		{
 			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
-			
-			if (Mode == (MENU_SET_ALARM|MENU_SET_TIME))
+			//ST7735_DrawString(0, 9, "MENU NONE", ST7735_WHITE);
+			if ((Mode == MENU_SET_ALARM) || (Mode ==MENU_SET_TIME))
 			{
+				//ST7735_DrawString(0, 9, "MENU NONE", ST7735_WHITE);
 				Mode = MENU_NONE;
 			}
 			else 
@@ -180,8 +183,9 @@ void GPIOPortD_Handler(void)
 			}
 		}
 		
-		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		if (GPIO_PORTD_RIS_R & 0X02 && last1) //poll PD1
 		{
+			//ST7735_DrawString(0, 9, "Decrement Time", ST7735_WHITE);
 			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear	
 			
 			if (Mode == MENU_SET_TIME)
@@ -196,12 +200,13 @@ void GPIOPortD_Handler(void)
 			}
 			else 
 			{
-				toggleSound ^= 1;
+				alarm_flag ^= 1;
 			}
 		}
 		
-		if (GPIO_PORTD_RIS_R & 0X04) //poll PD2
+		if (GPIO_PORTD_RIS_R & 0X04 && last2) //poll PD2
 		{
+			//ST7735_DrawString(0, 9, "Increment Time", ST7735_WHITE);
 			GPIO_PORTD_ICR_R = 0x04; //acknowledge flag1 and clear
 
 			if (Mode == MENU_SET_TIME)
@@ -220,8 +225,9 @@ void GPIOPortD_Handler(void)
 			}
 		}
 		
-		if (GPIO_PORTD_RIS_R & 0X08) //poll PD3
+		if (GPIO_PORTD_RIS_R & 0X08 && last3) //poll PD3
 		{
+			//ST7735_DrawString(0, 9, "INCREMENT HOUR", ST7735_WHITE);
 			GPIO_PORTD_ICR_R = 0x08; //acknowledge flag1 and clear
 			
 			if (Mode == MENU_SET_TIME)
@@ -236,6 +242,7 @@ void GPIOPortD_Handler(void)
 			}
 			else
 			{
+					//ST7735_DrawString(0, 9, "time-set mode********************************************", ST7735_WHITE);
 				Mode = MENU_SET_TIME;
 			}
 		}	
@@ -243,48 +250,49 @@ void GPIOPortD_Handler(void)
 	else if (display_status == PG2)
 	{
 		//snooze, update
-		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		if (GPIO_PORTD_RIS_R & 0X01 && last0) //poll PD0
 		{
 			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
 			//update info
 		}
-		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		if (GPIO_PORTD_RIS_R & 0X02 && last1) //poll PD1
 		{
 			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear
-			toggleSound ^= 1;
+			alarm_flag ^= 1;
 		}	
 	}
 	else if (display_status == PG3)
 	{
 		//snooze, update
-		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		if (GPIO_PORTD_RIS_R & 0X01 && last0) //poll PD0
 		{
 			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
 			//update info
 		}
-		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		if (GPIO_PORTD_RIS_R & 0X02 && last1) //poll PD1
 		{
 			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear
-			toggleSound ^= 1;
+			alarm_flag ^= 1;
 		}	
 	}
 	else if (display_status == PG4)
 	{
 		//snooze, update
-		if (GPIO_PORTD_RIS_R & 0X01) //poll PD0
+		if (GPIO_PORTD_RIS_R & 0X01 && last0) //poll PD0
 		{
 			GPIO_PORTD_ICR_R = 0x01; //acknowledge flag1 and clear
 			//update info
 		}
-		if (GPIO_PORTD_RIS_R & 0X02) //poll PD1
+		if (GPIO_PORTD_RIS_R & 0X02 && last1) //poll PD1
 		{
 			GPIO_PORTD_ICR_R = 0x02; //acknowledge flag1 and clear
-			toggleSound ^= 1;
+			alarm_flag ^= 1;
 		}	
 	}
 	else
 	{
 		//ERROR
 	}
+	Timer3_ARM();
 }
 

@@ -11,3 +11,4 @@
 .\display.o: Common.h
 .\display.o: Systick.h
 .\display.o: Stopwatch.h
+.\display.o: esp8266.h

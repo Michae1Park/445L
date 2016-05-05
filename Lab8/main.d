@@ -1,6 +1,8 @@
 .\main.o: Main.c
 .\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 .\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\main.o: C:\Keil\ARM\ARMCC\bin\..\include\string.h
+.\main.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
 .\main.o: ST7735.h
 .\main.o: Display.h
 .\main.o: SetTime.h
@@ -17,3 +19,4 @@
 .\main.o: esp8266.h
 .\main.o: LED.h
 .\main.o: UART.h
+.\main.o: Timer2.h
