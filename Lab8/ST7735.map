@@ -210,7 +210,9 @@ Section Cross References
     main.o(i.main) refers to main.o(i.parseRedditBuff) for parseRedditBuff
     main.o(i.main) refers to main.o(i.Change_Display) for Change_Display
     main.o(i.main) refers to timer0a.o(.data) for toggleSound
-    main.o(i.main) refers to main.o(.data) for FetchTemp
+    main.o(i.main) refers to main.o(.data) for pulltrigger
+    main.o(i.main) refers to timer1.o(.data) for Time_Minutes
+    main.o(i.parseGOOGBuff) refers to st7735.o(i.ST7735_DrawString) for ST7735_DrawString
     main.o(i.parseGOOGBuff) refers to strstr.o(.text) for strstr
     main.o(i.parseGOOGBuff) refers to strncpy.o(.text) for strncpy
     main.o(i.parseGOOGBuff) refers to esp8266.o(.bss) for stockGOOGBuff
@@ -221,12 +223,14 @@ Section Cross References
     main.o(i.parseRedditBuff) refers to strncpy.o(.text) for strncpy
     main.o(i.parseRedditBuff) refers to esp8266.o(.bss) for redditBuff
     main.o(i.parseRedditBuff) refers to esp8266.o(.data) for redditSize
+    main.o(i.parseStockBuff) refers to st7735.o(i.ST7735_DrawString) for ST7735_DrawString
     main.o(i.parseStockBuff) refers to strstr.o(.text) for strstr
     main.o(i.parseStockBuff) refers to strncpy.o(.text) for strncpy
     main.o(i.parseStockBuff) refers to esp8266.o(.bss) for stockRestBuff
     main.o(i.parseStockBuff) refers to esp8266.o(.data) for AAPLquote
     main.o(i.parseWeatherBuff) refers to _scanf_int.o(.text) for _scanf_int
     main.o(i.parseWeatherBuff) refers to printf3.o(i.__0printf$3) for __2printf
+    main.o(i.parseWeatherBuff) refers to st7735.o(i.ST7735_DrawString) for ST7735_DrawString
     main.o(i.parseWeatherBuff) refers to strstr.o(.text) for strstr
     main.o(i.parseWeatherBuff) refers to strncpy.o(.text) for strncpy
     main.o(i.parseWeatherBuff) refers to strncmp.o(.text) for strncmp
@@ -971,27 +975,27 @@ Image Symbol Table
     i.incrementMin                           0x00003c84   Section        0  settime.o(i.incrementMin)
     i.lc                                     0x00003cc0   Section        0  esp8266.o(i.lc)
     i.main                                   0x00003cd0   Section        0  main.o(i.main)
-    i.parseGOOGBuff                          0x00003e88   Section        0  main.o(i.parseGOOGBuff)
-    i.parseRedditBuff                        0x00003ec4   Section        0  main.o(i.parseRedditBuff)
-    i.parseStockBuff                         0x00003f34   Section        0  main.o(i.parseStockBuff)
-    i.parseWeatherBuff                       0x00003fa0   Section        0  main.o(i.parseWeatherBuff)
-    i.pushColor                              0x000040e8   Section        0  st7735.o(i.pushColor)
-    pushColor                                0x000040e9   Thumb Code    18  st7735.o(i.pushColor)
-    i.setAddrWindow                          0x000040fc   Section        0  st7735.o(i.setAddrWindow)
-    setAddrWindow                            0x000040fd   Thumb Code   106  st7735.o(i.setAddrWindow)
-    i.writecommand                           0x00004170   Section        0  st7735.o(i.writecommand)
-    writecommand                             0x00004171   Thumb Code    40  st7735.o(i.writecommand)
-    i.writedata                              0x000041a0   Section        0  st7735.o(i.writedata)
-    writedata                                0x000041a1   Thumb Code    24  st7735.o(i.writedata)
-    .constdata                               0x000041c0   Section     2018  st7735.o(.constdata)
-    Font                                     0x000041c0   Data        1275  st7735.o(.constdata)
-    Bcmd                                     0x000046bb   Data         103  st7735.o(.constdata)
-    Rcmd1                                    0x00004722   Data          59  st7735.o(.constdata)
-    Rcmd2green                               0x0000475d   Data          13  st7735.o(.constdata)
-    Rcmd2red                                 0x0000476a   Data          13  st7735.o(.constdata)
-    Rcmd3                                    0x00004777   Data          43  st7735.o(.constdata)
-    .constdata                               0x000049a4   Section       52  display.o(.constdata)
-    .constdata                               0x000049d8   Section       64  ctype_c.o(.constdata)
+    i.parseGOOGBuff                          0x00003eb4   Section        0  main.o(i.parseGOOGBuff)
+    i.parseRedditBuff                        0x00003f14   Section        0  main.o(i.parseRedditBuff)
+    i.parseStockBuff                         0x00003f90   Section        0  main.o(i.parseStockBuff)
+    i.parseWeatherBuff                       0x00004044   Section        0  main.o(i.parseWeatherBuff)
+    i.pushColor                              0x000041b8   Section        0  st7735.o(i.pushColor)
+    pushColor                                0x000041b9   Thumb Code    18  st7735.o(i.pushColor)
+    i.setAddrWindow                          0x000041cc   Section        0  st7735.o(i.setAddrWindow)
+    setAddrWindow                            0x000041cd   Thumb Code   106  st7735.o(i.setAddrWindow)
+    i.writecommand                           0x00004240   Section        0  st7735.o(i.writecommand)
+    writecommand                             0x00004241   Thumb Code    40  st7735.o(i.writecommand)
+    i.writedata                              0x00004270   Section        0  st7735.o(i.writedata)
+    writedata                                0x00004271   Thumb Code    24  st7735.o(i.writedata)
+    .constdata                               0x00004290   Section     2018  st7735.o(.constdata)
+    Font                                     0x00004290   Data        1275  st7735.o(.constdata)
+    Bcmd                                     0x0000478b   Data         103  st7735.o(.constdata)
+    Rcmd1                                    0x000047f2   Data          59  st7735.o(.constdata)
+    Rcmd2green                               0x0000482d   Data          13  st7735.o(.constdata)
+    Rcmd2red                                 0x0000483a   Data          13  st7735.o(.constdata)
+    Rcmd3                                    0x00004847   Data          43  st7735.o(.constdata)
+    .constdata                               0x00004a74   Section       52  display.o(.constdata)
+    .constdata                               0x00004aa8   Section       64  ctype_c.o(.constdata)
     .data                                    0x20000000   Section       44  st7735.o(.data)
     _width                                   0x2000000a   Data           2  st7735.o(.data)
     _height                                  0x2000000c   Data           2  st7735.o(.data)
@@ -1010,16 +1014,16 @@ Image Symbol Table
     prevmy                                   0x20000080   Data           8  display.o(.data)
     prevhx                                   0x20000088   Data           8  display.o(.data)
     prevhy                                   0x20000090   Data           8  display.o(.data)
-    .data                                    0x2000009c   Section      604  main.o(.data)
-    .data                                    0x200002f8   Section      124  esp8266.o(.data)
-    .data                                    0x20000374   Section       16  uart.o(.data)
-    .data                                    0x20000384   Section        4  timer2.o(.data)
-    .data                                    0x20000388   Section        4  stdout.o(.data)
-    .bss                                     0x2000038c   Section       12  st7735.o(.bss)
-    .bss                                     0x20000398   Section     7300  esp8266.o(.bss)
-    .bss                                     0x2000201c   Section     2048  uart.o(.bss)
-    RxFifo                                   0x2000201c   Data        1024  uart.o(.bss)
-    TxFifo                                   0x2000241c   Data        1024  uart.o(.bss)
+    .data                                    0x2000009c   Section      608  main.o(.data)
+    .data                                    0x200002fc   Section      124  esp8266.o(.data)
+    .data                                    0x20000378   Section       16  uart.o(.data)
+    .data                                    0x20000388   Section        4  timer2.o(.data)
+    .data                                    0x2000038c   Section        4  stdout.o(.data)
+    .bss                                     0x20000390   Section       12  st7735.o(.bss)
+    .bss                                     0x2000039c   Section     7300  esp8266.o(.bss)
+    .bss                                     0x20002020   Section     2048  uart.o(.bss)
+    RxFifo                                   0x20002020   Data        1024  uart.o(.bss)
+    TxFifo                                   0x20002420   Data        1024  uart.o(.bss)
     STACK                                    0x20002820   Section     1024  startup.o(STACK)
     StackMem                                 0x20002820   Data           0  startup.o(STACK)
 
@@ -1323,15 +1327,15 @@ Image Symbol Table
     incrementHour                            0x00003c49   Thumb Code    50  settime.o(i.incrementHour)
     incrementMin                             0x00003c85   Thumb Code    50  settime.o(i.incrementMin)
     lc                                       0x00003cc1   Thumb Code    14  esp8266.o(i.lc)
-    main                                     0x00003cd1   Thumb Code   270  main.o(i.main)
-    parseGOOGBuff                            0x00003e89   Thumb Code    34  main.o(i.parseGOOGBuff)
-    parseRedditBuff                          0x00003ec5   Thumb Code    80  main.o(i.parseRedditBuff)
-    parseStockBuff                           0x00003f35   Thumb Code    66  main.o(i.parseStockBuff)
-    parseWeatherBuff                         0x00003fa1   Thumb Code   244  main.o(i.parseWeatherBuff)
-    dBfs                                     0x000047a2   Data         512  st7735.o(.constdata)
-    __ctype_categories                       0x000049d8   Data          64  ctype_c.o(.constdata)
-    Region$$Table$$Base                      0x00004a18   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00004a38   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x00003cd1   Thumb Code   308  main.o(i.main)
+    parseGOOGBuff                            0x00003eb5   Thumb Code    58  main.o(i.parseGOOGBuff)
+    parseRedditBuff                          0x00003f15   Thumb Code    90  main.o(i.parseRedditBuff)
+    parseStockBuff                           0x00003f91   Thumb Code   112  main.o(i.parseStockBuff)
+    parseWeatherBuff                         0x00004045   Thumb Code   272  main.o(i.parseWeatherBuff)
+    dBfs                                     0x00004872   Data         512  st7735.o(.constdata)
+    __ctype_categories                       0x00004aa8   Data          64  ctype_c.o(.constdata)
+    Region$$Table$$Base                      0x00004ae8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00004b08   Number         0  anon$$obj.o(Region$$Table)
     StX                                      0x20000000   Data           4  st7735.o(.data)
     StY                                      0x20000004   Data           4  st7735.o(.data)
     StTextColor                              0x20000008   Data           2  st7735.o(.data)
@@ -1369,58 +1373,59 @@ Image Symbol Table
     AllowAlarmChange                         0x200002e0   Data           2  main.o(.data)
     pg                                       0x200002e4   Data           4  main.o(.data)
     prevpg                                   0x200002e8   Data           4  main.o(.data)
-    counts                                   0x200002ec   Data           4  main.o(.data)
-    ADCvalue                                 0x200002f0   Data           4  main.o(.data)
-    prevADCvalue                             0x200002f4   Data           4  main.o(.data)
-    RXBufferIndex                            0x200002f8   Data           4  esp8266.o(.data)
-    LastReturnIndex                          0x200002fc   Data           4  esp8266.o(.data)
-    CurrentReturnIndex                       0x20000300   Data           4  esp8266.o(.data)
-    ServerResponseIndex                      0x20000304   Data           4  esp8266.o(.data)
-    ESP8266_ProcessBuffer                    0x20000308   Data           1  esp8266.o(.data)
-    ESP8266_EchoResponse                     0x20000309   Data           1  esp8266.o(.data)
-    ESP8266_ResponseComplete                 0x2000030a   Data           1  esp8266.o(.data)
-    ESP8266_APEnabled                        0x2000030b   Data           1  esp8266.o(.data)
-    ESP8266_ClientEnabled                    0x2000030c   Data           1  esp8266.o(.data)
-    ESP8266_ServerEnabled                    0x2000030d   Data           1  esp8266.o(.data)
-    ESP8266_InputProcessingEnabled           0x2000030e   Data           1  esp8266.o(.data)
-    ESP8266_PageRequested                    0x2000030f   Data           1  esp8266.o(.data)
-    year                                     0x20000310   Data           4  esp8266.o(.data)
-    month                                    0x20000314   Data           4  esp8266.o(.data)
-    day                                      0x20000318   Data           4  esp8266.o(.data)
-    SearchLooking                            0x2000031c   Data           1  esp8266.o(.data)
-    SearchFound                              0x2000031d   Data           1  esp8266.o(.data)
-    SearchIndex                              0x20000320   Data           4  esp8266.o(.data)
-    ServerResponseSearchString               0x20000324   Data          16  esp8266.o(.data)
-    ServerResponseSearchFinished             0x20000334   Data           4  esp8266.o(.data)
-    ServerResponseSearchIndex                0x20000338   Data           4  esp8266.o(.data)
-    ServerResponseSearchLooking              0x2000033c   Data           4  esp8266.o(.data)
-    ESP8266_ServerPort                       0x20000340   Data           2  esp8266.o(.data)
-    ESP8266_ServerTimeout                    0x20000342   Data           2  esp8266.o(.data)
-    temp                                     0x20000344   Data           3  esp8266.o(.data)
-    description                              0x20000347   Data           6  esp8266.o(.data)
-    yearString                               0x2000034d   Data           5  esp8266.o(.data)
-    monthString                              0x20000352   Data           4  esp8266.o(.data)
-    dayString                                0x20000356   Data           4  esp8266.o(.data)
-    GOOGquote                                0x2000035a   Data           7  esp8266.o(.data)
-    AAPLquote                                0x20000361   Data           7  esp8266.o(.data)
-    FBquote                                  0x20000368   Data           7  esp8266.o(.data)
-    redditSize                               0x20000370   Data           4  esp8266.o(.data)
-    RxPutI                                   0x20000374   Data           4  uart.o(.data)
-    RxGetI                                   0x20000378   Data           4  uart.o(.data)
-    TxPutI                                   0x2000037c   Data           4  uart.o(.data)
-    TxGetI                                   0x20000380   Data           4  uart.o(.data)
-    PeriodicTask3                            0x20000384   Data           4  timer2.o(.data)
-    __stdout                                 0x20000388   Data           4  stdout.o(.data)
-    Message                                  0x2000038c   Data          12  st7735.o(.bss)
-    RXBuffer                                 0x20000398   Data        1024  esp8266.o(.bss)
-    TXBuffer                                 0x20000798   Data        1024  esp8266.o(.bss)
-    ServerResponseBuffer                     0x20000b98   Data        1024  esp8266.o(.bss)
-    weatherBuff                              0x20000f98   Data        1024  esp8266.o(.bss)
-    stockGOOGBuff                            0x20001398   Data        1024  esp8266.o(.bss)
-    stockRestBuff                            0x20001798   Data        1024  esp8266.o(.bss)
-    redditBuff                               0x20001b98   Data        1024  esp8266.o(.bss)
-    redditTitle                              0x20001f98   Data         100  esp8266.o(.bss)
-    SearchString                             0x20001ffc   Data          32  esp8266.o(.bss)
+    pulltrigger                              0x200002ec   Data           4  main.o(.data)
+    counts                                   0x200002f0   Data           4  main.o(.data)
+    ADCvalue                                 0x200002f4   Data           4  main.o(.data)
+    prevADCvalue                             0x200002f8   Data           4  main.o(.data)
+    RXBufferIndex                            0x200002fc   Data           4  esp8266.o(.data)
+    LastReturnIndex                          0x20000300   Data           4  esp8266.o(.data)
+    CurrentReturnIndex                       0x20000304   Data           4  esp8266.o(.data)
+    ServerResponseIndex                      0x20000308   Data           4  esp8266.o(.data)
+    ESP8266_ProcessBuffer                    0x2000030c   Data           1  esp8266.o(.data)
+    ESP8266_EchoResponse                     0x2000030d   Data           1  esp8266.o(.data)
+    ESP8266_ResponseComplete                 0x2000030e   Data           1  esp8266.o(.data)
+    ESP8266_APEnabled                        0x2000030f   Data           1  esp8266.o(.data)
+    ESP8266_ClientEnabled                    0x20000310   Data           1  esp8266.o(.data)
+    ESP8266_ServerEnabled                    0x20000311   Data           1  esp8266.o(.data)
+    ESP8266_InputProcessingEnabled           0x20000312   Data           1  esp8266.o(.data)
+    ESP8266_PageRequested                    0x20000313   Data           1  esp8266.o(.data)
+    year                                     0x20000314   Data           4  esp8266.o(.data)
+    month                                    0x20000318   Data           4  esp8266.o(.data)
+    day                                      0x2000031c   Data           4  esp8266.o(.data)
+    SearchLooking                            0x20000320   Data           1  esp8266.o(.data)
+    SearchFound                              0x20000321   Data           1  esp8266.o(.data)
+    SearchIndex                              0x20000324   Data           4  esp8266.o(.data)
+    ServerResponseSearchString               0x20000328   Data          16  esp8266.o(.data)
+    ServerResponseSearchFinished             0x20000338   Data           4  esp8266.o(.data)
+    ServerResponseSearchIndex                0x2000033c   Data           4  esp8266.o(.data)
+    ServerResponseSearchLooking              0x20000340   Data           4  esp8266.o(.data)
+    ESP8266_ServerPort                       0x20000344   Data           2  esp8266.o(.data)
+    ESP8266_ServerTimeout                    0x20000346   Data           2  esp8266.o(.data)
+    temp                                     0x20000348   Data           3  esp8266.o(.data)
+    description                              0x2000034b   Data           6  esp8266.o(.data)
+    yearString                               0x20000351   Data           5  esp8266.o(.data)
+    monthString                              0x20000356   Data           4  esp8266.o(.data)
+    dayString                                0x2000035a   Data           4  esp8266.o(.data)
+    GOOGquote                                0x2000035e   Data           7  esp8266.o(.data)
+    AAPLquote                                0x20000365   Data           7  esp8266.o(.data)
+    FBquote                                  0x2000036c   Data           7  esp8266.o(.data)
+    redditSize                               0x20000374   Data           4  esp8266.o(.data)
+    RxPutI                                   0x20000378   Data           4  uart.o(.data)
+    RxGetI                                   0x2000037c   Data           4  uart.o(.data)
+    TxPutI                                   0x20000380   Data           4  uart.o(.data)
+    TxGetI                                   0x20000384   Data           4  uart.o(.data)
+    PeriodicTask3                            0x20000388   Data           4  timer2.o(.data)
+    __stdout                                 0x2000038c   Data           4  stdout.o(.data)
+    Message                                  0x20000390   Data          12  st7735.o(.bss)
+    RXBuffer                                 0x2000039c   Data        1024  esp8266.o(.bss)
+    TXBuffer                                 0x2000079c   Data        1024  esp8266.o(.bss)
+    ServerResponseBuffer                     0x20000b9c   Data        1024  esp8266.o(.bss)
+    weatherBuff                              0x20000f9c   Data        1024  esp8266.o(.bss)
+    stockGOOGBuff                            0x2000139c   Data        1024  esp8266.o(.bss)
+    stockRestBuff                            0x2000179c   Data        1024  esp8266.o(.bss)
+    redditBuff                               0x20001b9c   Data        1024  esp8266.o(.bss)
+    redditTitle                              0x20001f9c   Data         100  esp8266.o(.bss)
+    SearchString                             0x20002000   Data          32  esp8266.o(.bss)
     __initial_sp                             0x20002c20   Data           0  startup.o(STACK)
 
 
@@ -1431,84 +1436,84 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00004dc4, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00004bbc])
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00004e98, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00004c90])
 
-    Execution Region ER_RO (Base: 0x00000000, Size: 0x00004a38, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x00000000, Size: 0x00004b08, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000284   Code   RO            3  * RESET               startup.o
-    0x00000284   0x00000000   Code   RO         1141  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000284   0x00000004   Code   RO         1425    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x00000288   0x00000004   Code   RO         1428    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x0000028c   0x00000000   Code   RO         1430    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x0000028c   0x00000000   Code   RO         1432    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x0000028c   0x00000008   Code   RO         1433    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x00000294   0x00000000   Code   RO         1435    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x00000294   0x00000000   Code   RO         1437    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x00000294   0x00000004   Code   RO         1426    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x00000284   0x00000000   Code   RO         1145  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000284   0x00000004   Code   RO         1429    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000288   0x00000004   Code   RO         1432    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000028c   0x00000000   Code   RO         1434    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000028c   0x00000000   Code   RO         1436    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000028c   0x00000008   Code   RO         1437    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000294   0x00000000   Code   RO         1439    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000294   0x00000000   Code   RO         1441    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000294   0x00000004   Code   RO         1430    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x00000298   0x0000001c   Code   RO            4    .text               startup.o
-    0x000002b4   0x00000024   Code   RO         1144    .text               mc_w.l(memcpya.o)
-    0x000002d8   0x00000024   Code   RO         1146    .text               mc_w.l(strstr.o)
-    0x000002fc   0x00000018   Code   RO         1148    .text               mc_w.l(strncpy.o)
-    0x00000314   0x0000000e   Code   RO         1150    .text               mc_w.l(strlen.o)
-    0x00000322   0x0000001c   Code   RO         1152    .text               mc_w.l(strcmp.o)
-    0x0000033e   0x00000012   Code   RO         1154    .text               mc_w.l(strcpy.o)
-    0x00000350   0x0000001e   Code   RO         1156    .text               mc_w.l(strncmp.o)
+    0x000002b4   0x00000024   Code   RO         1148    .text               mc_w.l(memcpya.o)
+    0x000002d8   0x00000024   Code   RO         1150    .text               mc_w.l(strstr.o)
+    0x000002fc   0x00000018   Code   RO         1152    .text               mc_w.l(strncpy.o)
+    0x00000314   0x0000000e   Code   RO         1154    .text               mc_w.l(strlen.o)
+    0x00000322   0x0000001c   Code   RO         1156    .text               mc_w.l(strcmp.o)
+    0x0000033e   0x00000012   Code   RO         1158    .text               mc_w.l(strcpy.o)
+    0x00000350   0x0000001e   Code   RO         1160    .text               mc_w.l(strncmp.o)
     0x0000036e   0x00000002   PAD
-    0x00000370   0x00000038   Code   RO         1421    .text               mc_w.l(__0sscanf.o)
-    0x000003a8   0x00000150   Code   RO         1423    .text               mc_w.l(_scanf_int.o)
-    0x000004f8   0x0000002c   Code   RO         1440    .text               mc_w.l(uidiv.o)
-    0x00000524   0x0000001c   Code   RO         1444    .text               mc_w.l(_chval.o)
-    0x00000540   0x00000028   Code   RO         1446    .text               mc_w.l(scanf_char.o)
-    0x00000568   0x00000040   Code   RO         1448    .text               mc_w.l(_sgetc.o)
-    0x000005a8   0x00000024   Code   RO         1461    .text               mc_w.l(init.o)
-    0x000005cc   0x0000000a   Code   RO         1469    .text               mc_w.l(isspace_c.o)
+    0x00000370   0x00000038   Code   RO         1425    .text               mc_w.l(__0sscanf.o)
+    0x000003a8   0x00000150   Code   RO         1427    .text               mc_w.l(_scanf_int.o)
+    0x000004f8   0x0000002c   Code   RO         1444    .text               mc_w.l(uidiv.o)
+    0x00000524   0x0000001c   Code   RO         1448    .text               mc_w.l(_chval.o)
+    0x00000540   0x00000028   Code   RO         1450    .text               mc_w.l(scanf_char.o)
+    0x00000568   0x00000040   Code   RO         1452    .text               mc_w.l(_sgetc.o)
+    0x000005a8   0x00000024   Code   RO         1465    .text               mc_w.l(init.o)
+    0x000005cc   0x0000000a   Code   RO         1473    .text               mc_w.l(isspace_c.o)
     0x000005d6   0x00000002   PAD
-    0x000005d8   0x0000032c   Code   RO         1471    .text               mc_w.l(_scanf.o)
-    0x00000904   0x00000028   Code   RO         1475    .text               mc_w.l(ctype_c.o)
-    0x0000092c   0x0000005c   Code   RO         1486    .text               mc_w.l(__dczerorl2.o)
-    0x00000988   0x0000002c   Code   RO          666    i.ADC0_InSeq3       adcswtrigger.o
-    0x000009b4   0x000000ec   Code   RO          667    i.ADC0_InitSWTriggerSeq3_Ch9  adcswtrigger.o
+    0x000005d8   0x0000032c   Code   RO         1475    .text               mc_w.l(_scanf.o)
+    0x00000904   0x00000028   Code   RO         1479    .text               mc_w.l(ctype_c.o)
+    0x0000092c   0x0000005c   Code   RO         1490    .text               mc_w.l(__dczerorl2.o)
+    0x00000988   0x0000002c   Code   RO          670    i.ADC0_InSeq3       adcswtrigger.o
+    0x000009b4   0x000000ec   Code   RO          671    i.ADC0_InitSWTriggerSeq3_Ch9  adcswtrigger.o
     0x00000aa0   0x00000048   Code   RO          389    i.Alarm_Handler     timer1.o
     0x00000ae8   0x00000078   Code   RO          599    i.Alarm_Init        main.o
     0x00000b60   0x000000e8   Code   RO          600    i.Change_Display    main.o
     0x00000c48   0x00000020   Code   RO           34    i.Delay1ms          st7735.o
-    0x00000c68   0x00000020   Code   RO          744    i.DelayMs           esp8266.o
-    0x00000c88   0x00000030   Code   RO          745    i.DelayMsSearching  esp8266.o
+    0x00000c68   0x00000020   Code   RO          748    i.DelayMs           esp8266.o
+    0x00000c88   0x00000030   Code   RO          749    i.DelayMsSearching  esp8266.o
     0x00000cb8   0x00000468   Code   RO          543    i.Display_PG1       display.o
     0x00001120   0x000009ac   Code   RO          544    i.Display_PG2       display.o
     0x00001acc   0x000000e8   Code   RO          545    i.Display_PG3       display.o
     0x00001bb4   0x000000c8   Code   RO          546    i.Display_PG4       display.o
-    0x00001c7c   0x0000007c   Code   RO          746    i.ESP8266FIFOtoBuffer  esp8266.o
-    0x00001cf8   0x0000001a   Code   RO          748    i.ESP8266SendCommand  esp8266.o
+    0x00001c7c   0x0000007c   Code   RO          750    i.ESP8266FIFOtoBuffer  esp8266.o
+    0x00001cf8   0x0000001a   Code   RO          752    i.ESP8266SendCommand  esp8266.o
     0x00001d12   0x00000002   PAD
-    0x00001d14   0x00000064   Code   RO          749    i.ESP8266_CloseTCPConnection  esp8266.o
-    0x00001d78   0x0000000c   Code   RO          753    i.ESP8266_EnableRXInterrupt  esp8266.o
-    0x00001d84   0x00000044   Code   RO          755    i.ESP8266_GetIPAddress  esp8266.o
-    0x00001dc8   0x00000048   Code   RO          756    i.ESP8266_GetStatus  esp8266.o
-    0x00001e10   0x00000054   Code   RO          757    i.ESP8266_GetVersionNumber  esp8266.o
-    0x00001e64   0x0000033c   Code   RO          758    i.ESP8266_Init      esp8266.o
-    0x000021a0   0x00000110   Code   RO          759    i.ESP8266_InitUART  esp8266.o
-    0x000022b0   0x00000070   Code   RO          760    i.ESP8266_JoinAccessPoint  esp8266.o
-    0x00002320   0x00000044   Code   RO          761    i.ESP8266_ListAccessPoints  esp8266.o
-    0x00002364   0x0000006c   Code   RO          762    i.ESP8266_MakeTCPConnection  esp8266.o
-    0x000023d0   0x00000018   Code   RO          763    i.ESP8266_PrintChar  esp8266.o
-    0x000023e8   0x00000074   Code   RO          765    i.ESP8266_Reset     esp8266.o
-    0x0000245c   0x000000dc   Code   RO          766    i.ESP8266_SendTCP   esp8266.o
-    0x00002538   0x00000058   Code   RO          767    i.ESP8266_SetConnectionMux  esp8266.o
-    0x00002590   0x00000058   Code   RO          768    i.ESP8266_SetDataTransmissionMode  esp8266.o
-    0x000025e8   0x00000060   Code   RO          770    i.ESP8266_SetWifiMode  esp8266.o
+    0x00001d14   0x00000064   Code   RO          753    i.ESP8266_CloseTCPConnection  esp8266.o
+    0x00001d78   0x0000000c   Code   RO          757    i.ESP8266_EnableRXInterrupt  esp8266.o
+    0x00001d84   0x00000044   Code   RO          759    i.ESP8266_GetIPAddress  esp8266.o
+    0x00001dc8   0x00000048   Code   RO          760    i.ESP8266_GetStatus  esp8266.o
+    0x00001e10   0x00000054   Code   RO          761    i.ESP8266_GetVersionNumber  esp8266.o
+    0x00001e64   0x0000033c   Code   RO          762    i.ESP8266_Init      esp8266.o
+    0x000021a0   0x00000110   Code   RO          763    i.ESP8266_InitUART  esp8266.o
+    0x000022b0   0x00000070   Code   RO          764    i.ESP8266_JoinAccessPoint  esp8266.o
+    0x00002320   0x00000044   Code   RO          765    i.ESP8266_ListAccessPoints  esp8266.o
+    0x00002364   0x0000006c   Code   RO          766    i.ESP8266_MakeTCPConnection  esp8266.o
+    0x000023d0   0x00000018   Code   RO          767    i.ESP8266_PrintChar  esp8266.o
+    0x000023e8   0x00000074   Code   RO          769    i.ESP8266_Reset     esp8266.o
+    0x0000245c   0x000000dc   Code   RO          770    i.ESP8266_SendTCP   esp8266.o
+    0x00002538   0x00000058   Code   RO          771    i.ESP8266_SetConnectionMux  esp8266.o
+    0x00002590   0x00000058   Code   RO          772    i.ESP8266_SetDataTransmissionMode  esp8266.o
+    0x000025e8   0x00000060   Code   RO          774    i.ESP8266_SetWifiMode  esp8266.o
     0x00002648   0x00000220   Code   RO          329    i.GPIOPortD_Handler  switch.o
     0x00002868   0x00000028   Code   RO          330    i.GPIO_ARM          switch.o
-    0x00002890   0x0000006c   Code   RO          689    i.LED_Init          led.o
+    0x00002890   0x0000006c   Code   RO          693    i.LED_Init          led.o
     0x000028fc   0x0000000a   Code   RO           35    i.Output_Clear      st7735.o
-    0x00002906   0x00000008   Code   RO          965    i.Output_Init       uart.o
+    0x00002906   0x00000008   Code   RO          969    i.Output_Init       uart.o
     0x0000290e   0x00000002   PAD
     0x00002910   0x0000007c   Code   RO           12    i.PLL_Init          pll.o
-    0x0000298c   0x00000024   Code   RO          967    i.RxFifo_Init       uart.o
-    0x000029b0   0x0000003c   Code   RO          968    i.RxFifo_Put        uart.o
-    0x000029ec   0x00000018   Code   RO          969    i.RxFifo_Size       uart.o
+    0x0000298c   0x00000024   Code   RO          971    i.RxFifo_Init       uart.o
+    0x000029b0   0x0000003c   Code   RO          972    i.RxFifo_Put        uart.o
+    0x000029ec   0x00000018   Code   RO          973    i.RxFifo_Size       uart.o
     0x00002a04   0x000000f4   Code   RO           41    i.ST7735_DrawCharS  st7735.o
     0x00002af8   0x00000048   Code   RO           45    i.ST7735_DrawPixel  st7735.o
     0x00002b40   0x00000056   Code   RO           46    i.ST7735_DrawString  st7735.o
@@ -1521,68 +1526,68 @@ Memory Map of the image
     0x00002ea0   0x00000018   Code   RO           54    i.ST7735_OutString  st7735.o
     0x00002eb8   0x0000008c   Code   RO           55    i.ST7735_OutUDec    st7735.o
     0x00002f44   0x00000020   Code   RO           66    i.ST7735_SetCursor  st7735.o
-    0x00002f64   0x0000004c   Code   RO          772    i.SearchCheck       esp8266.o
-    0x00002fb0   0x00000030   Code   RO          773    i.SearchStart       esp8266.o
-    0x00002fe0   0x000000d4   Code   RO          774    i.ServerResponseSearchCheck  esp8266.o
-    0x000030b4   0x00000040   Code   RO          775    i.ServerResponseSearchStart  esp8266.o
+    0x00002f64   0x0000004c   Code   RO          776    i.SearchCheck       esp8266.o
+    0x00002fb0   0x00000030   Code   RO          777    i.SearchStart       esp8266.o
+    0x00002fe0   0x000000d4   Code   RO          778    i.ServerResponseSearchCheck  esp8266.o
+    0x000030b4   0x00000040   Code   RO          779    i.ServerResponseSearchStart  esp8266.o
     0x000030f4   0x000000b4   Code   RO          331    i.Switch_Init       switch.o
     0x000031a8   0x00000028   Code   RO          520    i.Timer0A_Handler   timer0a.o
     0x000031d0   0x0000006c   Code   RO          521    i.Timer0A_Init      timer0a.o
     0x0000323c   0x000000a0   Code   RO          390    i.Timer1A_Handler   timer1.o
     0x000032dc   0x00000060   Code   RO          391    i.Timer1_Init       timer1.o
-    0x0000333c   0x00000018   Code   RO         1120    i.Timer2A_Handler   timer2.o
-    0x00003354   0x00000060   Code   RO         1121    i.Timer2_Init       timer2.o
+    0x0000333c   0x00000018   Code   RO         1124    i.Timer2A_Handler   timer2.o
+    0x00003354   0x00000060   Code   RO         1125    i.Timer2_Init       timer2.o
     0x000033b4   0x00000060   Code   RO          332    i.Timer3A_Handler   switch.o
     0x00003414   0x0000004c   Code   RO          333    i.Timer3_ARM        switch.o
-    0x00003460   0x0000003c   Code   RO          970    i.TxFifo_Get        uart.o
-    0x0000349c   0x00000024   Code   RO          971    i.TxFifo_Init       uart.o
-    0x000034c0   0x0000003c   Code   RO          972    i.TxFifo_Put        uart.o
-    0x000034fc   0x00000018   Code   RO          973    i.TxFifo_Size       uart.o
-    0x00003514   0x00000058   Code   RO          974    i.UART0_Handler     uart.o
-    0x0000356c   0x00000030   Code   RO          776    i.UART1_Handler     esp8266.o
-    0x0000359c   0x000000c8   Code   RO          980    i.UART_Init         uart.o
-    0x00003664   0x00000034   Code   RO          981    i.UART_OutChar      uart.o
-    0x00003698   0x00000034   Code   RO          982    i.UART_OutCharNonBlock  uart.o
-    0x000036cc   0x00000020   Code   RO         1249    i.__0printf$3       mc_w.l(printf3.o)
-    0x000036ec   0x00000028   Code   RO         1251    i.__0sprintf$3      mc_w.l(printf3.o)
-    0x00003714   0x0000000e   Code   RO         1480    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x00003722   0x00000002   Code   RO         1481    i.__scatterload_null  mc_w.l(handlers.o)
-    0x00003724   0x0000000e   Code   RO         1482    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x00003460   0x0000003c   Code   RO          974    i.TxFifo_Get        uart.o
+    0x0000349c   0x00000024   Code   RO          975    i.TxFifo_Init       uart.o
+    0x000034c0   0x0000003c   Code   RO          976    i.TxFifo_Put        uart.o
+    0x000034fc   0x00000018   Code   RO          977    i.TxFifo_Size       uart.o
+    0x00003514   0x00000058   Code   RO          978    i.UART0_Handler     uart.o
+    0x0000356c   0x00000030   Code   RO          780    i.UART1_Handler     esp8266.o
+    0x0000359c   0x000000c8   Code   RO          984    i.UART_Init         uart.o
+    0x00003664   0x00000034   Code   RO          985    i.UART_OutChar      uart.o
+    0x00003698   0x00000034   Code   RO          986    i.UART_OutCharNonBlock  uart.o
+    0x000036cc   0x00000020   Code   RO         1253    i.__0printf$3       mc_w.l(printf3.o)
+    0x000036ec   0x00000028   Code   RO         1255    i.__0sprintf$3      mc_w.l(printf3.o)
+    0x00003714   0x0000000e   Code   RO         1484    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x00003722   0x00000002   Code   RO         1485    i.__scatterload_null  mc_w.l(handlers.o)
+    0x00003724   0x0000000e   Code   RO         1486    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x00003732   0x00000002   PAD
-    0x00003734   0x000001b8   Code   RO         1256    i._printf_core      mc_w.l(printf3.o)
-    0x000038ec   0x0000000a   Code   RO         1258    i._sputc            mc_w.l(printf3.o)
+    0x00003734   0x000001b8   Code   RO         1260    i._printf_core      mc_w.l(printf3.o)
+    0x000038ec   0x0000000a   Code   RO         1262    i._sputc            mc_w.l(printf3.o)
     0x000038f6   0x00000056   Code   RO           72    i.commandList       st7735.o
     0x0000394c   0x00000184   Code   RO           73    i.commonInit        st7735.o
-    0x00003ad0   0x0000002c   Code   RO          986    i.copyHardwareToSoftware  uart.o
-    0x00003afc   0x0000002c   Code   RO          987    i.copySoftwareToHardware  uart.o
+    0x00003ad0   0x0000002c   Code   RO          990    i.copyHardwareToSoftware  uart.o
+    0x00003afc   0x0000002c   Code   RO          991    i.copySoftwareToHardware  uart.o
     0x00003b28   0x00000030   Code   RO          458    i.decrementAlarmMin  setalarm.o
     0x00003b58   0x00000038   Code   RO          420    i.decrementMin      settime.o
     0x00003b90   0x00000048   Code   RO           75    i.fillmessage       st7735.o
-    0x00003bd8   0x00000010   Code   RO          988    i.fputc             uart.o
+    0x00003bd8   0x00000010   Code   RO          992    i.fputc             uart.o
     0x00003be8   0x00000030   Code   RO          459    i.incrementAlarmHour  setalarm.o
     0x00003c18   0x00000030   Code   RO          460    i.incrementAlarmMin  setalarm.o
     0x00003c48   0x0000003c   Code   RO          421    i.incrementHour     settime.o
     0x00003c84   0x0000003c   Code   RO          422    i.incrementMin      settime.o
-    0x00003cc0   0x0000000e   Code   RO          777    i.lc                esp8266.o
+    0x00003cc0   0x0000000e   Code   RO          781    i.lc                esp8266.o
     0x00003cce   0x00000002   PAD
-    0x00003cd0   0x000001b8   Code   RO          602    i.main              main.o
-    0x00003e88   0x0000003c   Code   RO          603    i.parseGOOGBuff     main.o
-    0x00003ec4   0x00000070   Code   RO          604    i.parseRedditBuff   main.o
-    0x00003f34   0x0000006c   Code   RO          605    i.parseStockBuff    main.o
-    0x00003fa0   0x00000148   Code   RO          606    i.parseWeatherBuff  main.o
-    0x000040e8   0x00000012   Code   RO           76    i.pushColor         st7735.o
-    0x000040fa   0x00000002   PAD
-    0x000040fc   0x00000074   Code   RO           77    i.setAddrWindow     st7735.o
-    0x00004170   0x00000030   Code   RO           78    i.writecommand      st7735.o
-    0x000041a0   0x00000020   Code   RO           79    i.writedata         st7735.o
-    0x000041c0   0x000007e2   Data   RO           81    .constdata          st7735.o
-    0x000049a2   0x00000002   PAD
-    0x000049a4   0x00000034   Data   RO          547    .constdata          display.o
-    0x000049d8   0x00000040   Data   RO         1476    .constdata          mc_w.l(ctype_c.o)
-    0x00004a18   0x00000020   Data   RO         1478    Region$$Table       anon$$obj.o
+    0x00003cd0   0x000001e4   Code   RO          602    i.main              main.o
+    0x00003eb4   0x00000060   Code   RO          603    i.parseGOOGBuff     main.o
+    0x00003f14   0x0000007c   Code   RO          604    i.parseRedditBuff   main.o
+    0x00003f90   0x000000b4   Code   RO          605    i.parseStockBuff    main.o
+    0x00004044   0x00000174   Code   RO          606    i.parseWeatherBuff  main.o
+    0x000041b8   0x00000012   Code   RO           76    i.pushColor         st7735.o
+    0x000041ca   0x00000002   PAD
+    0x000041cc   0x00000074   Code   RO           77    i.setAddrWindow     st7735.o
+    0x00004240   0x00000030   Code   RO           78    i.writecommand      st7735.o
+    0x00004270   0x00000020   Code   RO           79    i.writedata         st7735.o
+    0x00004290   0x000007e2   Data   RO           81    .constdata          st7735.o
+    0x00004a72   0x00000002   PAD
+    0x00004a74   0x00000034   Data   RO          547    .constdata          display.o
+    0x00004aa8   0x00000040   Data   RO         1480    .constdata          mc_w.l(ctype_c.o)
+    0x00004ae8   0x00000020   Data   RO         1482    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Base: 0x20000000, Size: 0x0000038c, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00000184])
+    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000390, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00000188])
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1595,21 +1600,20 @@ Memory Map of the image
     0x2000005a   0x00000006   PAD
     0x20000060   0x0000003a   Data   RW          548    .data               display.o
     0x2000009a   0x00000002   PAD
-    0x2000009c   0x0000025c   Data   RW          607    .data               main.o
-    0x200002f8   0x0000007c   Data   RW          780    .data               esp8266.o
-    0x20000374   0x00000010   Data   RW          990    .data               uart.o
-    0x20000384   0x00000004   Data   RW         1122    .data               timer2.o
-    0x20000388   0x00000004   Data   RW         1439    .data               mc_w.l(stdout.o)
+    0x2000009c   0x00000260   Data   RW          607    .data               main.o
+    0x200002fc   0x0000007c   Data   RW          784    .data               esp8266.o
+    0x20000378   0x00000010   Data   RW          994    .data               uart.o
+    0x20000388   0x00000004   Data   RW         1126    .data               timer2.o
+    0x2000038c   0x00000004   Data   RW         1443    .data               mc_w.l(stdout.o)
 
 
-    Execution Region ER_ZI (Base: 0x2000038c, Size: 0x00002894, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Base: 0x20000390, Size: 0x00002890, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x2000038c   0x0000000c   Zero   RW           80    .bss                st7735.o
-    0x20000398   0x00001c84   Zero   RW          778    .bss                esp8266.o
-    0x2000201c   0x00000800   Zero   RW          989    .bss                uart.o
-    0x2000281c   0x00000004   PAD
+    0x20000390   0x0000000c   Zero   RW           80    .bss                st7735.o
+    0x2000039c   0x00001c84   Zero   RW          782    .bss                esp8266.o
+    0x20002020   0x00000800   Zero   RW          993    .bss                uart.o
     0x20002820   0x00000400   Zero   RW            1    STACK               startup.o
 
 
@@ -1624,7 +1628,7 @@ Image component sizes
       4036        600         52         58          0       5204   display.o
       3048       1102          0        124       7300      15823   esp8266.o
        108         20          0          0          0        371   led.o
-      1400        382          0        604          0       5426   main.o
+      1608        444          0        608          0       5494   main.o
        124          6          0          0          0       4619   pll.o
        144         14          0          6          0       1904   setalarm.o
        176         28          0          0          0       1246   settime.o
@@ -1637,9 +1641,9 @@ Image component sizes
        804        132          0         16       2048       7273   uart.o
 
     ----------------------------------------------------------------------
-     14510       3406       2104        904      10388      67363   Object Totals
+     14718       3468       2104        908      10384      67431   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        10          0          2          9          4          0   (incl. Padding)
+        10          0          2          9          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1695,15 +1699,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     16832       3470       2168        908      10388      63355   Grand Totals
-     16832       3470       2168        388      10388      63355   ELF Image Totals (compressed)
-     16832       3470       2168        388          0          0   ROM Totals
+     17040       3532       2168        912      10384      63423   Grand Totals
+     17040       3532       2168        392      10384      63423   ELF Image Totals (compressed)
+     17040       3532       2168        392          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                19000 (  18.55kB)
+    Total RO  Size (Code + RO Data)                19208 (  18.76kB)
     Total RW  Size (RW Data + ZI Data)             11296 (  11.03kB)
-    Total ROM Size (Code + RO Data + RW Data)      19388 (  18.93kB)
+    Total ROM Size (Code + RO Data + RW Data)      19600 (  19.14kB)
 
 ==============================================================================
 

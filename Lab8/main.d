@@ -20,3 +20,4 @@
 .\main.o: LED.h
 .\main.o: UART.h
 .\main.o: Timer2.h
+.\main.o: Timer1.h
